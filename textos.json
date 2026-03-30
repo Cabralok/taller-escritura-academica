@@ -1,0 +1,50 @@
+[
+  {
+    "texto": "Puede afirmarse en general que toda explicación pone en juego dos segmentos de base: un objeto por explicar —el explicando— y otro segmento, el explicante, que modifica al objeto para hacerlo más inteligible. Las relaciones entre ambos son básicamente de dos tipos: causales y ecuativas. Mientras que las explicaciones históricas parecen preferir la causalidad, los textos de divulgación científica utilizan con mayor frecuencia paráfrasis, sinónimos y ejemplos.",
+    "fuente": "Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba.",
+    "tipo_sugerido": "explicativo",
+    "nivel": "inicial"
+  },
+  {
+    "texto": "La argumentación puede definirse como el conjunto de estrategias discursivas que se ponen en práctica para lograr la adhesión del destinatario al punto de vista que se presenta para su validación. Aquí ya no se persigue la verdad sino la aceptabilidad; por esta razón, a diferencia de los sistemas demostrativos de la lógica y la matemática, los enunciados de partida no necesitan ser verdaderos: basta con que sean probables, pero convincentes.",
+    "fuente": "Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba.",
+    "tipo_sugerido": "argumentativo",
+    "nivel": "inicial"
+  },
+  {
+    "texto": "El proceso de composición es específico en función de una determinada situación de comunicación y de la interpretación de sus exigencias por parte del escritor. Esto equivale a entender que los procesos de composición son siempre situados, dependen de un contexto espacio-temporal y de un entorno socio-cultural que les confiere sentido.",
+    "fuente": "Castelló, M. (2007). Escribir y comunicarse en contextos científicos y académicos. Graó.",
+    "tipo_sugerido": "expositivo",
+    "nivel": "inicial"
+  },
+  {
+    "texto": "La demostración se opone a la explicación y la argumentación porque opera con conceptos axiomáticos o con enunciados primitivos propios de la disciplina, mientras que la explicación y la argumentación proceden con nociones que pueden expresarse mediante nombres comunes que reenvían a propiedades estables de los objetos. La demostración es un discurso cerrado, que se autoabastece semántica y sintácticamente.",
+    "fuente": "Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba.",
+    "tipo_sugerido": "expositivo",
+    "nivel": "intermedio"
+  },
+  {
+    "texto": "No nos parece razonable sostener que la escritura académica se aprende de una vez y para siempre en un único espacio curricular. Por el contrario, la alfabetización académica debe ser entendida como un proceso continuo, transversal a todas las disciplinas y a lo largo de toda la carrera. Pretender que un solo taller resuelva la complejidad de la escritura universitaria es, cuando menos, ingenuo.",
+    "fuente": "Carlino, P. (2005). Escribir, leer y aprender en la universidad. Fondo de Cultura Económica.",
+    "tipo_sugerido": "argumentativo",
+    "nivel": "intermedio"
+  },
+  {
+    "texto": "Los géneros discursivos son conjuntos más o menos estables de enunciados determinados por las prácticas socioculturales; los hablantes aprenden el uso de los géneros a través de la experiencia comunicativa. Cada esfera del uso de la lengua elabora sus tipos relativamente estables de enunciados a los que denominamos géneros discursivos, los cuales reflejan las condiciones específicas y el objeto de cada una de esas esferas.",
+    "fuente": "Arnoux, E. (2006). La lectura y la escritura en la universidad. Eudeba.",
+    "tipo_sugerido": "expositivo",
+    "nivel": "intermedio"
+  },
+  {
+    "texto": "Si la validez de una demostración depende de que se hayan aplicado las reglas necesarias para la deducción, la validez de una argumentación, en cambio, está sujeta al contexto de producción. No hay argumentación sin destinatario real o virtual, sin una situación en la que alguien intente convencer a otro. Es precisamente este anclaje contextual lo que distingue la argumentación de la demostración lógica.",
+    "fuente": "Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba.",
+    "tipo_sugerido": "argumentativo",
+    "nivel": "avanzado"
+  },
+  {
+    "texto": "Leer para escribir es una de las actividades más interesantes para ayudar a los alumnos a interpretar correctamente las exigencias de la tarea. Se trata de leer textos semejantes a los que el alumno debe escribir, de encontrar las claves de la situación de comunicación que permitieron al escritor tomar determinadas decisiones que se plasman en la forma final de su texto.",
+    "fuente": "Castelló, M. (2007). Escribir y comunicarse en contextos científicos y académicos. Graó.",
+    "tipo_sugerido": "expositivo",
+    "nivel": "inicial"
+  }
+]

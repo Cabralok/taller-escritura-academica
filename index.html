@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de Escritura Académica</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #2D7D5A; --verde-claro: #3DA876; --verde-suave: #E8F5EF;
+    --naranja: #E8773A; --naranja-suave: #FDF1EA;
+    --azul: #2C5F8A; --azul-suave: #EAF1F8;
+    --amarillo: #F5C842; --amarillo-suave: #FEFAE8;
+    --violeta: #7B5EA7; --violeta-suave: #F2EEF9;
+    --rojo: #C0392B; --rojo-suave: #FDECEA;
+    --gris-oscuro: #2C2C2C; --gris-medio: #555; --gris-claro: #F4F4F2;
+    --blanco: #FEFEFE; --sombra: 0 2px 16px rgba(0,0,0,0.08); --radio: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', sans-serif; background: #F0F3EF; color: var(--gris-oscuro); min-height: 100vh; }
+
+  header { background: var(--verde); color: white; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; box-shadow: 0 2px 12px rgba(45,125,90,0.25); position: sticky; top: 0; z-index: 100; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; }
+  .autor { font-size: 0.78rem; font-weight: 300; opacity: 0.82; letter-spacing: 0.05em; font-style: italic; }
+
+  nav { background: white; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; border-bottom: 3px solid var(--verde-suave); box-shadow: var(--sombra); scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  .tab { padding: 1rem 1.1rem; cursor: pointer; font-size: 0.8rem; font-weight: 500; color: var(--gris-medio); border-bottom: 3px solid transparent; margin-bottom: -3px; white-space: nowrap; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+  .tab:hover { color: var(--verde); background: var(--verde-suave); }
+  .tab.active { color: var(--verde); border-bottom-color: var(--verde); font-weight: 600; }
+  .tab .num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; font-size: 0.7rem; font-weight: 700; background: var(--verde-suave); color: var(--verde); }
+  .tab.active .num { background: var(--verde); color: white; }
+  .tab.t-conectores { color: var(--azul); }
+  .tab.t-conectores.active { color: var(--azul); border-bottom-color: var(--azul); }
+  .tab.t-conectores .num { background: var(--azul-suave); color: var(--azul); }
+  .tab.t-conectores.active .num { background: var(--azul); color: white; }
+
+  main { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .panel { display: none; animation: fadeIn 0.3s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .card { background: white; border-radius: var(--radio); padding: 1.8rem; box-shadow: var(--sombra); margin-bottom: 1.2rem; }
+  .card-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.2rem; }
+  .mod-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+  .card h2 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--gris-oscuro); margin-bottom: 0.25rem; }
+  .card .subtitulo { font-size: 0.82rem; color: var(--gris-medio); }
+
+  .consigna { border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.9rem; line-height: 1.65; border-left: 4px solid; }
+  .consigna strong { display: block; margin-bottom: 0.3rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .fragmento { background: var(--gris-claro); border-radius: 8px; padding: 1.2rem 1.2rem 1rem 2rem; margin-bottom: 1.2rem; font-size: 0.88rem; line-height: 1.7; font-style: italic; color: #444; border-left: 3px solid #ccc; position: relative; }
+  .fragmento::before { content: '"'; font-size: 3rem; color: #ddd; position: absolute; top: -8px; left: 8px; font-family: 'Playfair Display', serif; line-height: 1; }
+  .fragmento .fuente { font-size: 0.75rem; color: #888; margin-top: 0.6rem; font-style: normal; }
+
+  textarea { width: 100%; border: 2px solid #E0E0E0; border-radius: 8px; padding: 0.9rem 1rem; font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; line-height: 1.6; resize: vertical; color: var(--gris-oscuro); transition: border-color 0.2s; min-height: 110px; }
+  textarea:focus { outline: none; border-color: var(--verde); }
+  textarea::placeholder { color: #aaa; }
+  label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--gris-medio); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .campo { margin-bottom: 1rem; }
+
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 8px; font-family: 'Source Sans 3', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+  .btn-primary { background: var(--verde); color: white; box-shadow: 0 3px 10px rgba(45,125,90,0.3); }
+  .btn-primary:hover { background: var(--verde-claro); transform: translateY(-1px); }
+  .btn-reset { background: none; color: var(--gris-medio); font-size: 0.8rem; padding: 0.4rem 0.8rem; text-decoration: underline; cursor: pointer; border: none; }
+  .btn-reset:hover { color: var(--rojo); }
+  .acciones { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+
+  /* CARGANDO */
+  .cargando-frag { text-align: center; padding: 1.5rem; color: var(--gris-medio); font-style: italic; font-size: 0.88rem; }
+
+  /* CHAT */
+  .chat-area { margin-top: 1.2rem; border-radius: var(--radio); overflow: hidden; border: 1.5px solid #E0E0E0; }
+  .chat-header { background: var(--gris-claro); padding: 0.6rem 1rem; font-size: 0.78rem; font-weight: 600; color: var(--gris-medio); text-transform: uppercase; letter-spacing: 0.07em; display: flex; align-items: center; gap: 0.5rem; }
+  .chat-header .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verde); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .chat-messages { padding: 1rem; max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; background: white; }
+  .msg { max-width: 88%; padding: 0.8rem 1rem; border-radius: 10px; font-size: 0.875rem; line-height: 1.65; animation: fadeIn 0.25s ease; }
+  .msg.ia { background: var(--verde-suave); border-bottom-left-radius: 2px; align-self: flex-start; border-left: 3px solid var(--verde); }
+  .msg.usuario { background: var(--azul-suave); border-bottom-right-radius: 2px; align-self: flex-end; border-right: 3px solid var(--azul); }
+  .msg.cierre { background: var(--naranja-suave); border-left: 3px solid var(--naranja); align-self: flex-start; max-width: 100%; }
+  .msg-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; opacity: 0.6; }
+  .loading-msg { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1rem; font-size: 0.82rem; color: var(--gris-medio); font-style: italic; }
+  .dots span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--verde); margin: 0 1px; animation: bounce 1.2s infinite; }
+  .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+  .chat-input-area { display: flex; border-top: 1.5px solid #E0E0E0; }
+  .chat-input-area textarea { border: none; border-radius: 0; resize: none; min-height: 56px; max-height: 120px; font-size: 0.88rem; flex: 1; padding: 0.8rem 1rem; }
+  .chat-input-area textarea:focus { border-color: transparent; box-shadow: none; }
+  .btn-enviar { background: var(--verde); color: white; border: none; padding: 0 1.2rem; cursor: pointer; font-size: 1.1rem; transition: background 0.2s; }
+  .btn-enviar:hover { background: var(--verde-claro); }
+
+  /* GUÍA ERRORES */
+  .guia-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--rojo); background: var(--rojo-suave); border: 1.5px solid var(--rojo); border-radius: 8px; padding: 0.5rem 1rem; margin-bottom: 1rem; width: fit-content; transition: all 0.2s; user-select: none; }
+  .guia-toggle:hover { background: #f5c5c0; }
+  .guia-panel { display: none; margin-bottom: 1.2rem; }
+  .guia-panel.open { display: block; }
+  .error-grupo { margin-bottom: 1rem; }
+  .error-grupo h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rojo); margin-bottom: 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid #f0c0bb; }
+  .error-item { background: var(--rojo-suave); border-radius: 8px; padding: 0.7rem 1rem; margin-bottom: 0.5rem; border-left: 3px solid var(--rojo); }
+  .error-item strong { display: block; font-size: 0.85rem; color: var(--rojo); margin-bottom: 0.2rem; }
+  .error-item span { font-size: 0.82rem; color: #666; line-height: 1.5; }
+  .error-item em { display: block; font-size: 0.78rem; color: #888; margin-top: 0.3rem; font-style: italic; }
+
+  /* CONECTORES */
+  .conectores-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
+  .conector-cat { background: white; border-radius: var(--radio); padding: 1rem 1.2rem; box-shadow: var(--sombra); border-top: 3px solid var(--azul); }
+  .conector-cat h3 { font-size: 0.82rem; font-weight: 700; color: var(--azul); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+  .conector-cat .desc { font-size: 0.75rem; color: var(--gris-medio); margin-bottom: 0.6rem; font-style: italic; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .tag { background: var(--azul-suave); color: var(--azul); border-radius: 20px; padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: 500; }
+  .buscador-wrap { position: relative; margin-bottom: 1rem; }
+  .buscador-wrap input { width: 100%; border: 2px solid #E0E0E0; border-radius: 8px; padding: 0.75rem 1rem 0.75rem 2.5rem; font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; transition: border-color 0.2s; }
+  .buscador-wrap input:focus { outline: none; border-color: var(--azul); }
+  .buscador-wrap .icono { position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: #aaa; }
+
+  /* COLORES MÓDULO */
+  .m1 .mod-icon { background: var(--verde-suave); }
+  .m2 .mod-icon { background: var(--naranja-suave); }
+  .m3 .mod-icon { background: var(--azul-suave); }
+  .m4 .mod-icon { background: var(--violeta-suave); }
+  .m5 .mod-icon { background: var(--rojo-suave); }
+  .m1 .consigna { background: var(--verde-suave); border-color: var(--verde); color: #1a4d35; }
+  .m2 .consigna { background: var(--naranja-suave); border-color: var(--naranja); color: #7a3a12; }
+  .m3 .consigna { background: var(--azul-suave); border-color: var(--azul); color: #1a3a5c; }
+  .m4 .consigna { background: var(--violeta-suave); border-color: var(--violeta); color: #4a2d6e; }
+  .m5 .consigna { background: var(--rojo-suave); border-color: var(--rojo); color: #7a1f15; }
+  .m1 .btn-primary, .m1 .btn-enviar { background: var(--verde); }
+  .m2 .btn-primary, .m2 .btn-enviar { background: var(--naranja); }
+  .m3 .btn-primary, .m3 .btn-enviar { background: var(--azul); }
+  .m4 .btn-primary, .m4 .btn-enviar { background: var(--violeta); }
+  .m5 .btn-primary, .m5 .btn-enviar { background: var(--rojo); }
+  .m1 .btn-primary:hover { background: var(--verde-claro); }
+  .m2 .btn-primary:hover { background: #d4622a; }
+  .m3 .btn-primary:hover { background: #1e4a72; }
+  .m4 .btn-primary:hover { background: #6a4d96; }
+  .m5 .btn-primary:hover { background: #a52d22; }
+  .m1 .msg.ia { background: var(--verde-suave); border-color: var(--verde); }
+  .m2 .msg.ia { background: var(--naranja-suave); border-color: var(--naranja); }
+  .m3 .msg.ia { background: var(--azul-suave); border-color: var(--azul); }
+  .m4 .msg.ia { background: var(--violeta-suave); border-color: var(--violeta); }
+  .m5 .msg.ia { background: var(--rojo-suave); border-color: var(--rojo); }
+  .m1 .chat-header .dot { background: var(--verde); }
+  .m2 .chat-header .dot { background: var(--naranja); }
+  .m3 .chat-header .dot { background: var(--azul); }
+  .m4 .chat-header .dot { background: var(--violeta); }
+  .m5 .chat-header .dot { background: var(--rojo); }
+
+  /* ETAPAS M1 */
+  .etapas { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; }
+  .etapa { flex: 1; padding: 0.5rem; border-radius: 8px; text-align: center; font-size: 0.75rem; font-weight: 600; background: #F0F0EE; color: #999; transition: all 0.3s; }
+  .etapa.activa { background: var(--verde); color: white; }
+  .etapa.completa { background: var(--verde-suave); color: var(--verde); }
+
+  /* BADGE NIVEL */
+  .badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; margin-left: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .badge-inicial { background: var(--verde-suave); color: var(--verde); }
+  .badge-intermedio { background: var(--amarillo-suave); color: #8a6800; }
+  .badge-avanzado { background: var(--rojo-suave); color: var(--rojo); }
+
+  @media (max-width: 600px) {
+    header { padding: 0 1rem; }
+    header h1 { font-size: 1.05rem; }
+    .autor { display: none; }
+    nav { padding: 0 0.5rem; }
+    main { padding: 1rem 0.8rem 3rem; }
+    .card { padding: 1.2rem; }
+    .conectores-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📝 Taller de Escritura Académica</h1>
+  <span class="autor">Prof. Rodolfo Cabral</span>
+</header>
+
+<nav>
+  <div class="tab active" onclick="mostrarPanel('p1',this)"><span class="num">1</span> Constructor</div>
+  <div class="tab" onclick="mostrarPanel('p2',this)"><span class="num">2</span> Identificador</div>
+  <div class="tab" onclick="mostrarPanel('p3',this)"><span class="num">3</span> Reescritura</div>
+  <div class="tab" onclick="mostrarPanel('p4',this)"><span class="num">4</span> Citas</div>
+  <div class="tab" onclick="mostrarPanel('p5',this)"><span class="num">5</span> Errores</div>
+  <div class="tab t-conectores" onclick="mostrarPanel('pc',this)"><span class="num">📋</span> Conectores</div>
+</nav>
+
+<main>
+
+<!-- MÓDULO 1 -->
+<div id="p1" class="panel active m1">
+  <div class="card">
+    <div class="card-header">
+      <div class="mod-icon">🧱</div>
+      <div><h2>Constructor de párrafos</h2><div class="subtitulo">Construí un párrafo académico en 3 etapas. La IA te acompaña sin darte las respuestas.</div></div>
+    </div>
+    <div class="etapas">
+      <div class="etapa activa" id="et1">① Oración tópico</div>
+      <div class="etapa" id="et2">② Fundamentación</div>
+      <div class="etapa" id="et3">③ Cierre</div>
+    </div>
+    <div class="consigna"><strong>📌 Consigna</strong>Elegí un tema de las ciencias sociales (puede ser un concepto visto en clase) y construí un párrafo académico paso a paso. Empezá por la oración tópico: la idea central que va a sostener todo el párrafo.</div>
+    <div class="campo"><label>Tema elegido</label><textarea id="m1-tema" placeholder="Ej: La desigualdad social como objeto de estudio de las ciencias sociales..." rows="2"></textarea></div>
+    <div class="campo"><label>① Tu oración tópico</label><textarea id="m1-oracion" placeholder="Escribí aquí la oración que presenta la idea central del párrafo..."></textarea></div>
+    <div class="acciones">
+      <button class="btn btn-primary" onclick="iniciarM1()">Enviar al tutor →</button>
+      <button class="btn-reset" onclick="resetModulo('m1')">Reiniciar</button>
+    </div>
+  </div>
+  <div class="card" id="chat-m1-wrap" style="display:none;">
+    <div class="chat-area">
+      <div class="chat-header"><span class="dot"></span> Tutor académico — en proceso</div>
+      <div class="chat-messages" id="chat-m1"></div>
+      <div class="chat-input-area">
+        <textarea id="input-m1" placeholder="Respondé aquí al tutor..." onkeydown="enviarEnter(event,'m1')"></textarea>
+        <button class="btn-enviar" onclick="enviarMensaje('m1')">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MÓDULO 2 -->
+<div id="p2" class="panel m2">
+  <div class="card">
+    <div class="card-header">
+      <div class="mod-icon">🔍</div>
+      <div><h2>Identificador de tipo textual</h2><div class="subtitulo">Leé el fragmento, identificá su tipo y justificá tu respuesta con conceptos de la materia.</div></div>
+    </div>
+    <div id="fragmento-container">
+      <div class="cargando-frag">⏳ Cargando fragmento...</div>
+    </div>
+    <div class="consigna"><strong>📌 Consigna</strong>Leé el fragmento y respondé: ¿Es un texto <strong>expositivo</strong>, <strong>argumentativo</strong> o <strong>explicativo</strong>? Justificá tu respuesta usando al menos un concepto de la materia (Zamudio/Atorresi, Arnoux). La IA no confirmará tu respuesta hasta que hayas fundamentado.</div>
+    <div class="campo"><label>Tu identificación y justificación</label><textarea id="m2-respuesta" placeholder="Este fragmento es de tipo... porque... Se puede observar que... según Zamudio y Atorresi..."></textarea></div>
+    <div class="acciones">
+      <button class="btn btn-primary" onclick="iniciarModulo('m2')">Enviar al tutor →</button>
+      <button class="btn-reset" onclick="cargarFragmentoAleatorio(); resetModulo('m2')">Nuevo fragmento</button>
+    </div>
+  </div>
+  <div class="card" id="chat-m2-wrap" style="display:none;">
+    <div class="chat-area">
+      <div class="chat-header"><span class="dot"></span> Tutor académico — en proceso</div>
+      <div class="chat-messages" id="chat-m2"></div>
+      <div class="chat-input-area">
+        <textarea id="input-m2" placeholder="Respondé aquí al tutor..." onkeydown="enviarEnter(event,'m2')"></textarea>
+        <button class="btn-enviar" onclick="enviarMensaje('m2')">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MÓDULO 3 -->
+<div id="p3" class="panel m3">
+  <div class="card">
+    <div class="card-header">
+      <div class="mod-icon">✏️</div>
+      <div><h2>Reescritura académica</h2><div class="subtitulo">Transformá el fragmento coloquial en registro académico y justificá cada decisión.</div></div>
+    </div>
+    <div class="fragmento">
+      La verdad es que la pobreza es un problema re grave en Argentina y hay mucha gente que no puede comer bien ni mandar a sus hijos al colegio. Eso está mal y el gobierno tendría que hacer algo ya. Pero claro, siempre hacen lo mismo y nunca cambia nada.
+      <div class="fuente">Texto coloquial — para reescribir en registro académico</div>
+    </div>
+    <div class="consigna"><strong>📌 Consigna</strong>Reescribí este texto en registro académico. Considerá: precisión conceptual, desagentivación, uso de conectores apropiados, eliminación de marcas coloquiales. Luego explicá qué cambiaste y por qué.</div>
+    <div class="campo"><label>Tu reescritura académica</label><textarea id="m3-reescritura" placeholder="La problemática de la pobreza constituye..." rows="5"></textarea></div>
+    <div class="campo"><label>¿Qué cambiaste y por qué?</label><textarea id="m3-justificacion" placeholder="Reemplacé '...re grave...' por '...de alta complejidad...' porque en el registro académico... Utilicé el conector 'en consecuencia' para..."></textarea></div>
+    <div class="acciones">
+      <button class="btn btn-primary" onclick="iniciarModulo('m3')">Enviar al tutor →</button>
+      <button class="btn-reset" onclick="resetModulo('m3')">Reiniciar</button>
+    </div>
+  </div>
+  <div class="card" id="chat-m3-wrap" style="display:none;">
+    <div class="chat-area">
+      <div class="chat-header"><span class="dot"></span> Tutor académico — en proceso</div>
+      <div class="chat-messages" id="chat-m3"></div>
+      <div class="chat-input-area">
+        <textarea id="input-m3" placeholder="Respondé aquí al tutor..." onkeydown="enviarEnter(event,'m3')"></textarea>
+        <button class="btn-enviar" onclick="enviarMensaje('m3')">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MÓDULO 4 -->
+<div id="p4" class="panel m4">
+  <div class="card">
+    <div class="card-header">
+      <div class="mod-icon">📚</div>
+      <div><h2>Laboratorio de citas</h2><div class="subtitulo">Practicá las tres modalidades de citado con fragmentos reales de los textos de la materia.</div></div>
+    </div>
+    <div class="fragmento">
+      Puede afirmarse en general que toda explicación pone en juego dos segmentos de base: un objeto por explicar —el explicando— y otro segmento, el explicante, que modifica al objeto para hacerlo más inteligible.
+      <div class="fuente">Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba. (p. 13)</div>
+    </div>
+    <div class="consigna"><strong>📌 Consigna</strong>Usando el fragmento de arriba, practicá las tres modalidades: <strong>① Cita directa</strong> (comillas + referencia APA), <strong>② Paráfrasis</strong> (en tus palabras + referencia), <strong>③ Referencia indirecta</strong> (solo la idea, sin citar textualmente). La IA evaluará si respetás el sentido original y el formato correcto.</div>
+    <div class="campo"><label>① Cita directa</label><textarea id="m4-directa" placeholder='Según Zamudio y Atorresi (2000), "..."  (p. 13).' rows="3"></textarea></div>
+    <div class="campo"><label>② Paráfrasis</label><textarea id="m4-parafrasis" placeholder="Zamudio y Atorresi (2000) sostienen que toda explicación implica..." rows="3"></textarea></div>
+    <div class="campo"><label>③ Referencia indirecta</label><textarea id="m4-indirecta" placeholder="En el marco de los estudios sobre el discurso explicativo, se distinguen dos componentes estructurales..." rows="3"></textarea></div>
+    <div class="acciones">
+      <button class="btn btn-primary" onclick="iniciarModulo('m4')">Enviar al tutor →</button>
+      <button class="btn-reset" onclick="resetModulo('m4')">Reiniciar</button>
+    </div>
+  </div>
+  <div class="card" id="chat-m4-wrap" style="display:none;">
+    <div class="chat-area">
+      <div class="chat-header"><span class="dot"></span> Tutor académico — en proceso</div>
+      <div class="chat-messages" id="chat-m4"></div>
+      <div class="chat-input-area">
+        <textarea id="input-m4" placeholder="Respondé aquí al tutor..." onkeydown="enviarEnter(event,'m4')"></textarea>
+        <button class="btn-enviar" onclick="enviarMensaje('m4')">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MÓDULO 5 -->
+<div id="p5" class="panel m5">
+  <div class="card">
+    <div class="card-header">
+      <div class="mod-icon">🔧</div>
+      <div><h2>Texto con errores</h2><div class="subtitulo">Detectá los errores, nombralos con vocabulario académico y corregilos. La IA no revela nada hasta el final.</div></div>
+    </div>
+
+    <div class="guia-toggle" onclick="toggleGuia()">
+      📖 Guía de errores académicos — consultar antes de empezar
+    </div>
+    <div class="guia-panel" id="guia-errores">
+      <div class="error-grupo">
+        <h4>Errores discursivos / argumentativos</h4>
+        <div class="error-item"><strong>Argumento circular</strong><span>Se usa la conclusión como premisa, generando una explicación que no explica nada.</span><em>Ejemplo: "La sociedad es importante porque sin sociedad no habría sociedad."</em></div>
+        <div class="error-item"><strong>Falta de fundamentación</strong><span>Se presenta una opinión personal como si fuera una afirmación objetiva, sin respaldo teórico ni empírico.</span><em>Ejemplo: "Está mal y el gobierno tendría que hacer algo."</em></div>
+        <div class="error-item"><strong>Salto lógico</strong><span>Se pasa de una idea a otra sin conexión explícita, omitiendo los pasos del razonamiento.</span><em>Ejemplo: "Hay pobreza. Por lo tanto, el sistema educativo fracasó."</em></div>
+        <div class="error-item"><strong>Generalización sin datos</strong><span>Se hacen afirmaciones universales ("todos", "siempre", "nunca") sin evidencia que las respalde.</span><em>Ejemplo: "Siempre hacen lo mismo y nunca cambia nada."</em></div>
+        <div class="error-item"><strong>Falta de tesis clara</strong><span>El párrafo no tiene una idea central identificable que organice y dirija todo el desarrollo.</span></div>
+      </div>
+      <div class="error-grupo">
+        <h4>Errores de registro y cohesión</h4>
+        <div class="error-item"><strong>Mezcla de registros</strong><span>Se combina lenguaje coloquial con lenguaje académico en el mismo texto, rompiendo la uniformidad del discurso.</span><em>Ejemplo: "La problemática social es re compleja y hay mucha gente que la pasa mal."</em></div>
+        <div class="error-item"><strong>Uso innecesario de primera persona</strong><span>Se usan expresiones como "yo creo", "en mi opinión" sin justificación retórica, lo que debilita la objetividad del texto académico.</span></div>
+        <div class="error-item"><strong>Repetición léxica innecesaria</strong><span>Se repite la misma palabra sin variación cuando existen sinónimos o pronombres que podrían reemplazarla.</span><em>Ejemplo: "Los investigadores investigan la sociedad con métodos de investigación."</em></div>
+        <div class="error-item"><strong>Mal uso de conectores</strong><span>Se usa un conector que no corresponde a la relación lógica entre las ideas (causa, consecuencia, contraste, etc.).</span></div>
+        <div class="error-item"><strong>Desagentivación inconsistente</strong><span>Se mezcla la voz activa con la impersonal sin criterio, generando incoherencia en el posicionamiento enunciativo.</span></div>
+      </div>
+      <div class="error-grupo">
+        <h4>Errores de precisión y claridad</h4>
+        <div class="error-item"><strong>Lenguaje vago o ambiguo</strong><span>Se usan términos imprecisos ("algo", "muchos", "a veces", "cosas") que no aportan información concreta.</span></div>
+        <div class="error-item"><strong>Exceso de rodeos</strong><span>El argumento central se "pierde" por una acumulación de oraciones innecesarias que no aportan al desarrollo de la idea.</span></div>
+      </div>
+      <div class="error-grupo">
+        <h4>Errores de citado</h4>
+        <div class="error-item"><strong>Cita sin referencia</strong><span>Se usa una idea ajena como propia, sin mencionar la fuente. Esto constituye plagio académico.</span></div>
+        <div class="error-item"><strong>Paráfrasis que copia</strong><span>Se cambian pocas palabras pero se mantiene la estructura sintáctica original del texto fuente. No es una verdadera paráfrasis.</span></div>
+        <div class="error-item"><strong>Cita mal integrada</strong><span>La cita aparece suelta, sin introducción ni análisis, como un fragmento ajeno que no dialoga con el texto propio.</span></div>
+      </div>
+    </div>
+
+    <div class="fragmento">
+      La sociedad es un tema muy importante para las ciencias sociales porque sin sociedad no habría ciencias sociales. Los investigadores investigan la sociedad usando métodos. Estos métodos son científicos. Por eso la investigación es científica. Además, se puede decir que yo creo que la pobreza es muy mala y el Estado debería resolverlo urgente.
+      <div class="fuente">Texto con errores — para analizar y corregir</div>
+    </div>
+    <div class="consigna"><strong>📌 Consigna</strong>Este párrafo tiene al menos <strong>4 problemas académicos</strong>. Usá la guía de arriba para detectarlos, nombralos con vocabulario de la materia y reescribí el párrafo corrigiéndolos. La IA no revelará cuáles son hasta que hayas hecho el proceso completo.</div>
+    <div class="campo"><label>Errores que detectás — nombralos y explicá por qué son errores</label><textarea id="m5-errores" placeholder="Error 1: Argumento circular — porque usa la conclusión como premisa al afirmar que...&#10;Error 2: ...&#10;Error 3: ...&#10;Error 4: ..."></textarea></div>
+    <div class="campo"><label>Párrafo corregido</label><textarea id="m5-correccion" placeholder="Reescribí el párrafo corrigiendo todos los problemas..." rows="5"></textarea></div>
+    <div class="acciones">
+      <button class="btn btn-primary" onclick="iniciarModulo('m5')">Enviar al tutor →</button>
+      <button class="btn-reset" onclick="resetModulo('m5')">Reiniciar</button>
+    </div>
+  </div>
+  <div class="card" id="chat-m5-wrap" style="display:none;">
+    <div class="chat-area">
+      <div class="chat-header"><span class="dot"></span> Tutor académico — en proceso</div>
+      <div class="chat-messages" id="chat-m5"></div>
+      <div class="chat-input-area">
+        <textarea id="input-m5" placeholder="Respondé aquí al tutor..." onkeydown="enviarEnter(event,'m5')"></textarea>
+        <button class="btn-enviar" onclick="enviarMensaje('m5')">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONECTORES -->
+<div id="pc" class="panel">
+  <div class="card" style="border-top: 4px solid var(--azul);">
+    <div class="card-header">
+      <div class="mod-icon" style="background:var(--azul-suave);">📋</div>
+      <div><h2 style="color:var(--azul);">Conectores textuales</h2><div class="subtitulo">22 categorías funcionales — Bravo (2005), Cassany (1995), Díaz (1987). Usá el buscador para encontrar el conector que necesitás.</div></div>
+    </div>
+    <div class="buscador-wrap">
+      <span class="icono">🔍</span>
+      <input type="text" id="buscador-conector" placeholder="Buscar conector o categoría..." oninput="filtrarConectores()">
+    </div>
+    <div class="conectores-grid" id="grid-conectores"></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ===== DATOS CONECTORES =====
+const conectoresData = [
+  { cat:"1. Aclaración / Repetición", desc:"Proporcionan claridad y énfasis", tags:["Es decir","En otras palabras","Dicho de otra manera","Esto es","Conviene subrayar","Me gustaría dejar claro","Lo anterior no quiere decir que"] },
+  { cat:"2. Adición", desc:"Agregan nuevos datos o aspectos", tags:["Además","Asimismo","También","No sólo... sino también","Por otra parte","Se debe agregar que","Todavía cabe señalar"] },
+  { cat:"3. Cambio de perspectiva", desc:"Anuncian otro aspecto del mismo tema", tags:["A su vez","Con respecto a","En cuanto a","En relación con","Por lo que se refiere a","Por otro lado"] },
+  { cat:"4. Causa", desc:"Introducen ideas que actúan como causa", tags:["Porque","Ya que","Dado que","Puesto que","A causa de","Considerando que","En vista de que"] },
+  { cat:"5. Coexistencia", desc:"Expresan simultaneidad entre eventos", tags:["Al mismo tiempo","Igualmente","Mientras tanto","Simultáneamente","De igual modo","Por otro lado"] },
+  { cat:"6. Comienzo", desc:"Inician un tema nuevo", tags:["Acerca de","Con respecto a","En cuanto a","Sobre","En lo que toca a","Otro punto es"] },
+  { cat:"7. Concesión / Restricción", desc:"Expresan una objeción que no invalida la idea", tags:["Sin embargo","Aunque","No obstante","A pesar de que","Por el contrario","Si bien","Con todo"] },
+  { cat:"8. Conclusión / Consecuencia", desc:"Anuncian conclusión o efecto", tags:["Por lo tanto","En consecuencia","De ahí que","Por consiguiente","En conclusión","De modo que","Se infiere que"] },
+  { cat:"9. Condición", desc:"Expresan una condición necesaria", tags:["Si… entonces","Siempre que","A condición de que","En caso de que","A menos que","Siempre y cuando"] },
+  { cat:"10. Continuidad", desc:"Dan continuidad o muestran transición", tags:["A continuación","Dicho lo anterior","Llegados a este punto","Luego","Consideremos ahora","Volviendo al tema"] },
+  { cat:"11. Contraste / Oposición", desc:"Expresan contraste entre dos ideas", tags:["Sin embargo","Por el contrario","En cambio","No obstante","Aunque","Ahora bien","Antes bien"] },
+  { cat:"12. Conformidad / Semejanza", desc:"Anuncian similitud con algo anterior", tags:["De acuerdo con","Igualmente","Del mismo modo","De manera análoga","En consonancia con","Conforme a"] },
+  { cat:"13. Detalles", desc:"Señalan un aspecto preciso", tags:["En concreto","En particular","En el caso de","Para ser más específicos","De manera puntual"] },
+  { cat:"14. Ejemplificar", desc:"Ilustran o ejemplifican una idea", tags:["Por ejemplo","Así, por ejemplo","Para ilustrar","Pongamos por caso","Sirva de ejemplo","Como muestra"] },
+  { cat:"15. Énfasis", desc:"Destacan ideas importantes", tags:["Sobre todo","En efecto","Precisamente","En realidad","Lo más importante","Indiscutiblemente"] },
+  { cat:"16. Finalidad", desc:"Expresan una finalidad o propósito", tags:["Con el fin de","Con el objetivo de","Para que","Con la finalidad de","Con miras a","A fin de"] },
+  { cat:"17. Hipótesis", desc:"Encabezan juicios de los que no se tiene certeza", tags:["Posiblemente","Es probable que","Quizás","Supongamos","Tal vez","Es posible que"] },
+  { cat:"18. Introducción", desc:"Introducen el tema del texto", tags:["El objetivo principal de","Me propongo exponer","En lo que sigue","Este texto trata de","Voy a plantear"] },
+  { cat:"19. Objeción", desc:"Se anticipa a posibles objeciones del lector", tags:["Se podría objetar que","Para quienes piensan que","Ante la objeción","Quienes refutan esta idea sostienen que"] },
+  { cat:"20. Resumen", desc:"Recapitulan o sintetizan información previa", tags:["En resumen","En síntesis","En definitiva","En pocas palabras","Resumiendo","Para simplificar"] },
+  { cat:"21. Secuencia / Orden", desc:"Organizan siguiendo un orden lógico", tags:["En primer lugar","En segundo lugar","Finalmente","A continuación","Luego","Para empezar","Para terminar"] },
+  { cat:"22. Semejanza", desc:"Colocan dos juicios en el mismo plano", tags:["Igualmente","De igual manera","De la misma forma","Asimismo","De manera semejante"] }
+];
+
+// ===== ESTADOS =====
+const estados = {
+  m1:{ historial:[], rondas:0, activo:false },
+  m2:{ historial:[], rondas:0, activo:false, fragmentoActual:null },
+  m3:{ historial:[], rondas:0, activo:false },
+  m4:{ historial:[], rondas:0, activo:false },
+  m5:{ historial:[], rondas:0, activo:false }
+};
+
+// ===== NAVEGACIÓN =====
+function mostrarPanel(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ===== GUÍA ERRORES =====
+function toggleGuia() {
+  document.getElementById('guia-errores').classList.toggle('open');
+}
+
+// ===== CARGAR FRAGMENTO DESDE JSON =====
+async function cargarFragmentoAleatorio() {
+  const cont = document.getElementById('fragmento-container');
+  cont.innerHTML = '<div class="cargando-frag">⏳ Cargando fragmento...</div>';
+  try {
+    const resp = await fetch('textos.json?v=' + Date.now());
+    const textos = await resp.json();
+    const idx = Math.floor(Math.random() * textos.length);
+    const t = textos[idx];
+    estados.m2.fragmentoActual = t;
+    const niveles = { inicial: 'badge-inicial', intermedio: 'badge-intermedio', avanzado: 'badge-avanzado' };
+    cont.innerHTML = `
+      <div class="fragmento">
+        ${t.texto}
+        <div class="fuente">${t.fuente} <span class="badge ${niveles[t.nivel] || 'badge-inicial'}">${t.nivel || 'inicial'}</span></div>
+      </div>`;
+  } catch(e) {
+    cont.innerHTML = `<div class="fragmento">
+      Puede afirmarse en general que toda explicación pone en juego dos segmentos de base: un objeto por explicar —el explicando— y otro segmento, el explicante, que modifica al objeto para hacerlo más inteligible.
+      <div class="fuente">Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba.</div>
+    </div>`;
+    estados.m2.fragmentoActual = { texto: "Puede afirmarse en general que toda explicación pone en juego dos segmentos de base: un objeto por explicar —el explicando— y otro segmento, el explicante, que modifica al objeto para hacerlo más inteligible.", fuente: "Zamudio y Atorresi (2000)", tipo_sugerido: "explicativo" };
+  }
+}
+
+// ===== PROMPTS SISTEMA =====
+function getSystemPrompt(modulo) {
+  const base = `Sos un tutor exigente y socrático de escritura académica para estudiantes universitarias de Trabajo Social en Argentina. Tu misión es acompañar el proceso de aprendizaje SIN dar las respuestas.
+
+PRINCIPIOS INQUEBRANTABLES:
+1. NUNCA completés lo que la alumna dejó incompleto.
+2. NUNCA reescribás por ella.
+3. NUNCA confirmes si va bien hasta el cierre final (mínimo 3 rondas de intercambio real).
+4. Si la alumna pregunta "¿está bien?" → respondé con otra pregunta.
+5. Si intenta que hagas el trabajo por ella → señalalo directamente y devolvé la responsabilidad.
+6. Podés citar conectores del cuadro de Bravo (2005) mencionando su categoría. Ej: "considerá un conector de consecuencia como 'por lo tanto' o 'en consecuencia'".
+7. Usá un tono directo, cálido pero exigente. Nunca condescendiente.
+8. El cierre con devolución completa solo ocurre cuando considerás que el proceso tuvo suficiente desarrollo.
+9. Usá el voseo rioplatense en tus respuestas.`;
+
+  const especificos = {
+    m1: `\nMÓDULO 1 — Constructor de párrafos. La alumna construye un párrafo en 3 etapas: oración tópico → fundamentación → cierre. Guiá cada etapa con preguntas. No avances de etapa hasta que la anterior esté sólida. Preguntá: ¿qué información adelanta esta oración? ¿puede sostenerse sin más contexto? ¿cuál sería la fundamentación que la respalda? ¿cómo cierra la idea?`,
+    m2: `\nMÓDULO 2 — Identificador de tipo textual. La alumna debe identificar si el fragmento es expositivo, argumentativo o explicativo, y justificarlo con conceptos de la materia (Zamudio/Atorresi, Arnoux). No confirmes la clasificación hasta que haya señalado al menos un rasgo textual concreto del fragmento. Preguntá: ¿qué función cumple este texto? ¿busca convencer, informar o hacer comprender? ¿dónde se ve eso en el texto?`,
+    m3: `\nMÓDULO 3 — Reescritura académica. La alumna reescribió un texto coloquial en registro académico. Preguntá sobre sus decisiones: ¿por qué eligió ese conector? ¿qué marcas de oralidad eliminó? ¿la desagentivación es consistente? ¿el registro es uniforme en todo el texto? No hagas vos la corrección.`,
+    m4: `\nMÓDULO 4 — Laboratorio de citas. La alumna practicó cita directa, paráfrasis y referencia indirecta usando fragmentos de Zamudio/Atorresi. Verificá: ¿la cita directa tiene comillas y referencia APA completa? ¿la paráfrasis respeta el sentido original sin copiar la estructura? ¿la referencia indirecta integra la idea sin reproducir el texto? Hacé preguntas sobre cada modalidad por separado.`,
+    m5: `\nMÓDULO 5 — Texto con errores. La alumna detectó errores en un párrafo. Los errores presentes son: argumento circular ("sin sociedad no habría ciencias sociales"), repetición léxica ("investigadores investigan... investigación"), falta de fundamentación (opinión presentada como hecho), mezcla de registros ("yo creo... urgente") y generalización sin datos. No reveles cuáles son hasta el cierre. Preguntá: ¿encontró todos? ¿puede nombrarlos con vocabulario académico preciso? ¿la corrección resuelve realmente cada problema?`
+  };
+  return base + (especificos[modulo] || '');
+}
+
+// ===== API =====
+async function llamarAPI(modulo, mensajeUsuario) {
+  const estado = estados[modulo];
+  estado.historial.push({ role:'user', content: mensajeUsuario });
+  mostrarLoading(modulo);
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system: getSystemPrompt(modulo),
+        messages: estado.historial
+      })
+    });
+    const data = await response.json();
+    const respuesta = data.content?.[0]?.text || 'No pude procesar la respuesta. Intentá de nuevo.';
+    estado.historial.push({ role:'assistant', content: respuesta });
+    estado.rondas++;
+    quitarLoading(modulo);
+    agregarMensaje(modulo, respuesta, 'ia', estado.rondas >= 3);
+  } catch(e) {
+    quitarLoading(modulo);
+    agregarMensaje(modulo, 'Hubo un error de conexión. Verificá tu acceso a internet y volvé a intentar.', 'ia', false);
+  }
+}
+
+// ===== CHAT UI =====
+function agregarMensaje(modulo, texto, tipo, esCierre=false) {
+  const chat = document.getElementById('chat-'+modulo);
+  const div = document.createElement('div');
+  div.className = `msg ${tipo}${esCierre && tipo==='ia' ? ' cierre' : ''}`;
+  const label = tipo==='ia' ? (esCierre ? '✅ Devolución final' : '🎓 Tutor') : '✍️ Vos';
+  div.innerHTML = `<div class="msg-label">${label}</div>${texto.replace(/\n/g,'<br>')}`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function mostrarLoading(modulo) {
+  const chat = document.getElementById('chat-'+modulo);
+  const div = document.createElement('div');
+  div.className = 'loading-msg'; div.id = 'loading-'+modulo;
+  div.innerHTML = `<span>El tutor está pensando</span><span class="dots"><span></span><span></span><span></span></span>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function quitarLoading(modulo) {
+  const el = document.getElementById('loading-'+modulo);
+  if(el) el.remove();
+}
+
+function enviarEnter(event, modulo) {
+  if(event.key==='Enter' && !event.shiftKey) { event.preventDefault(); enviarMensaje(modulo); }
+}
+
+async function enviarMensaje(modulo) {
+  const input = document.getElementById('input-'+modulo);
+  const texto = input.value.trim();
+  if(!texto) return;
+  input.value = '';
+  agregarMensaje(modulo, texto, 'usuario');
+  await llamarAPI(modulo, texto);
+}
+
+// ===== INICIAR MÓDULOS =====
+async function iniciarM1() {
+  const tema = document.getElementById('m1-tema').value.trim();
+  const oracion = document.getElementById('m1-oracion').value.trim();
+  if(!tema || !oracion) { alert('Completá el tema y tu oración tópico antes de enviar.'); return; }
+  const wrap = document.getElementById('chat-m1-wrap');
+  wrap.style.display = 'block';
+  wrap.scrollIntoView({ behavior:'smooth', block:'center' });
+  const msg = `Mi tema elegido es: "${tema}". Mi oración tópico es: "${oracion}".`;
+  agregarMensaje('m1', msg, 'usuario');
+  await llamarAPI('m1', msg);
+}
+
+async function iniciarModulo(modulo) {
+  let mensaje = '';
+  if(modulo==='m2') {
+    const respuesta = document.getElementById('m2-respuesta').value.trim();
+    if(!estados.m2.fragmentoActual) { alert('Esperá a que cargue el fragmento.'); return; }
+    if(!respuesta) { alert('Escribí tu identificación y justificación antes de enviar.'); return; }
+    const f = estados.m2.fragmentoActual;
+    mensaje = `El fragmento que analicé es: "${f.texto}" (${f.fuente}). Mi respuesta: ${respuesta}`;
+  }
+  if(modulo==='m3') {
+    const rew = document.getElementById('m3-reescritura').value.trim();
+    const just = document.getElementById('m3-justificacion').value.trim();
+    if(!rew || !just) { alert('Completá tanto la reescritura como la justificación.'); return; }
+    mensaje = `Mi reescritura académica: "${rew}". Lo que cambié y por qué: "${just}".`;
+  }
+  if(modulo==='m4') {
+    const dir = document.getElementById('m4-directa').value.trim();
+    const par = document.getElementById('m4-parafrasis').value.trim();
+    const ind = document.getElementById('m4-indirecta').value.trim();
+    if(!dir || !par || !ind) { alert('Completá las tres modalidades de cita antes de enviar.'); return; }
+    mensaje = `Mis tres modalidades de cita:\n① Cita directa: ${dir}\n② Paráfrasis: ${par}\n③ Referencia indirecta: ${ind}`;
+  }
+  if(modulo==='m5') {
+    const err = document.getElementById('m5-errores').value.trim();
+    const cor = document.getElementById('m5-correccion').value.trim();
+    if(!err || !cor) { alert('Completá la detección de errores y el párrafo corregido.'); return; }
+    mensaje = `Errores que detecté:\n${err}\n\nMi párrafo corregido:\n${cor}`;
+  }
+  const wrap = document.getElementById('chat-'+modulo+'-wrap');
+  wrap.style.display = 'block';
+  wrap.scrollIntoView({ behavior:'smooth', block:'center' });
+  agregarMensaje(modulo, mensaje, 'usuario');
+  await llamarAPI(modulo, mensaje);
+}
+
+// ===== RESET =====
+function resetModulo(modulo) {
+  if(!confirm('¿Reiniciar el ejercicio? Se perderá el progreso actual.')) return;
+  estados[modulo] = { historial:[], rondas:0, activo:false, fragmentoActual: estados[modulo].fragmentoActual || null };
+  const chat = document.getElementById('chat-'+modulo);
+  if(chat) chat.innerHTML = '';
+  const wrap = document.getElementById('chat-'+modulo+'-wrap');
+  if(wrap) wrap.style.display = 'none';
+  const campos = { m1:['m1-tema','m1-oracion'], m2:['m2-respuesta'], m3:['m3-reescritura','m3-justificacion'], m4:['m4-directa','m4-parafrasis','m4-indirecta'], m5:['m5-errores','m5-correccion'] };
+  (campos[modulo] || []).forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+}
+
+// ===== CONECTORES =====
+function renderConectores(filtro='') {
+  const grid = document.getElementById('grid-conectores');
+  grid.innerHTML = '';
+  const f = filtro.toLowerCase();
+  conectoresData.forEach(cat => {
+    const tagsFiltrados = f ? cat.tags.filter(t => t.toLowerCase().includes(f)) : cat.tags;
+    const catMatch = cat.cat.toLowerCase().includes(f) || cat.desc.toLowerCase().includes(f);
+    if(!f || catMatch || tagsFiltrados.length > 0) {
+      const div = document.createElement('div');
+      div.className = 'conector-cat';
+      const tagsA = catMatch && !f ? cat.tags : (tagsFiltrados.length > 0 ? tagsFiltrados : cat.tags);
+      div.innerHTML = `<h3>${cat.cat}</h3><div class="desc">${cat.desc}</div><div class="tags">${tagsA.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
+      grid.appendChild(div);
+    }
+  });
+}
+
+function filtrarConectores() {
+  renderConectores(document.getElementById('buscador-conector').value);
+}
+
+// ===== INIT =====
+renderConectores();
+cargarFragmentoAleatorio();
+</script>
+</body>
+</html>
