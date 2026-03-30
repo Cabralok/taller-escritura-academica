@@ -73,7 +73,8 @@
   .modalidad-row{display:flex;gap:0.8rem;flex-wrap:wrap}
   .mod-btn{padding:0.4rem 1rem;border-radius:20px;font-size:0.82rem;font-weight:600;cursor:pointer;border:2px solid rgba(255,255,255,0.6);background:transparent;color:white;transition:all 0.2s}
   .mod-btn.sel{background:white;color:var(--verde);border-color:white}
-  .id-nota{font-size:0.75rem;opacity:0.75;margin-top:0.5rem}
+  .id-row .campo.visible{display:block!important}
+  .id-row.visible{display:flex!important}
 
   /* REPORTE */
   .reporte-card{background:white;border-radius:var(--radio);padding:1.8rem;box-shadow:var(--sombra);border-top:4px solid var(--verde);margin-bottom:1.2rem}
@@ -194,15 +195,15 @@
   </div>
   <div class="id-row">
     <div class="campo" id="campo-nombre1">
-      <label>Tu nombre completo</label>
+      <label id="label-nombre1">Tu nombre completo</label>
       <input type="text" id="nombre1" placeholder="Apellido, Nombre">
     </div>
-    <div class="campo" id="campo-nombre2" style="display:none">
+    <div class="campo" id="campo-nombre2" style="display:none!important">
       <label>Integrante 2</label>
       <input type="text" id="nombre2" placeholder="Apellido, Nombre">
     </div>
   </div>
-  <div class="id-row" id="row-nombre3" style="display:none">
+  <div class="id-row" id="row-nombre3" style="display:none!important">
     <div class="campo">
       <label>Integrante 3</label>
       <input type="text" id="nombre3" placeholder="Apellido, Nombre">
@@ -401,8 +402,18 @@ function setMod(m,btn){
   modalidadActual=m;
   document.querySelectorAll('.mod-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
-  document.getElementById('campo-nombre2').style.display=m==='Grupal'?'block':'none';
-  document.getElementById('row-nombre3').style.display=m==='Grupal'?'flex':'none';
+  const n2=document.getElementById('campo-nombre2');
+  const n3=document.getElementById('row-nombre3');
+  const etiqueta=document.getElementById('label-nombre1');
+  if(m==='Grupal'){
+    n2.style.cssText='display:block';
+    n3.style.cssText='display:flex';
+    if(etiqueta) etiqueta.textContent='Integrante 1';
+  } else {
+    n2.style.cssText='display:none';
+    n3.style.cssText='display:none';
+    if(etiqueta) etiqueta.textContent='Tu nombre completo';
+  }
 }
 
 function getNombres(){
