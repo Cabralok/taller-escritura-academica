@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Taller de Escritura Académica</title>
-<script src="https://js.puter.com/v2/"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -487,30 +487,50 @@ CRITERIO DE CIERRE:
   return b+(sp[m]||'');
 }
 
+// ===== GEMINI API =====
+const GEMINI_KEY = 'AIzaSyC-prdStZF6UhtqeTMo4zTrbdHgH9OKf6A';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
 // ===== IA =====
 async function llamar(m,msg){
   const est=E[m];
   est.h.push({role:'user',content:msg});
   load(m);
   try{
-    let msgs;
-    if(est.h.length===1){
-      msgs=[{role:'user',content:`[INSTRUCCIONES]\n${getSP(m)}\n[FIN]\n\nMensaje: ${msg}`}];
-    }else{
-      msgs=[
-        {role:'user',content:`[INSTRUCCIONES]\n${getSP(m)}\n[FIN]\n\nPrimer mensaje: ${est.h[0].content}`},
-        ...est.h.slice(1)
-      ];
+    // Construir historial para Gemini
+    const systemPrompt = getSP(m);
+    const contents = est.h.map(h => ({
+      role: h.role === 'user' ? 'user' : 'model',
+      parts: [{ text: h.content }]
+    }));
+
+    const body = {
+      system_instruction: { parts: [{ text: systemPrompt }] },
+      contents: contents
+    };
+
+    const response = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if(!response.ok){
+      const err = await response.json();
+      throw new Error(err?.error?.message || 'Error de API');
     }
-    const res=await puter.ai.chat(msgs,{model:'gpt-4o-mini'});
-    const txt=typeof res==='string'?res:(res?.message?.content||res?.content||'No pude procesar la respuesta.');
+
+    const data = await response.json();
+    const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude procesar la respuesta.';
+
     est.h.push({role:'assistant',content:txt});
     est.r++;
     unload(m);
     addMsg(m,txt,'ia',est.r>=3);
   }catch(e){
     unload(m);
-    addMsg(m,'Para usar el tutor necesitás iniciar sesión en Puter. Si aparece una ventana, hacé clic en Aceptar.','ia',false);
+    addMsg(m,'Error al conectar con el tutor: '+e.message+'. Recargá la página e intentá de nuevo.','ia',false);
+    console.error(e);
   }
 }
 
