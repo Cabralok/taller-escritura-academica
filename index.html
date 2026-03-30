@@ -690,4 +690,16 @@ function renderC(f=''){
     if(!fl||cm||tf.length>0){
       const d=document.createElement('div');d.className='ccat';
       const ta=cm&&!fl?x.t:(tf.length>0?tf:x.t);
-      d.innerHTML=`<h3>${x.c}</h3><div class="desc">${x.d}</div><div class="tags">${ta.map(t
+      d.innerHTML=`<h3>${x.c}</h3><div class="desc">${x.d}</div><div class="tags">${ta.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
+      g.appendChild(d);
+    }
+  });
+}
+function filtC(){renderC(document.getElementById('busq-c').value);}
+
+// ===== INIT =====
+renderC();
+cargarFrag();
+</script>
+</body>
+</html>
