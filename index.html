@@ -481,48 +481,59 @@ function getSP(m){
   return b + (sp[m] || '');
 }
 
-// ===== API ANTHROPIC =====
+// ===== GEMINI API CON REINTENTOS =====
+const GEMINI_KEY = 'AIzaSyBtdCB598wNMsIEEpkaP0WCIax_CgkhBpo';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
+function actualizarLoad(m, texto) {
+  const el = document.getElementById('ld-' + m);
+  if (el) el.querySelector('span:first-child').textContent = texto;
+}
+
+async function llamarGemini(m, intento) {
+  const est = E[m];
+  const contents = est.h.map(h => ({
+    role: h.role === 'user' ? 'user' : 'model',
+    parts: [{ text: h.content }]
+  }));
+  const response = await fetch(GEMINI_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      system_instruction: { parts: [{ text: getSP(m) }] },
+      contents: contents
+    })
+  });
+  if (response.status === 429) {
+    if (intento <= 4) {
+      const espera = intento * 10;
+      actualizarLoad(m, `⏳ Tutor ocupado, reintentando en ${espera}s...`);
+      await new Promise(r => setTimeout(r, espera * 1000));
+      return llamarGemini(m, intento + 1);
+    }
+    throw new Error('El tutor está muy ocupado ahora. Esperá unos minutos e intentá de nuevo.');
+  }
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err?.error?.message || 'Error de API');
+  }
+  const data = await response.json();
+  return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude procesar la respuesta.';
+}
+
 async function llamar(m, msg) {
   const est = E[m];
   est.h.push({ role: 'user', content: msg });
   load(m);
   try {
-    // Construir mensajes para Anthropic (no incluye system en el array)
-    const messages = est.h.map(h => ({
-      role: h.role === 'user' ? 'user' : 'assistant',
-      content: h.content
-    }));
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1024,
-        system: getSP(m),
-        messages: messages
-      })
-    });
-
-    if (!response.ok) {
-      const err = await response.json();
-      throw new Error(err?.error?.message || 'Error de API');
-    }
-
-    const data = await response.json();
-    const txt = data?.content?.[0]?.text || 'No pude procesar la respuesta.';
-
+    const txt = await llamarGemini(m, 1);
     est.h.push({ role: 'assistant', content: txt });
     est.r++;
     unload(m);
     addMsg(m, txt, 'ia', est.r >= 3);
   } catch (e) {
     unload(m);
-    addMsg(m, 'Error al conectar con el tutor: ' + e.message + '. Recargá la página e intentá de nuevo.', 'ia', false);
+    addMsg(m, '⚠️ ' + e.message, 'ia', false);
     console.error(e);
   }
 }
