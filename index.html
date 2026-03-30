@@ -61,7 +61,6 @@
   .acciones{display:flex;align-items:center;gap:1rem;margin-top:1rem;flex-wrap:wrap}
   .cargando{text-align:center;padding:1.5rem;color:var(--gris-medio);font-style:italic;font-size:0.88rem}
 
-  /* PANEL IDENTIFICACION */
   .id-panel{background:linear-gradient(135deg,var(--verde) 0%,var(--verde-claro) 100%);border-radius:var(--radio);padding:1.5rem 2rem;margin-bottom:1.5rem;color:white}
   .id-panel h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem;opacity:0.95}
   .id-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.8rem}
@@ -73,10 +72,7 @@
   .modalidad-row{display:flex;gap:0.8rem;flex-wrap:wrap}
   .mod-btn{padding:0.4rem 1rem;border-radius:20px;font-size:0.82rem;font-weight:600;cursor:pointer;border:2px solid rgba(255,255,255,0.6);background:transparent;color:white;transition:all 0.2s}
   .mod-btn.sel{background:white;color:var(--verde);border-color:white}
-  .id-row .campo.visible{display:block!important}
-  .id-row.visible{display:flex!important}
 
-  /* REPORTE */
   .reporte-card{background:white;border-radius:var(--radio);padding:1.8rem;box-shadow:var(--sombra);border-top:4px solid var(--verde);margin-bottom:1.2rem}
   .reporte-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--verde);margin-bottom:1rem}
   .reporte-resumen{background:var(--verde-suave);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:0.85rem;line-height:1.7;color:#1a4d35;max-height:300px;overflow-y:auto;white-space:pre-wrap}
@@ -88,7 +84,6 @@
   .envio-err{background:var(--rojo-suave);border:1.5px solid var(--rojo);border-radius:8px;padding:0.8rem 1.2rem;font-size:0.88rem;color:var(--rojo);display:none;align-items:center;gap:0.5rem}
   .envio-err.show{display:flex}
 
-  /* CHAT */
   .chat-area{margin-top:1.2rem;border-radius:var(--radio);overflow:hidden;border:1.5px solid #E0E0E0}
   .chat-hdr{background:var(--gris-claro);padding:0.6rem 1rem;font-size:0.78rem;font-weight:600;color:var(--gris-medio);text-transform:uppercase;letter-spacing:0.07em;display:flex;align-items:center;gap:0.5rem}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--verde);animation:pulse 1.5s infinite}
@@ -109,7 +104,6 @@
   .btn-send{background:var(--verde);color:white;border:none;padding:0 1.2rem;cursor:pointer;font-size:1.1rem;transition:background 0.2s}
   .btn-send:hover{background:var(--verde-claro)}
 
-  /* GUÍA ERRORES */
   .guia-btn{display:flex;align-items:center;gap:0.5rem;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--rojo);background:var(--rojo-suave);border:1.5px solid var(--rojo);border-radius:8px;padding:0.5rem 1rem;margin-bottom:1rem;width:fit-content;transition:all 0.2s;user-select:none}
   .guia-btn:hover{background:#f5c5c0}
   .guia{display:none;margin-bottom:1.2rem}.guia.open{display:block}
@@ -120,7 +114,6 @@
   .ei span{font-size:0.82rem;color:#666;line-height:1.5}
   .ei em{display:block;font-size:0.78rem;color:#888;margin-top:0.3rem;font-style:italic}
 
-  /* CONECTORES */
   .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:1rem}
   .ccat{background:white;border-radius:var(--radio);padding:1rem 1.2rem;box-shadow:var(--sombra);border-top:3px solid var(--azul)}
   .ccat h3{font-size:0.82rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.2rem}
@@ -137,7 +130,6 @@
   .etapa{flex:1;padding:0.5rem;border-radius:8px;text-align:center;font-size:0.75rem;font-weight:600;background:#F0F0EE;color:#999;transition:all 0.3s}
   .etapa.on{background:var(--verde);color:white}
 
-  /* COLORES MÓDULO */
   .m1 .mod-icon{background:var(--verde-suave)}.m2 .mod-icon{background:var(--naranja-suave)}.m3 .mod-icon{background:var(--azul-suave)}.m4 .mod-icon{background:var(--violeta-suave)}.m5 .mod-icon{background:var(--rojo-suave)}
   .m1 .consigna{background:var(--verde-suave);border-color:var(--verde);color:#1a4d35}
   .m2 .consigna{background:var(--naranja-suave);border-color:var(--naranja);color:#7a3a12}
@@ -181,7 +173,6 @@
 
 <main>
 
-<!-- IDENTIFICACIÓN GLOBAL -->
 <div class="id-panel">
   <h3>👤 Antes de empezar — completá tus datos</h3>
   <div class="id-row">
@@ -335,12 +326,12 @@
 <div id="modal-reporte" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center">
   <div style="background:white;border-radius:var(--radio);padding:2rem;max-width:680px;width:90%;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.2)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem">
-      <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--verde)">&#128231; Reporte de actividad</h3>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--verde)">📧 Reporte de actividad</h3>
       <button onclick="cerrarModal()" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--gris-medio)">✕</button>
     </div>
     <div class="reporte-resumen" id="reporte-preview"></div>
     <div style="margin-top:1rem;display:flex;flex-direction:column;gap:0.8rem">
-      <div class="envio-ok" id="envio-ok">Reporte enviado correctamente al profesor</div>
+      <div class="envio-ok" id="envio-ok">✅ Reporte enviado correctamente al profesor</div>
       <div class="envio-err" id="envio-err">❌ <span id="envio-err-msg">Error al enviar. Intentá de nuevo.</span></div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap">
         <button class="btn-enviar-mail" id="btn-enviar-mail" onclick="enviarMail()">📨 Enviar reporte al profesor</button>
@@ -448,7 +439,7 @@ async function cargarFrag(){
 }
 function nuevoFrag(){resetM('m2');cargarFrag();}
 
-// ===== PROMPT =====
+// ===== SYSTEM PROMPT =====
 function getSP(m){
   const b = "Sos un tutor de escritura academica para estudiantes universitarias de Trabajo Social en Argentina. Tu rol es acompanar el proceso con inteligencia pedagogica, no sos un interrogador automatico.\n\n" +
     "PRINCIPIOS:\n" +
@@ -469,23 +460,19 @@ function getSP(m){
         "- Si la oracion topico es clara: reconocelo y pedile la fundamentacion.\n" +
         "- Si es vaga: pregunta que idea central quiere desarrollar.\n" +
         "- Guia etapa por etapa pero no te quedes trabado si ya esta bien.",
-
     m2: "\nMODULO 2 - Identificador de tipo textual (expositivo, argumentativo, explicativo).\n" +
         "- Si identifica correctamente y da un rasgo concreto: confirma y cierra o profundiza uno mas.\n" +
         "- Si identifica bien pero no fundamenta: pedile que senale donde ve ese tipo en el texto.\n" +
         "- Si identifica mal: pregunta que funcion cumple el texto (informar, convencer, hacer comprender).",
-
     m3: "\nMODULO 3 - Reescritura academica.\n" +
         "- Revisa: elimino marcas coloquiales, uso desagentivacion, el registro es uniforme, conectores apropiados.\n" +
         "- Si esta bien: decilo y pregunta solo sobre el aspecto mas debil.\n" +
         "- Si hay problemas: senala UNO por vez.",
-
     m4: "\nMODULO 4 - Laboratorio de citas.\n" +
         "- Cita directa: tiene comillas, autor, anio y pagina? Si si: confirma.\n" +
         "- Parafrasis: respeta el sentido sin copiar la estructura? Si si: confirma.\n" +
         "- Referencia indirecta: integra la idea sin reproducir el texto? Si si: confirma.\n" +
         "- Solo pregunta sobre lo que esta mal o incompleto.",
-
     m5: "\nMODULO 5 - Texto con errores (argumento circular, repeticion lexica, falta de fundamentacion, mezcla de registros, generalizacion sin datos).\n" +
         "- Si detecto todos: confirma y pedile que justifique el mas complejo.\n" +
         "- Si detecto algunos: pregunta si encontro todos y da una pista sobre la categoria del que falta.\n" +
@@ -494,49 +481,48 @@ function getSP(m){
   return b + (sp[m] || '');
 }
 
-// ===== GEMINI API =====
-const GEMINI_KEY = 'AIzaSyBtdCB598wNMsIEEpkaP0WCIax_CgkhBpo';
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
-
-// ===== IA =====
-async function llamar(m,msg){
-  const est=E[m];
-  est.h.push({role:'user',content:msg});
+// ===== API ANTHROPIC =====
+async function llamar(m, msg) {
+  const est = E[m];
+  est.h.push({ role: 'user', content: msg });
   load(m);
-  try{
-    // Construir historial para Gemini
-    const systemPrompt = getSP(m);
-    const contents = est.h.map(h => ({
-      role: h.role === 'user' ? 'user' : 'model',
-      parts: [{ text: h.content }]
+  try {
+    // Construir mensajes para Anthropic (no incluye system en el array)
+    const messages = est.h.map(h => ({
+      role: h.role === 'user' ? 'user' : 'assistant',
+      content: h.content
     }));
 
-    const body = {
-      system_instruction: { parts: [{ text: systemPrompt }] },
-      contents: contents
-    };
-
-    const response = await fetch(GEMINI_URL, {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      headers: {
+        'Content-Type': 'application/json',
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        system: getSP(m),
+        messages: messages
+      })
     });
 
-    if(!response.ok){
+    if (!response.ok) {
       const err = await response.json();
       throw new Error(err?.error?.message || 'Error de API');
     }
 
     const data = await response.json();
-    const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude procesar la respuesta.';
+    const txt = data?.content?.[0]?.text || 'No pude procesar la respuesta.';
 
-    est.h.push({role:'assistant',content:txt});
+    est.h.push({ role: 'assistant', content: txt });
     est.r++;
     unload(m);
-    addMsg(m,txt,'ia',est.r>=3);
-  }catch(e){
+    addMsg(m, txt, 'ia', est.r >= 3);
+  } catch (e) {
     unload(m);
-    addMsg(m,'Error al conectar con el tutor: '+e.message+'. Recargá la página e intentá de nuevo.','ia',false);
+    addMsg(m, 'Error al conectar con el tutor: ' + e.message + '. Recargá la página e intentá de nuevo.', 'ia', false);
     console.error(e);
   }
 }
@@ -628,13 +614,7 @@ function construirReporte(m){
     const rol=msg.role==='user'?'✍️ ALUMNA':'🎓 TUTOR';
     detalle+=`${rol}:\n${msg.content}\n\n`;
   });
-  return{
-    fecha,
-    modalidad:modalidadActual,
-    nombres,
-    modulos:nombresModulos[m]||m,
-    reporte:detalle||'Sin actividad registrada.'
-  };
+  return{fecha,modalidad:modalidadActual,nombres,modulos:nombresModulos[m]||m,reporte:detalle||'Sin actividad registrada.'};
 }
 
 function verReporte(m){
@@ -649,34 +629,25 @@ function verReporte(m){
   document.getElementById('envio-err').classList.remove('show');
   document.getElementById('btn-enviar-mail').disabled=false;
   document.getElementById('btn-enviar-mail').textContent='📨 Enviar reporte al profesor';
-  const modal=document.getElementById('modal-reporte');
-  modal.style.display='flex';
+  document.getElementById('modal-reporte').style.display='flex';
 }
 
-function cerrarModal(){
-  document.getElementById('modal-reporte').style.display='none';
-}
+function cerrarModal(){document.getElementById('modal-reporte').style.display='none';}
 
 async function enviarMail(){
   const btn=document.getElementById('btn-enviar-mail');
-  btn.disabled=true;
-  btn.textContent='⏳ Enviando...';
+  btn.disabled=true;btn.textContent='⏳ Enviando...';
   const d=reporteActual.data;
   try{
     await emailjs.send('service_pm7wx9l','template_6qh82wd',{
-      nombres:d.nombres,
-      fecha:d.fecha,
-      modalidad:d.modalidad,
-      modulos:d.modulos,
-      reporte:d.reporte
+      nombres:d.nombres,fecha:d.fecha,modalidad:d.modalidad,modulos:d.modulos,reporte:d.reporte
     });
     document.getElementById('envio-ok').classList.add('show');
     btn.textContent='✅ Enviado';
   }catch(e){
     document.getElementById('envio-err').classList.add('show');
-    document.getElementById('envio-err-msg').textContent='Error al enviar: '+e.text||e.message||'Intentá de nuevo.';
-    btn.disabled=false;
-    btn.textContent='📨 Reintentar';
+    document.getElementById('envio-err-msg').textContent='Error al enviar: '+(e.text||e.message||'Intentá de nuevo.');
+    btn.disabled=false;btn.textContent='📨 Reintentar';
   }
 }
 
