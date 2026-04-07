@@ -629,7 +629,7 @@ async function enviarMail(){
   btn.disabled=true;btn.textContent='⏳ Enviando...';
   const d=reporteActual.data;
   try{
-    await emailjs.send('service_pm7wx9l','template_6qh82wd',{
+    await emailjs.send('service_pm7wx9l','template_84cnoe2',{
       nombres:d.nombres,fecha:d.fecha,modalidad:d.modalidad,modulos:d.modulos,reporte:d.reporte
     });
     document.getElementById('envio-ok').classList.add('show');
