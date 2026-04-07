@@ -481,52 +481,36 @@ function getSP(m){
   return b + (sp[m] || '');
 }
 
-// ===== GEMINI API CON REINTENTOS =====
-const GEMINI_KEY = 'AIzaSyBtdCB598wNMsIEEpkaP0WCIax_CgkhBpo';
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
-
-function actualizarLoad(m, texto) {
-  const el = document.getElementById('ld-' + m);
-  if (el) el.querySelector('span:first-child').textContent = texto;
-}
-
-async function llamarGemini(m, intento) {
-  const est = E[m];
-  const contents = est.h.map(h => ({
-    role: h.role === 'user' ? 'user' : 'model',
-    parts: [{ text: h.content }]
-  }));
-  const response = await fetch(GEMINI_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      system_instruction: { parts: [{ text: getSP(m) }] },
-      contents: contents
-    })
-  });
-  if (response.status === 429) {
-    if (intento <= 4) {
-      const espera = intento * 10;
-      actualizarLoad(m, `⏳ Tutor ocupado, reintentando en ${espera}s...`);
-      await new Promise(r => setTimeout(r, espera * 1000));
-      return llamarGemini(m, intento + 1);
-    }
-    throw new Error('El tutor está muy ocupado ahora. Esperá unos minutos e intentá de nuevo.');
-  }
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err?.error?.message || 'Error de API');
-  }
-  const data = await response.json();
-  return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude procesar la respuesta.';
-}
+// ===== OPENROUTER API =====
+const OR_KEY = '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';
+const OR_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const OR_MODEL = 'meta-llama/llama-3.3-70b-instruct:free';
 
 async function llamar(m, msg) {
   const est = E[m];
   est.h.push({ role: 'user', content: msg });
   load(m);
   try {
-    const txt = await llamarGemini(m, 1);
+    const messages = [
+      { role: 'system', content: getSP(m) },
+      ...est.h.map(h => ({ role: h.role === 'user' ? 'user' : 'assistant', content: h.content }))
+    ];
+    const response = await fetch(OR_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OR_KEY}`,
+        'HTTP-Referer': 'https://cabralok.github.io/taller-escritura-academica',
+        'X-Title': 'Taller de Escritura Academica'
+      },
+      body: JSON.stringify({ model: OR_MODEL, messages })
+    });
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err?.error?.message || 'Error de API');
+    }
+    const data = await response.json();
+    const txt = data?.choices?.[0]?.message?.content || 'No pude procesar la respuesta.';
     est.h.push({ role: 'assistant', content: txt });
     est.r++;
     unload(m);
