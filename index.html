@@ -482,7 +482,7 @@ function getSP(m){
 }
 
 // ===== OPENROUTER API =====
-const OR_KEY = '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';
+const OR_KEY = '';
 const OR_URL = 'https://taller-proxy.rodocabral.workers.dev';
 const OR_MODEL = 'meta-llama/llama-3.3-70b-instruct:free';
 
@@ -497,13 +497,8 @@ async function llamar(m, msg) {
     ];
     const response = await fetch(OR_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OR_KEY}`,
-        'HTTP-Referer': 'https://cabralok.github.io/taller-escritura-academica',
-        'X-Title': 'Taller de Escritura Academica'
-      },
-      body: JSON.stringify({ model: OR_MODEL, messages })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages })
     });
     if (!response.ok) {
       const err = await response.json();
