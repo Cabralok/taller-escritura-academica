@@ -509,11 +509,26 @@ async function llamar(m, msg) {
     est.h.push({ role: 'assistant', content: txt });
     est.r++;
     unload(m);
+    if (m === 'm1') activarEtapaM1(est.r);
     addMsg(m, txt, 'ia', est.r >= 3);
   } catch (e) {
     unload(m);
     addMsg(m, '⚠️ ' + e.message, 'ia', false);
     console.error(e);
+  }
+}
+
+function activarEtapaM1(ronda) {
+  const etapas = document.querySelectorAll('#p1 .etapa');
+  if (!etapas.length) return;
+  etapas.forEach(e => e.classList.remove('on'));
+  if (ronda <= 1) {
+    etapas[0].classList.add('on');
+  } else if (ronda <= 3) {
+    etapas[0].classList.add('on');
+    etapas[1].classList.add('on');
+  } else {
+    etapas.forEach(e => e.classList.add('on'));
   }
 }
 
