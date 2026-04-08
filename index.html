@@ -228,8 +228,8 @@
   <div class="card">
     <div class="card-header"><div class="mod-icon">🔍</div><div><h2>Identificador de tipo textual</h2><div class="sub">Leé el fragmento, identificá su tipo y justificá con conceptos de la materia.</div></div></div>
     <div id="frag-cont"><div class="cargando">⏳ Cargando fragmento...</div></div>
-    <div class="consigna"><strong>📌 Consigna</strong>¿Es <strong>expositivo</strong>, <strong>argumentativo</strong> o <strong>explicativo</strong>? Justificá con conceptos de Zamudio/Atorresi o Arnoux. El tutor no confirmará hasta que fundamentes con al menos un rasgo concreto del texto.</div>
-    <div class="campo"><label>Tu identificación y justificación</label><textarea id="m2-r" placeholder="Este fragmento es de tipo... porque... Se observa que..."></textarea></div>
+    <div class="consigna"><strong>📌 Consigna</strong>¿Es <strong>expositivo-explicativo</strong>, <strong>argumentativo</strong>, <strong>narrativo</strong> o <strong>dialogal</strong>? Justificá con conceptos de Zamudio/Atorresi o Arnoux. El tutor no confirmará hasta que fundamentes con al menos un rasgo concreto del texto.</div>
+    <div class="campo"><label>Tu identificación y justificación</label><textarea id="m2-r" placeholder="Este fragmento es de tipo expositivo-explicativo / argumentativo / narrativo / dialogal... porque... Se observa que..."></textarea></div>
     <div class="acciones"><button class="btn btn-p" onclick="iniciar('m2')">Enviar al tutor →</button><button class="btn-r" onclick="nuevoFrag()">Nuevo fragmento</button></div>
   </div>
   <div id="w-m2" style="display:none" class="card">
@@ -471,10 +471,16 @@ function getSP(m){
         "- El cierre debe sintetizar o proyectar, no copiar la oracion topico.\n" +
         "- Cuando el cierre sea correcto: hace una devolucion final integrando las 3 etapas y felicitala por el parrafo construido.\n\n" +
         "IMPORTANTE: Siempre anuncia en que etapa estan con una linea clara como 'Pasemos a la FUNDAMENTACION' o 'Pasemos al CIERRE'. Nunca des la devolucion final antes de haber trabajado las 3 etapas.",
-    m2: "\nMODULO 2 - Identificador de tipo textual (expositivo, argumentativo, explicativo).\n" +
-        "- Si identifica correctamente y da un rasgo concreto: confirma y cierra o profundiza uno mas.\n" +
-        "- Si identifica bien pero no fundamenta: pedile que senale donde ve ese tipo en el texto.\n" +
-        "- Si identifica mal: pregunta que funcion cumple el texto (informar, convencer, hacer comprender).",
+    m2: "\nMODULO 2 - Identificador de tipo textual. Los 4 tipos posibles son:\n" +
+        "- EXPOSITIVO-EXPLICATIVO: informa y hace comprensible un concepto. Rasgos: definiciones, reformulaciones, ejemplos, conectores aclaratorios (es decir, esto es), voz impersonal, sin opinion del autor.\n" +
+        "- ARGUMENTATIVO: busca convencer. Rasgos: tesis explicita, argumentos que la respaldan, conectores causales/condicionales, marcas de opinion del autor (consideramos, es necesario), refutacion de posturas contrarias.\n" +
+        "- NARRATIVO: relata hechos en secuencia temporal. Rasgos: verbos en pasado, orden cronologico, personajes o actores, conectores temporales (luego, despues, entonces).\n" +
+        "- DIALOGAL: reproduce intercambio entre voces. Rasgos: turnos de habla, interlocucion directa, preguntas y respuestas, citas de voces distintas.\n" +
+        "INSTRUCCIONES:\n" +
+        "- Si identifica correctamente y da un rasgo concreto del texto: confirma y pide que profundice otro rasgo.\n" +
+        "- Si identifica bien pero no fundamenta con el texto: pedile que senale donde exactamente ve ese rasgo.\n" +
+        "- Si identifica mal: pregunta que funcion cumple el texto (informar, convencer, relatar, dialogar).\n" +
+        "- No confirmes hasta que cite al menos un rasgo concreto del fragmento, no de la teoria.",
     m3: "\nMODULO 3 - Reescritura academica.\n" +
         "- Revisa: elimino marcas coloquiales, uso desagentivacion, el registro es uniforme, conectores apropiados.\n" +
         "- Si esta bien: decilo y pregunta solo sobre el aspecto mas debil.\n" +
