@@ -3,198 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taller de Escritura Académica</title>
-
+<title>Taller de Escritura Académica — v2</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --verde:#2D7D5A;--verde-claro:#3DA876;--verde-suave:#E8F5EF;
-    --naranja:#E8773A;--naranja-suave:#FDF1EA;
-    --azul:#2C5F8A;--azul-suave:#EAF1F8;
-    --violeta:#7B5EA7;--violeta-suave:#F2EEF9;
-    --rojo:#C0392B;--rojo-suave:#FDECEA;
-    --amarillo-suave:#FEFAE8;
-    --gris-oscuro:#2C2C2C;--gris-medio:#555;--gris-claro:#F4F4F2;
-    --sombra:0 2px 16px rgba(0,0,0,0.08);--radio:12px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Source Sans 3',sans-serif;background:#F0F3EF;color:var(--gris-oscuro);min-height:100vh}
-  header{background:var(--verde);color:white;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 2px 12px rgba(45,125,90,0.25);position:sticky;top:0;z-index:100}
-  header h1{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700}
-  .autor{font-size:0.78rem;font-weight:300;opacity:0.82;letter-spacing:0.05em;font-style:italic}
-  nav{background:white;padding:0 2rem;display:flex;overflow-x:auto;border-bottom:3px solid var(--verde-suave);box-shadow:var(--sombra);scrollbar-width:none}
-  nav::-webkit-scrollbar{display:none}
-  .tab{padding:1rem 1.1rem;cursor:pointer;font-size:0.8rem;font-weight:500;color:var(--gris-medio);border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:0.4rem}
-  .tab:hover{color:var(--verde);background:var(--verde-suave)}
-  .tab.active{color:var(--verde);border-bottom-color:var(--verde);font-weight:600}
-  .tab .num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:0.7rem;font-weight:700;background:var(--verde-suave);color:var(--verde)}
-  .tab.active .num{background:var(--verde);color:white}
-  .tab.t-azul{color:var(--azul)}.tab.t-azul.active{color:var(--azul);border-bottom-color:var(--azul)}
-  .tab.t-azul .num{background:var(--azul-suave);color:var(--azul)}.tab.t-azul.active .num{background:var(--azul);color:white}
-  main{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
-  .panel{display:none;animation:fadeIn 0.3s ease}.panel.active{display:block}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  .card{background:white;border-radius:var(--radio);padding:1.8rem;box-shadow:var(--sombra);margin-bottom:1.2rem}
-  .card-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem}
-  .mod-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-  .card h2{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:0.25rem}
-  .card .sub{font-size:0.82rem;color:var(--gris-medio)}
-  .consigna{border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:0.9rem;line-height:1.65;border-left:4px solid}
-  .consigna strong{display:block;margin-bottom:0.3rem;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em}
-  .fragmento{background:var(--gris-claro);border-radius:8px;padding:1.2rem 1.2rem 1rem 2rem;margin-bottom:1.2rem;font-size:0.88rem;line-height:1.7;font-style:italic;color:#444;border-left:3px solid #ccc;position:relative}
-  .fragmento::before{content:'"';font-size:3rem;color:#ddd;position:absolute;top:-8px;left:8px;font-family:'Playfair Display',serif;line-height:1}
-  .fragmento .fuente{font-size:0.75rem;color:#888;margin-top:0.6rem;font-style:normal}
-  textarea{width:100%;border:2px solid #E0E0E0;border-radius:8px;padding:0.9rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:0.9rem;line-height:1.6;resize:vertical;color:var(--gris-oscuro);transition:border-color 0.2s;min-height:110px}
-  textarea:focus{outline:none;border-color:var(--verde)}
-  textarea::placeholder{color:#aaa}
-  input[type=text]{width:100%;border:2px solid #E0E0E0;border-radius:8px;padding:0.75rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:0.9rem;color:var(--gris-oscuro);transition:border-color 0.2s}
-  input[type=text]:focus{outline:none;border-color:var(--verde)}
-  input[type=text]::placeholder{color:#aaa}
-  label{display:block;font-size:0.8rem;font-weight:600;color:var(--gris-medio);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.06em}
-  .campo{margin-bottom:1rem}
-  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;border-radius:8px;font-family:'Source Sans 3',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;border:none;transition:all 0.2s}
-  .btn-p{background:var(--verde);color:white;box-shadow:0 3px 10px rgba(45,125,90,0.3)}
-  .btn-p:hover{background:var(--verde-claro);transform:translateY(-1px)}
-  .btn-r{background:none;color:var(--gris-medio);font-size:0.8rem;padding:0.4rem 0.8rem;text-decoration:underline;cursor:pointer;border:none}
-  .btn-r:hover{color:var(--rojo)}
-  .acciones{display:flex;align-items:center;gap:1rem;margin-top:1rem;flex-wrap:wrap}
-  .cargando{text-align:center;padding:1.5rem;color:var(--gris-medio);font-style:italic;font-size:0.88rem}
+:root{
+  --verde:#2D7D5A;--verde-claro:#3DA876;--verde-suave:#E8F5EF;--verde-oscuro:#1a5c3f;
+  --naranja:#E8773A;--naranja-suave:#FDF1EA;
+  --azul:#2C5F8A;--azul-suave:#EAF1F8;--azul-claro:#4080b0;
+  --violeta:#7B5EA7;--violeta-suave:#F2EEF9;
+  --rojo:#C0392B;--rojo-suave:#FDECEA;
+  --amarillo:#d4a017;--amarillo-suave:#FEFAE8;
+  --teal:#1a7a7a;--teal-suave:#e0f4f4;
+  --rosa:#b5476e;--rosa-suave:#fceef3;
+  --gris-oscuro:#2C2C2C;--gris-medio:#555;--gris-claro:#F4F4F2;--gris-borde:#E0E0E0;
+  --sombra:0 2px 16px rgba(0,0,0,0.08);--sombra-lg:0 8px 40px rgba(0,0,0,0.15);--radio:12px;
+  --trans:all 0.2s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:#EEEEE8;color:var(--gris-oscuro);min-height:100vh}
 
-  .id-panel{background:linear-gradient(135deg,var(--verde) 0%,var(--verde-claro) 100%);border-radius:var(--radio);padding:1.5rem 2rem;margin-bottom:1.5rem;color:white}
-  .id-panel h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem;opacity:0.95}
-  .id-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.8rem}
-  .id-row .campo{flex:1;min-width:200px;margin-bottom:0}
-  .id-row label{color:rgba(255,255,255,0.85)}
-  .id-row input{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:white}
-  .id-row input::placeholder{color:rgba(255,255,255,0.6)}
-  .id-row input:focus{border-color:white;background:rgba(255,255,255,0.25)}
-  .modalidad-row{display:flex;gap:0.8rem;flex-wrap:wrap}
-  .mod-btn{padding:0.4rem 1rem;border-radius:20px;font-size:0.82rem;font-weight:600;cursor:pointer;border:2px solid rgba(255,255,255,0.6);background:transparent;color:white;transition:all 0.2s}
-  .mod-btn.sel{background:white;color:var(--verde);border-color:white}
+/* HEADER */
+header{background:var(--verde-oscuro);color:white;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:62px;box-shadow:0 2px 16px rgba(26,92,63,0.35);position:sticky;top:0;z-index:200}
+.hdr-left{display:flex;align-items:center;gap:0.8rem}
+header h1{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;letter-spacing:-0.02em}
+.hdr-badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:0.2rem 0.7rem;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.85)}
+.autor{font-size:0.76rem;font-weight:300;opacity:0.75;letter-spacing:0.05em;font-style:italic}
+.hdr-actions{display:flex;align-items:center;gap:0.8rem}
+.btn-progreso{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:0.35rem 0.9rem;color:white;font-size:0.78rem;font-weight:600;cursor:pointer;transition:var(--trans)}
+.btn-progreso:hover{background:rgba(255,255,255,0.22)}
 
-  .reporte-card{background:white;border-radius:var(--radio);padding:1.8rem;box-shadow:var(--sombra);border-top:4px solid var(--verde);margin-bottom:1.2rem}
-  .reporte-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--verde);margin-bottom:1rem}
-  .reporte-resumen{background:var(--verde-suave);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:0.85rem;line-height:1.7;color:#1a4d35;max-height:300px;overflow-y:auto;white-space:pre-wrap}
-  .btn-enviar-mail{background:var(--verde);color:white;border:none;padding:0.85rem 2rem;border-radius:8px;font-family:'Source Sans 3',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:0.6rem;transition:all 0.2s;box-shadow:0 4px 14px rgba(45,125,90,0.35)}
-  .btn-enviar-mail:hover{background:var(--verde-claro);transform:translateY(-2px)}
-  .btn-enviar-mail:disabled{background:#aaa;cursor:not-allowed;transform:none;box-shadow:none}
-  .envio-ok{background:#d4edda;border:1.5px solid var(--verde);border-radius:8px;padding:0.8rem 1.2rem;font-size:0.88rem;color:#155724;display:none;align-items:center;gap:0.5rem}
-  .envio-ok.show{display:flex}
-  .envio-err{background:var(--rojo-suave);border:1.5px solid var(--rojo);border-radius:8px;padding:0.8rem 1.2rem;font-size:0.88rem;color:var(--rojo);display:none;align-items:center;gap:0.5rem}
-  .envio-err.show{display:flex}
+/* NAV */
+nav{background:white;padding:0 2rem;display:flex;overflow-x:auto;border-bottom:3px solid var(--verde-suave);box-shadow:var(--sombra);scrollbar-width:none;position:sticky;top:62px;z-index:100}
+nav::-webkit-scrollbar{display:none}
+.tab{padding:0.9rem 1rem;cursor:pointer;font-size:0.78rem;font-weight:500;color:var(--gris-medio);border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;transition:var(--trans);display:flex;align-items:center;gap:0.35rem;user-select:none}
+.tab:hover{color:var(--verde);background:var(--verde-suave)}
+.tab.active{color:var(--verde);border-bottom-color:var(--verde);font-weight:600}
+.tab .num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:0.68rem;font-weight:700;background:var(--verde-suave);color:var(--verde);flex-shrink:0}
+.tab.active .num{background:var(--verde);color:white}
+.tab.t-azul{color:var(--azul)}.tab.t-azul:hover{background:var(--azul-suave)}.tab.t-azul.active{color:var(--azul);border-bottom-color:var(--azul)}
+.tab.t-azul .num,.tab.t-azul.active:not(.active) .num{background:var(--azul-suave);color:var(--azul)}.tab.t-azul.active .num{background:var(--azul);color:white}
+.tab.t-violeta{color:var(--violeta)}.tab.t-violeta:hover{background:var(--violeta-suave)}.tab.t-violeta.active{color:var(--violeta);border-bottom-color:var(--violeta)}
+.tab.t-violeta .num{background:var(--violeta-suave);color:var(--violeta)}.tab.t-violeta.active .num{background:var(--violeta);color:white}
+.tab.t-teal{color:var(--teal)}.tab.t-teal:hover{background:var(--teal-suave)}.tab.t-teal.active{color:var(--teal);border-bottom-color:var(--teal)}
+.tab.t-teal .num{background:var(--teal-suave);color:var(--teal)}.tab.t-teal.active .num{background:var(--teal);color:white}
+.tab.t-rosa{color:var(--rosa)}.tab.t-rosa:hover{background:var(--rosa-suave)}.tab.t-rosa.active{color:var(--rosa);border-bottom-color:var(--rosa)}
+.tab.t-rosa .num{background:var(--rosa-suave);color:var(--rosa)}.tab.t-rosa.active .num{background:var(--rosa);color:white}
 
-  .chat-area{margin-top:1.2rem;border-radius:var(--radio);overflow:hidden;border:1.5px solid #E0E0E0}
-  .chat-hdr{background:var(--gris-claro);padding:0.6rem 1rem;font-size:0.78rem;font-weight:600;color:var(--gris-medio);text-transform:uppercase;letter-spacing:0.07em;display:flex;align-items:center;gap:0.5rem}
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--verde);animation:pulse 1.5s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-  .chat-msgs{padding:1rem;max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:0.8rem;background:white}
-  .msg{max-width:88%;padding:0.8rem 1rem;border-radius:10px;font-size:0.875rem;line-height:1.65;animation:fadeIn 0.25s ease}
-  .msg.ia{background:var(--verde-suave);border-bottom-left-radius:2px;align-self:flex-start;border-left:3px solid var(--verde)}
-  .msg.usr{background:var(--azul-suave);border-bottom-right-radius:2px;align-self:flex-end;border-right:3px solid var(--azul)}
-  .msg.cierre{background:var(--naranja-suave);border-left:3px solid var(--naranja);align-self:flex-start;max-width:100%}
-  .msg-lbl{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.3rem;opacity:0.6}
-  .load-msg{display:flex;align-items:center;gap:0.5rem;padding:0.8rem 1rem;font-size:0.82rem;color:var(--gris-medio);font-style:italic}
-  .dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--verde);margin:0 1px;animation:bounce 1.2s infinite}
-  .dots span:nth-child(2){animation-delay:0.2s}.dots span:nth-child(3){animation-delay:0.4s}
-  @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
-  .chat-in{display:flex;border-top:1.5px solid #E0E0E0}
-  .chat-in textarea{border:none;border-radius:0;resize:none;min-height:56px;max-height:120px;font-size:0.88rem;flex:1;padding:0.8rem 1rem}
-  .chat-in textarea:focus{border-color:transparent;box-shadow:none}
-  .btn-send{background:var(--verde);color:white;border:none;padding:0 1.2rem;cursor:pointer;font-size:1.1rem;transition:background 0.2s}
-  .btn-send:hover{background:var(--verde-claro)}
+/* MAIN */
+main{max-width:900px;margin:0 auto;padding:1.8rem 1.5rem 5rem}
+.panel{display:none;animation:fadeIn 0.3s ease}.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-  .guia-btn{display:flex;align-items:center;gap:0.5rem;cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--rojo);background:var(--rojo-suave);border:1.5px solid var(--rojo);border-radius:8px;padding:0.5rem 1rem;margin-bottom:1rem;width:fit-content;transition:all 0.2s;user-select:none}
-  .guia-btn:hover{background:#f5c5c0}
-  .guia{display:none;margin-bottom:1.2rem}.guia.open{display:block}
-  .eg{margin-bottom:1rem}
-  .eg h4{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--rojo);margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:1px solid #f0c0bb}
-  .ei{background:var(--rojo-suave);border-radius:8px;padding:0.7rem 1rem;margin-bottom:0.5rem;border-left:3px solid var(--rojo)}
-  .ei strong{display:block;font-size:0.85rem;color:var(--rojo);margin-bottom:0.2rem}
-  .ei span{font-size:0.82rem;color:#666;line-height:1.5}
-  .ei em{display:block;font-size:0.78rem;color:#888;margin-top:0.3rem;font-style:italic}
+/* CARDS */
+.card{background:white;border-radius:var(--radio);padding:1.8rem;box-shadow:var(--sombra);margin-bottom:1.2rem}
+.card-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem}
+.mod-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.card h2{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:0.2rem}
+.card .sub{font-size:0.8rem;color:var(--gris-medio);line-height:1.5}
+.consigna{border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:0.88rem;line-height:1.65;border-left:4px solid}
+.consigna strong{display:block;margin-bottom:0.3rem;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em}
 
-  .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:1rem}
-  .ccat{background:white;border-radius:var(--radio);padding:1rem 1.2rem;box-shadow:var(--sombra);border-top:3px solid var(--azul)}
-  .ccat h3{font-size:0.82rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.2rem}
-  .ccat .desc{font-size:0.75rem;color:var(--gris-medio);margin-bottom:0.6rem;font-style:italic}
-  .tags{display:flex;flex-wrap:wrap;gap:0.3rem}
-  .tag{background:var(--azul-suave);color:var(--azul);border-radius:20px;padding:0.2rem 0.6rem;font-size:0.75rem;font-weight:500}
-  .busq{position:relative;margin-bottom:1rem}
-  .busq input{width:100%;border:2px solid #E0E0E0;border-radius:8px;padding:0.75rem 1rem 0.75rem 2.5rem;font-family:'Source Sans 3',sans-serif;font-size:0.9rem;transition:border-color 0.2s}
-  .busq input:focus{outline:none;border-color:var(--azul)}
-  .busq .ico{position:absolute;left:0.8rem;top:50%;transform:translateY(-50%);color:#aaa}
-  .badge{display:inline-block;padding:0.15rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;margin-left:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
-  .bi{background:var(--verde-suave);color:var(--verde)}.bm{background:var(--amarillo-suave);color:#8a6800}.ba{background:var(--rojo-suave);color:var(--rojo)}
-  .etapas{display:flex;gap:0.5rem;margin-bottom:1.2rem}
-  .etapa{flex:1;padding:0.5rem;border-radius:8px;text-align:center;font-size:0.75rem;font-weight:600;background:#F0F0EE;color:#999;transition:all 0.3s}
-  .etapa.on{background:var(--verde);color:white}
+/* FRAGMENTO */
+.fragmento{background:var(--gris-claro);border-radius:8px;padding:1.2rem 1.2rem 1rem 2.2rem;margin-bottom:1.2rem;font-size:0.87rem;line-height:1.72;font-style:italic;color:#444;border-left:3px solid #ccc;position:relative}
+.fragmento::before{content:'"';font-size:3rem;color:#ddd;position:absolute;top:-8px;left:8px;font-family:'Playfair Display',serif;line-height:1}
+.fragmento .fuente{font-size:0.73rem;color:#888;margin-top:0.7rem;font-style:normal;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
 
-  .m1 .mod-icon{background:var(--verde-suave)}.m2 .mod-icon{background:var(--naranja-suave)}.m3 .mod-icon{background:var(--azul-suave)}.m4 .mod-icon{background:var(--violeta-suave)}.m5 .mod-icon{background:var(--rojo-suave)}
-  .m1 .consigna{background:var(--verde-suave);border-color:var(--verde);color:#1a4d35}
-  .m2 .consigna{background:var(--naranja-suave);border-color:var(--naranja);color:#7a3a12}
-  .m3 .consigna{background:var(--azul-suave);border-color:var(--azul);color:#1a3a5c}
-  .m4 .consigna{background:var(--violeta-suave);border-color:var(--violeta);color:#4a2d6e}
-  .m5 .consigna{background:var(--rojo-suave);border-color:var(--rojo);color:#7a1f15}
-  .m1 .btn-p,.m1 .btn-send{background:var(--verde)}.m1 .btn-p:hover,.m1 .btn-send:hover{background:var(--verde-claro)}
-  .m2 .btn-p,.m2 .btn-send{background:var(--naranja)}.m2 .btn-p:hover,.m2 .btn-send:hover{background:#d4622a}
-  .m3 .btn-p,.m3 .btn-send{background:var(--azul)}.m3 .btn-p:hover,.m3 .btn-send:hover{background:#1e4a72}
-  .m4 .btn-p,.m4 .btn-send{background:var(--violeta)}.m4 .btn-p:hover,.m4 .btn-send:hover{background:#6a4d96}
-  .m5 .btn-p,.m5 .btn-send{background:var(--rojo)}.m5 .btn-p:hover,.m5 .btn-send:hover{background:#a52d22}
-  .m1 .msg.ia{background:var(--verde-suave);border-color:var(--verde)}
-  .m2 .msg.ia{background:var(--naranja-suave);border-color:var(--naranja)}
-  .m3 .msg.ia{background:var(--azul-suave);border-color:var(--azul)}
-  .m4 .msg.ia{background:var(--violeta-suave);border-color:var(--violeta)}
-  .m5 .msg.ia{background:var(--rojo-suave);border-color:var(--rojo)}
-  .m1 .dot{background:var(--verde)}.m2 .dot{background:var(--naranja)}.m3 .dot{background:var(--azul)}.m4 .dot{background:var(--violeta)}.m5 .dot{background:var(--rojo)}
+/* FORMS */
+textarea{width:100%;border:2px solid var(--gris-borde);border-radius:8px;padding:0.85rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:0.88rem;line-height:1.6;resize:vertical;color:var(--gris-oscuro);transition:border-color 0.2s;min-height:100px}
+textarea:focus{outline:none;border-color:var(--verde)}
+textarea::placeholder{color:#bbb;font-style:italic}
+input[type=text],input[type=email]{width:100%;border:2px solid var(--gris-borde);border-radius:8px;padding:0.72rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:0.88rem;color:var(--gris-oscuro);transition:border-color 0.2s}
+input[type=text]:focus,input[type=email]:focus{outline:none;border-color:var(--verde)}
+input::placeholder{color:#bbb}
+label{display:block;font-size:0.75rem;font-weight:700;color:var(--gris-medio);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.07em}
+.campo{margin-bottom:1rem}
+select{width:100%;border:2px solid var(--gris-borde);border-radius:8px;padding:0.72rem 1rem;font-family:'Source Sans 3',sans-serif;font-size:0.88rem;color:var(--gris-oscuro);background:white;cursor:pointer}
+select:focus{outline:none;border-color:var(--verde)}
 
-  @media(max-width:600px){
-    header{padding:0 1rem}header h1{font-size:1.05rem}.autor{display:none}
-    nav{padding:0 0.5rem}main{padding:1rem 0.8rem 3rem}.card{padding:1.2rem}.cgrid{grid-template-columns:1fr}
-    .id-row{flex-direction:column}
-  }
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:0.45rem;padding:0.72rem 1.4rem;border-radius:8px;font-family:'Source Sans 3',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;border:none;transition:var(--trans)}
+.btn-p{background:var(--verde);color:white;box-shadow:0 3px 10px rgba(45,125,90,0.25)}
+.btn-p:hover{background:var(--verde-claro);transform:translateY(-1px)}
+.btn-sec{background:var(--gris-claro);color:var(--gris-oscuro);border:2px solid var(--gris-borde)}
+.btn-sec:hover{background:#e8e8e4;border-color:#ccc}
+.btn-r{background:none;color:var(--gris-medio);font-size:0.78rem;padding:0.4rem 0.8rem;text-decoration:underline;cursor:pointer;border:none;font-family:'Source Sans 3',sans-serif}
+.btn-r:hover{color:var(--rojo)}
+.btn-sm{padding:0.45rem 0.9rem;font-size:0.78rem}
+.acciones{display:flex;align-items:center;gap:0.8rem;margin-top:1rem;flex-wrap:wrap}
+.cargando{text-align:center;padding:1.5rem;color:var(--gris-medio);font-style:italic;font-size:0.85rem}
+
+/* ID PANEL */
+.id-panel{background:linear-gradient(135deg,var(--verde-oscuro) 0%,var(--verde) 60%,var(--verde-claro) 100%);border-radius:var(--radio);padding:1.5rem 2rem;margin-bottom:1.5rem;color:white;position:relative;overflow:hidden}
+.id-panel::after{content:'';position:absolute;top:-30px;right:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,0.06)}
+.id-panel h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:1rem;opacity:0.95}
+.id-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.8rem}
+.id-row .campo{flex:1;min-width:180px;margin-bottom:0}
+.id-row label{color:rgba(255,255,255,0.8)}
+.id-row input{background:rgba(255,255,255,0.13);border-color:rgba(255,255,255,0.35);color:white}
+.id-row input::placeholder{color:rgba(255,255,255,0.5)}
+.id-row input:focus{border-color:white;background:rgba(255,255,255,0.22)}
+.modalidad-row{display:flex;gap:0.6rem;flex-wrap:wrap}
+.mod-btn{padding:0.4rem 1rem;border-radius:20px;font-size:0.8rem;font-weight:600;cursor:pointer;border:2px solid rgba(255,255,255,0.55);background:transparent;color:white;transition:var(--trans)}
+.mod-btn.sel{background:white;color:var(--verde-oscuro);border-color:white}
+.id-nota{font-size:0.76rem;opacity:0.7;margin-top:0.5rem}
+
+/* PROGRESS BAR */
+.progreso-strip{background:white;border-radius:var(--radio);padding:1rem 1.5rem;box-shadow:var(--sombra);margin-bottom:1.2rem;display:flex;align-items:center;gap:1.2rem}
+.progreso-titulo{font-size:0.78rem;font-weight:700;color:var(--gris-medio);text-transform:uppercase;letter-spacing:0.07em;white-space:nowrap}
+.progreso-modulos{display:flex;gap:0.5rem;flex:1;flex-wrap:wrap}
+.pm{display:flex;align-items:center;gap:0.3rem;padding:0.3rem 0.7rem;border-radius:6px;font-size:0.73rem;font-weight:600;background:var(--gris-claro);color:#aaa;transition:var(--trans)}
+.pm.done{background:var(--verde-suave);color:var(--verde)}
+.pm.partial{background:var(--amarillo-suave);color:var(--amarillo)}
+
+/* ETAPAS */
+.etapas{display:flex;gap:0.4rem;margin-bottom:1.2rem}
+.etapa{flex:1;padding:0.5rem 0.4rem;border-radius:8px;text-align:center;font-size:0.73rem;font-weight:600;background:#F0F0EE;color:#aaa;transition:all 0.35s;border:2px solid transparent}
+.etapa.on{background:var(--verde);color:white;border-color:var(--verde-oscuro)}
+
+/* BADGES */
+.badge{display:inline-block;padding:0.15rem 0.55rem;border-radius:20px;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.bi{background:var(--verde-suave);color:var(--verde)}
+.bm{background:var(--amarillo-suave);color:var(--amarillo)}
+.ba{background:var(--rojo-suave);color:var(--rojo)}
+.bt{background:var(--azul-suave);color:var(--azul)}
+
+/* CHAT */
+.chat-area{margin-top:1.2rem;border-radius:var(--radio);overflow:hidden;border:1.5px solid var(--gris-borde)}
+.chat-hdr{background:var(--gris-claro);padding:0.6rem 1rem;font-size:0.75rem;font-weight:600;color:var(--gris-medio);text-transform:uppercase;letter-spacing:0.07em;display:flex;align-items:center;justify-content:space-between;gap:0.5rem}
+.chat-hdr-left{display:flex;align-items:center;gap:0.5rem}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--verde);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.chat-msgs{padding:1rem;max-height:440px;overflow-y:auto;display:flex;flex-direction:column;gap:0.8rem;background:white}
+.msg{max-width:88%;padding:0.85rem 1rem;border-radius:10px;font-size:0.875rem;line-height:1.68;animation:fadeIn 0.25s ease;white-space:pre-wrap}
+.msg.ia{background:var(--verde-suave);border-bottom-left-radius:3px;align-self:flex-start;border-left:3px solid var(--verde)}
+.msg.usr{background:var(--azul-suave);border-bottom-right-radius:3px;align-self:flex-end;border-right:3px solid var(--azul)}
+.msg.cierre{background:#fff8e1;border-left:3px solid var(--amarillo);align-self:flex-start;max-width:100%}
+.msg-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.3rem;opacity:0.55}
+.load-msg{display:flex;align-items:center;gap:0.5rem;padding:0.8rem 1rem;font-size:0.8rem;color:var(--gris-medio);font-style:italic}
+.dots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--verde);margin:0 1px;animation:bounce 1.2s infinite}
+.dots span:nth-child(2){animation-delay:0.2s}.dots span:nth-child(3){animation-delay:0.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+.chat-in{display:flex;border-top:1.5px solid var(--gris-borde)}
+.chat-in textarea{border:none;border-radius:0;resize:none;min-height:54px;max-height:110px;font-size:0.86rem;flex:1;padding:0.75rem 1rem}
+.chat-in textarea:focus{outline:none;box-shadow:none;border-color:transparent}
+.btn-send{background:var(--verde);color:white;border:none;padding:0 1.2rem;cursor:pointer;font-size:1rem;transition:background 0.2s}
+.btn-send:hover{background:var(--verde-claro)}
+.btn-send:disabled{background:#ccc;cursor:not-allowed}
+
+/* GUÍA DESPLEGABLE */
+.guia-btn{display:flex;align-items:center;gap:0.5rem;cursor:pointer;font-size:0.8rem;font-weight:600;color:var(--rojo);background:var(--rojo-suave);border:1.5px solid #eaaca6;border-radius:8px;padding:0.5rem 1rem;margin-bottom:1rem;width:fit-content;transition:var(--trans);user-select:none}
+.guia-btn:hover{background:#f5c5c0}
+.guia{display:none;margin-bottom:1.2rem;background:white;border:1.5px solid #f0c0bb;border-radius:10px;padding:1.2rem;animation:fadeIn 0.2s ease}.guia.open{display:block}
+.eg{margin-bottom:1rem}
+.eg h4{font-size:0.76rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--rojo);margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:1px solid #f0c0bb}
+.ei{background:var(--rojo-suave);border-radius:8px;padding:0.65rem 1rem;margin-bottom:0.5rem;border-left:3px solid var(--rojo)}
+.ei strong{display:block;font-size:0.82rem;color:var(--rojo);margin-bottom:0.15rem}
+.ei span{font-size:0.8rem;color:#666;line-height:1.5}
+
+/* CONECTORES */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:0.9rem;margin-top:1rem}
+.ccat{background:white;border-radius:var(--radio);padding:1rem 1.2rem;box-shadow:var(--sombra);border-top:3px solid var(--azul);transition:var(--trans)}
+.ccat:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.1)}
+.ccat h3{font-size:0.78rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.2rem}
+.ccat .desc{font-size:0.73rem;color:var(--gris-medio);margin-bottom:0.6rem;font-style:italic}
+.tags{display:flex;flex-wrap:wrap;gap:0.3rem}
+.tag{background:var(--azul-suave);color:var(--azul);border-radius:20px;padding:0.18rem 0.6rem;font-size:0.72rem;font-weight:500;cursor:pointer;transition:var(--trans)}
+.tag:hover{background:var(--azul);color:white}
+.tag.copied{background:var(--verde);color:white}
+.busq{position:relative;margin-bottom:1rem}
+.busq input{padding-left:2.5rem}
+.busq .ico{position:absolute;left:0.8rem;top:50%;transform:translateY(-50%);color:#aaa;font-size:1rem}
+
+/* GLOSARIO */
+.glos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0.9rem;margin-top:1rem}
+.glos-item{background:white;border-radius:var(--radio);padding:1rem 1.2rem;box-shadow:var(--sombra);border-left:4px solid var(--teal);transition:var(--trans)}
+.glos-item:hover{transform:translateY(-1px)}
+.glos-term{font-family:'Playfair Display',serif;font-size:1rem;color:var(--teal);margin-bottom:0.4rem;font-weight:600}
+.glos-def{font-size:0.8rem;color:var(--gris-medio);line-height:1.6}
+.glos-cat{display:inline-block;padding:0.12rem 0.5rem;border-radius:20px;font-size:0.68rem;font-weight:700;background:var(--teal-suave);color:var(--teal);margin-bottom:0.4rem}
+
+/* COMPARADOR */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+@media(max-width:580px){.comp-grid{grid-template-columns:1fr}}
+.comp-col{border-radius:10px;padding:1.2rem;border:2px solid var(--gris-borde)}
+.comp-col h4{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.8rem}
+.comp-row{display:flex;gap:0.5rem;align-items:flex-start;margin-bottom:0.5rem;font-size:0.82rem;line-height:1.5}
+.comp-row::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.comp-col.bueno .comp-row::before{background:var(--verde)}
+.comp-col.malo .comp-row::before{background:var(--rojo)}
+.comp-col.bueno{background:var(--verde-suave);border-color:#a8d9be}
+.comp-col.malo{background:var(--rojo-suave);border-color:#f0a8a0}
+.comp-col.bueno h4{color:var(--verde)}
+.comp-col.malo h4{color:var(--rojo)}
+
+/* DIAGNÓSTICO */
+.diag-intro{background:linear-gradient(135deg,var(--azul-suave),white);border-radius:12px;padding:1.4rem;margin-bottom:1.2rem;border:1.5px solid #c5d8ec}
+.diag-intro p{font-size:0.88rem;line-height:1.7;color:#1a3a5c}
+.diag-pregunta{background:white;border-radius:10px;padding:1.2rem;box-shadow:var(--sombra);margin-bottom:1rem;border-left:4px solid var(--azul)}
+.diag-pregunta p{font-size:0.9rem;line-height:1.65;margin-bottom:0.8rem;font-weight:500}
+.diag-opciones{display:flex;flex-direction:column;gap:0.5rem}
+.diag-op{display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.8rem;border-radius:8px;cursor:pointer;transition:var(--trans);border:1.5px solid var(--gris-borde);background:white;font-size:0.85rem;font-family:'Source Sans 3',sans-serif;text-align:left}
+.diag-op:hover{border-color:var(--azul);background:var(--azul-suave)}
+.diag-op.sel{border-color:var(--azul);background:var(--azul-suave);font-weight:600}
+.diag-op.correcta{border-color:var(--verde);background:var(--verde-suave);color:var(--verde-oscuro)}
+.diag-op.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);color:var(--rojo)}
+.diag-score{text-align:center;padding:2rem;background:white;border-radius:var(--radio);box-shadow:var(--sombra)}
+.diag-puntaje{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--verde)}
+.diag-nivel{font-size:0.9rem;color:var(--gris-medio);margin-top:0.5rem}
+.diag-recom{background:var(--verde-suave);border-radius:8px;padding:1rem;margin-top:1rem;font-size:0.85rem;line-height:1.65;color:#1a4d35}
+
+/* PLAN DE ESCRITURA */
+.plan-steps{display:flex;gap:0.5rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:0.5rem}
+.plan-step{flex-shrink:0;padding:0.5rem 1rem;border-radius:8px;font-size:0.78rem;font-weight:600;background:var(--gris-claro);color:#aaa;border:2px solid transparent;transition:var(--trans);cursor:pointer}
+.plan-step.active-step{background:var(--violeta-suave);color:var(--violeta);border-color:var(--violeta)}
+.plan-step.done-step{background:var(--verde-suave);color:var(--verde)}
+.plan-content{display:none;animation:fadeIn 0.25s ease}.plan-content.active{display:block}
+.plan-textarea{min-height:140px}
+
+/* REPORTE MODAL */
+.reporte-card{background:white;border-radius:var(--radio);padding:1.8rem;box-shadow:var(--sombra);border-top:4px solid var(--verde);margin-bottom:1.2rem}
+.reporte-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--verde);margin-bottom:1rem}
+.reporte-resumen{background:var(--verde-suave);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:0.82rem;line-height:1.7;color:#1a4d35;max-height:280px;overflow-y:auto;white-space:pre-wrap;font-family:'JetBrains Mono',monospace}
+.btn-enviar-mail{background:var(--verde);color:white;border:none;padding:0.8rem 1.8rem;border-radius:8px;font-family:'Source Sans 3',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:0.6rem;transition:var(--trans);box-shadow:0 4px 14px rgba(45,125,90,0.3)}
+.btn-enviar-mail:hover{background:var(--verde-claro);transform:translateY(-2px)}
+.btn-enviar-mail:disabled{background:#aaa;cursor:not-allowed;transform:none;box-shadow:none}
+.envio-ok{background:#d4edda;border:1.5px solid var(--verde);border-radius:8px;padding:0.75rem 1rem;font-size:0.85rem;color:#155724;display:none;align-items:center;gap:0.5rem}
+.envio-ok.show{display:flex}
+.envio-err{background:var(--rojo-suave);border:1.5px solid var(--rojo);border-radius:8px;padding:0.75rem 1rem;font-size:0.85rem;color:var(--rojo);display:none;align-items:center;gap:0.5rem}
+.envio-err.show{display:flex}
+
+/* MODAL OVERLAY */
+.modal-over{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:1rem}
+.modal-box{background:white;border-radius:var(--radio);padding:2rem;max-width:700px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--sombra-lg);animation:fadeIn 0.25s ease}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.modal-hdr h3{font-family:'Playfair Display',serif;font-size:1.2rem}
+.btn-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--gris-medio);padding:0.25rem;border-radius:6px;transition:var(--trans)}
+.btn-close:hover{background:var(--gris-claro)}
+
+/* TOOLTIP COPY */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--gris-oscuro);color:white;padding:0.6rem 1.2rem;border-radius:8px;font-size:0.82rem;font-weight:500;opacity:0;transition:opacity 0.3s;z-index:9999;pointer-events:none}
+.toast.show{opacity:1}
+
+/* PANEL ANALISIS COMPARATIVO */
+.ac-selector{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+@media(max-width:580px){.ac-selector{grid-template-columns:1fr}}
+.ac-texto{background:var(--gris-claro);border-radius:10px;padding:1rem;border:2px solid transparent;cursor:pointer;transition:var(--trans)}
+.ac-texto:hover{border-color:var(--violeta)}
+.ac-texto.sel{border-color:var(--violeta);background:var(--violeta-suave)}
+.ac-texto .tipo{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--violeta);margin-bottom:0.3rem}
+.ac-texto .preview{font-size:0.78rem;line-height:1.5;color:#555;font-style:italic}
+.enfoques-grid{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem}
+.enfoque-chip{padding:0.35rem 0.8rem;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;border:2px solid var(--gris-borde);background:white;transition:var(--trans)}
+.enfoque-chip:hover{border-color:var(--violeta)}
+.enfoque-chip.sel{background:var(--violeta);color:white;border-color:var(--violeta)}
+
+/* COLOR THEMES POR MÓDULO */
+.m1 .mod-icon{background:var(--verde-suave)}
+.m2 .mod-icon{background:var(--naranja-suave)}
+.m3 .mod-icon{background:var(--azul-suave)}
+.m4 .mod-icon{background:var(--violeta-suave)}
+.m5 .mod-icon{background:var(--rojo-suave)}
+.m6 .mod-icon{background:var(--teal-suave)}
+.m7 .mod-icon{background:var(--amarillo-suave)}
+.m8 .mod-icon{background:var(--violeta-suave)}
+.m9 .mod-icon{background:var(--rosa-suave)}
+
+.m1 .consigna{background:var(--verde-suave);border-color:var(--verde);color:#1a4d35}
+.m2 .consigna{background:var(--naranja-suave);border-color:var(--naranja);color:#7a3a12}
+.m3 .consigna{background:var(--azul-suave);border-color:var(--azul);color:#1a3a5c}
+.m4 .consigna{background:var(--violeta-suave);border-color:var(--violeta);color:#4a2d6e}
+.m5 .consigna{background:var(--rojo-suave);border-color:var(--rojo);color:#7a1f15}
+.m6 .consigna{background:var(--teal-suave);border-color:var(--teal);color:#0a4040}
+.m7 .consigna{background:var(--amarillo-suave);border-color:var(--amarillo);color:#6a4800}
+.m8 .consigna{background:var(--violeta-suave);border-color:var(--violeta);color:#4a2d6e}
+.m9 .consigna{background:var(--rosa-suave);border-color:var(--rosa);color:#7a2040}
+
+.m1 .btn-p,.m1 .btn-send{background:var(--verde)}.m1 .btn-p:hover,.m1 .btn-send:hover{background:var(--verde-claro)}
+.m2 .btn-p,.m2 .btn-send{background:var(--naranja)}.m2 .btn-p:hover,.m2 .btn-send:hover{background:#d4622a}
+.m3 .btn-p,.m3 .btn-send{background:var(--azul)}.m3 .btn-p:hover,.m3 .btn-send:hover{background:#1e4a72}
+.m4 .btn-p,.m4 .btn-send{background:var(--violeta)}.m4 .btn-p:hover,.m4 .btn-send:hover{background:#6a4d96}
+.m5 .btn-p,.m5 .btn-send{background:var(--rojo)}.m5 .btn-p:hover,.m5 .btn-send:hover{background:#a52d22}
+.m6 .btn-p,.m6 .btn-send{background:var(--teal)}.m6 .btn-p:hover,.m6 .btn-send:hover{background:#145c5c}
+.m7 .btn-p,.m7 .btn-send{background:var(--amarillo)}.m7 .btn-p:hover,.m7 .btn-send:hover{background:#b88a10}
+.m8 .btn-p,.m8 .btn-send{background:var(--violeta)}.m8 .btn-p:hover,.m8 .btn-send:hover{background:#6a4d96}
+.m9 .btn-p,.m9 .btn-send{background:var(--rosa)}.m9 .btn-p:hover,.m9 .btn-send:hover{background:#8a2a50}
+
+.m1 .msg.ia,.m6 .msg.ia{background:var(--verde-suave);border-color:var(--verde)}
+.m2 .msg.ia{background:var(--naranja-suave);border-color:var(--naranja)}
+.m3 .msg.ia{background:var(--azul-suave);border-color:var(--azul)}
+.m4 .msg.ia,.m8 .msg.ia{background:var(--violeta-suave);border-color:var(--violeta)}
+.m5 .msg.ia{background:var(--rojo-suave);border-color:var(--rojo)}
+.m7 .msg.ia{background:var(--amarillo-suave);border-color:var(--amarillo)}
+.m9 .msg.ia{background:var(--rosa-suave);border-color:var(--rosa)}
+.m1 .dot{background:var(--verde)}.m2 .dot{background:var(--naranja)}.m3 .dot{background:var(--azul)}
+.m4 .dot{background:var(--violeta)}.m5 .dot{background:var(--rojo)}.m6 .dot{background:var(--teal)}
+.m7 .dot{background:var(--amarillo)}.m8 .dot{background:var(--violeta)}.m9 .dot{background:var(--rosa)}
+
+/* RESPONSIVE */
+@media(max-width:620px){
+  header{padding:0 1rem}header h1{font-size:1rem}.hdr-badge{display:none}
+  nav{padding:0 0.5rem}main{padding:1rem 0.8rem 4rem}
+  .card{padding:1.2rem}.cgrid{grid-template-columns:1fr}.glos-grid{grid-template-columns:1fr}
+  .id-row{flex-direction:column}.hdr-actions{display:none}
+}
+
+/* DIVIDER */
+.divider{text-align:center;margin:1.5rem 0;position:relative}
+.divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--gris-borde)}
+.divider span{background:#EEEEE8;padding:0 1rem;position:relative;font-size:0.75rem;color:#aaa;font-weight:600;text-transform:uppercase;letter-spacing:0.08em}
+
+/* INFO PILLS */
+.pill-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.pill{display:inline-flex;align-items:center;gap:0.3rem;padding:0.3rem 0.75rem;border-radius:20px;font-size:0.75rem;font-weight:600;background:var(--gris-claro);color:var(--gris-medio)}
+.pill.verde{background:var(--verde-suave);color:var(--verde)}
+.pill.azul{background:var(--azul-suave);color:var(--azul)}
+.pill.naranja{background:var(--naranja-suave);color:var(--naranja)}
+
+/* NUMERO COUNTER */
+.counter{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#aaa;float:right;margin-top:0.25rem}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>📝 Taller de Escritura Académica</h1>
-  <span class="autor">Prof. Rodolfo Cabral</span>
+  <div class="hdr-left">
+    <h1>📝 Taller de Escritura Académica</h1>
+    <span class="hdr-badge">v2</span>
+  </div>
+  <div class="hdr-actions">
+    <button class="btn-progreso" onclick="verProgreso()">📊 Mi progreso</button>
+    
+    <span class="autor">Prof. Rodolfo Cabral</span>
+  </div>
 </header>
 
-<nav>
-  <div class="tab active" onclick="ir('p1',this)"><span class="num">1</span> Constructor</div>
-  <div class="tab" onclick="ir('p2',this)"><span class="num">2</span> Identificador</div>
-  <div class="tab" onclick="ir('p3',this)"><span class="num">3</span> Reescritura</div>
-  <div class="tab" onclick="ir('p4',this)"><span class="num">4</span> Citas</div>
-  <div class="tab" onclick="ir('p5',this)"><span class="num">5</span> Errores</div>
+<nav id="main-nav">
+  <div class="tab active" onclick="ir('p1',this)"><span class="num">🧱</span> Constructor</div>
+  <div class="tab" onclick="ir('p2',this)"><span class="num">🔍</span> Identificador</div>
+  <div class="tab" onclick="ir('p3',this)"><span class="num">✏️</span> Reescritura</div>
+  <div class="tab" onclick="ir('p4',this)"><span class="num">📎</span> Citas</div>
+  <div class="tab" onclick="ir('p5',this)"><span class="num">🚨</span> Errores</div>
+  <div class="tab" onclick="ir('p6',this)"><span class="num">🧠</span> Análisis</div>
+  <div class="tab" onclick="ir('p7',this)"><span class="num">📐</span> Plan</div>
+  <div class="tab" onclick="ir('pd',this)"><span class="num">🎯</span> Diagnóstico</div>
   <div class="tab t-azul" onclick="ir('pc',this)"><span class="num">📋</span> Conectores</div>
+  <div class="tab t-teal" onclick="ir('pg',this)"><span class="num">📖</span> Glosario</div>
 </nav>
 
 <main>
 
+<!-- PANEL IDENTIFICACIÓN -->
 <div class="id-panel">
-  <h3>👤 Antes de empezar — completá tus datos</h3>
+  <h3>👤 Identificación — completá tus datos para empezar</h3>
   <div class="id-row">
     <div class="campo">
-      <label>Modalidad de trabajo</label>
+      <label>Modalidad</label>
       <div class="modalidad-row">
         <button class="mod-btn sel" onclick="setMod('Individual',this)">Individual</button>
         <button class="mod-btn" onclick="setMod('Grupal',this)">Grupal</button>
       </div>
     </div>
+    <div class="campo">
+      <label>Institución / Materia</label>
+      <input type="text" id="institucion" placeholder="Ej: UBA — Teoría Social">
+    </div>
   </div>
   <div class="id-row">
     <div class="campo" id="campo-nombre1">
-      <label id="label-nombre1">Tu nombre completo</label>
+      <label id="label-nombre1">Nombre completo</label>
       <input type="text" id="nombre1" placeholder="Apellido, Nombre">
     </div>
-    <div class="campo" id="campo-nombre2" style="display:none!important">
+    <div class="campo" id="campo-nombre2" style="display:none">
       <label>Integrante 2</label>
       <input type="text" id="nombre2" placeholder="Apellido, Nombre">
     </div>
   </div>
-  <div class="id-row" id="row-nombre3" style="display:none!important">
+  <div class="id-row" id="row-nombre3" style="display:none">
     <div class="campo">
       <label>Integrante 3</label>
       <input type="text" id="nombre3" placeholder="Apellido, Nombre">
@@ -204,188 +389,434 @@
       <input type="text" id="nombre4" placeholder="Apellido, Nombre">
     </div>
   </div>
-  <div class="id-nota">📌 Estos datos aparecerán en el reporte que se envía al profesor.</div>
+  <div class="id-nota">📌 Estos datos aparecen en el reporte enviado al/a la docente.</div>
 </div>
 
-<!-- M1 -->
+<!-- PROGRESO STRIP -->
+<div class="progreso-strip">
+  <span class="progreso-titulo">Progreso</span>
+  <div class="progreso-modulos" id="pm-strip">
+    <div class="pm" id="pm-m1">🧱 Constructor</div>
+    <div class="pm" id="pm-m2">🔍 Identificador</div>
+    <div class="pm" id="pm-m3">✏️ Reescritura</div>
+    <div class="pm" id="pm-m4">📎 Citas</div>
+    <div class="pm" id="pm-m5">🚨 Errores</div>
+    <div class="pm" id="pm-m6">🧠 Análisis</div>
+    <div class="pm" id="pm-m7">📐 Plan</div>
+    <div class="pm" id="pm-pd">🎯 Diagnóstico</div>
+  </div>
+</div>
+
+<!-- M1 — CONSTRUCTOR DE PÁRRAFOS -->
 <div id="p1" class="panel active m1">
   <div class="card">
-    <div class="card-header"><div class="mod-icon">🧱</div><div><h2>Constructor de párrafos</h2><div class="sub">Construí un párrafo académico en 3 etapas. El tutor te acompaña sin darte las respuestas.</div></div></div>
+    <div class="card-header"><div class="mod-icon">🧱</div><div><h2>Constructor de párrafos</h2><div class="sub">Construí un párrafo académico en 3 etapas guiadas. El tutor te acompaña sin darte las respuestas.</div></div></div>
     <div class="etapas"><div class="etapa on">① Oración tópico</div><div class="etapa">② Fundamentación</div><div class="etapa">③ Cierre</div></div>
+    <div class="pill-row">
+      <span class="pill verde">🎯 Nivel inicial–intermedio</span>
+      <span class="pill azul">📚 Ciencias Sociales</span>
+    </div>
     <div class="consigna"><strong>📌 Consigna</strong>Elegí un tema de las ciencias sociales y construí un párrafo académico paso a paso. Empezá por la oración tópico: la idea central que va a sostener todo el párrafo.</div>
-    <div class="campo"><label>Tema elegido</label><textarea id="m1-tema" placeholder="Ej: La desigualdad social como objeto de estudio de las ciencias sociales..." rows="2"></textarea></div>
-    <div class="campo"><label>① Tu oración tópico</label><textarea id="m1-oracion" placeholder="Escribí aquí la oración que presenta la idea central del párrafo..."></textarea></div>
+    <div class="campo"><label>Tema elegido</label><textarea id="m1-tema" rows="2" placeholder="Ej: La desigualdad social como objeto de estudio de las ciencias sociales..." oninput="updateCounter('m1-tema','ct1')"></textarea><span class="counter" id="ct1">0 / 300</span></div>
+    <div class="campo"><label>① Tu oración tópico</label><textarea id="m1-oracion" placeholder="Escribí aquí la oración que presenta la idea central del párrafo..." oninput="updateCounter('m1-oracion','ct2')"></textarea><span class="counter" id="ct2">0 / 250</span></div>
     <div class="acciones"><button class="btn btn-p" onclick="iniciarM1()">Enviar al tutor →</button><button class="btn-r" onclick="resetM('m1')">Reiniciar</button></div>
   </div>
   <div id="w-m1" style="display:none" class="card">
-    <div class="chat-area"><div class="chat-hdr"><span class="dot"></span> Tutor académico — en proceso</div><div class="chat-msgs" id="c-m1"></div><div class="chat-in"><textarea id="i-m1" placeholder="Respondé aquí al tutor..." onkeydown="ee(event,'m1')"></textarea><button class="btn-send" onclick="send('m1')">➤</button></div></div>
+    <div class="chat-area"><div class="chat-hdr"><div class="chat-hdr-left"><span class="dot"></span> Tutor académico</div><button class="btn-r" style="margin:0" onclick="exportarChat('m1')">💾 Exportar</button></div><div class="chat-msgs" id="c-m1"></div><div class="chat-in"><textarea id="i-m1" placeholder="Respondé al tutor... (Enter para enviar, Shift+Enter para nueva línea)" onkeydown="ee(event,'m1')"></textarea><button class="btn-send" onclick="send('m1')" id="send-m1">➤</button></div></div>
     <div class="acciones" style="margin-top:1rem"><button class="btn btn-p" onclick="verReporte('m1')" style="background:var(--azul)">📧 Generar y enviar reporte</button></div>
   </div>
 </div>
 
-<!-- M2 -->
+<!-- M2 — IDENTIFICADOR -->
 <div id="p2" class="panel m2">
   <div class="card">
-    <div class="card-header"><div class="mod-icon">🔍</div><div><h2>Identificador de tipo textual</h2><div class="sub">Leé el fragmento, identificá su tipo y justificá con conceptos de la materia.</div></div></div>
+    <div class="card-header"><div class="mod-icon">🔍</div><div><h2>Identificador de tipo textual</h2><div class="sub">Leé el fragmento, identificá su tipo discursivo y justificá con marcas concretas del texto.</div></div></div>
+    <div class="pill-row">
+      <span class="pill verde">🎯 Nivel inicial–avanzado</span>
+      <span class="pill naranja">📦 Fragmento aleatorio</span>
+    </div>
+    <div class="consigna"><strong>📌 Consigna</strong>Leé el fragmento. Identificá a qué tipo textual pertenece (expositivo-explicativo, argumentativo, narrativo o dialogal) y justificá tu respuesta señalando al menos dos marcas lingüísticas concretas del texto.</div>
     <div id="frag-cont"><div class="cargando">⏳ Cargando fragmento...</div></div>
-    <div class="consigna"><strong>📌 Consigna</strong>¿Es <strong>expositivo-explicativo</strong>, <strong>argumentativo</strong>, <strong>narrativo</strong> o <strong>dialogal</strong>? Justificá con conceptos de Zamudio/Atorresi o Arnoux. El tutor no confirmará hasta que fundamentes con al menos un rasgo concreto del texto.</div>
-    <div class="campo"><label>Tu identificación y justificación</label><textarea id="m2-r" placeholder="Este fragmento es de tipo expositivo-explicativo / argumentativo / narrativo / dialogal... porque... Se observa que..."></textarea></div>
-    <div class="acciones"><button class="btn btn-p" onclick="iniciar('m2')">Enviar al tutor →</button><button class="btn-r" onclick="nuevoFrag()">Nuevo fragmento</button></div>
+    <div style="display:flex;gap:0.5rem;margin-bottom:1.2rem;flex-wrap:wrap">
+      <button class="btn btn-sec btn-sm" onclick="nuevoFrag()">🔄 Nuevo fragmento</button>
+      <button class="btn btn-sec btn-sm" onclick="filtrarFrags()">🎚️ Filtrar por nivel</button>
+    </div>
+    <div id="filtro-nivel" style="display:none;margin-bottom:1rem">
+      <label>Nivel de dificultad del fragmento</label>
+      <select id="sel-nivel" onchange="cargarFragNivel()">
+        <option value="todos">Todos</option>
+        <option value="inicial">Inicial</option>
+        <option value="intermedio">Intermedio</option>
+        <option value="avanzado">Avanzado</option>
+      </select>
+    </div>
+    <div class="campo"><label>Tu identificación y justificación</label><textarea id="m2-r" placeholder="El fragmento es de tipo [TIPO] porque... Las marcas que lo indican son: 1)... 2)..." oninput="updateCounter('m2-r','ct3')"></textarea><span class="counter" id="ct3">0 / 400</span></div>
+    <div class="acciones"><button class="btn btn-p" onclick="iniciar('m2')">Enviar al tutor →</button><button class="btn-r" onclick="resetM('m2')">Nuevo intento</button></div>
   </div>
   <div id="w-m2" style="display:none" class="card">
-    <div class="chat-area"><div class="chat-hdr"><span class="dot"></span> Tutor académico — en proceso</div><div class="chat-msgs" id="c-m2"></div><div class="chat-in"><textarea id="i-m2" placeholder="Respondé aquí al tutor..." onkeydown="ee(event,'m2')"></textarea><button class="btn-send" onclick="send('m2')">➤</button></div></div>
+    <div class="chat-area"><div class="chat-hdr"><div class="chat-hdr-left"><span class="dot"></span> Tutor académico</div><button class="btn-r" style="margin:0" onclick="exportarChat('m2')">💾 Exportar</button></div><div class="chat-msgs" id="c-m2"></div><div class="chat-in"><textarea id="i-m2" placeholder="Respondé al tutor..." onkeydown="ee(event,'m2')"></textarea><button class="btn-send" onclick="send('m2')" id="send-m2">➤</button></div></div>
     <div class="acciones" style="margin-top:1rem"><button class="btn btn-p" onclick="verReporte('m2')" style="background:var(--azul)">📧 Generar y enviar reporte</button></div>
   </div>
 </div>
 
-<!-- M3 -->
+<!-- M3 — REESCRITURA -->
 <div id="p3" class="panel m3">
   <div class="card">
-    <div class="card-header"><div class="mod-icon">✏️</div><div><h2>Reescritura académica</h2><div class="sub">Transformá el fragmento coloquial en registro académico y justificá cada decisión.</div></div></div>
-    <div class="fragmento">La verdad es que la pobreza es un problema re grave en Argentina y hay mucha gente que no puede comer bien ni mandar a sus hijos al colegio. Eso está mal y el gobierno tendría que hacer algo ya. Pero claro, siempre hacen lo mismo y nunca cambia nada.<div class="fuente">Texto coloquial — para reescribir en registro académico</div></div>
-    <div class="consigna"><strong>📌 Consigna</strong>Reescribí este texto en registro académico. Considerá: precisión conceptual, desagentivación, conectores apropiados, eliminación de marcas coloquiales. Luego explicá qué cambiaste y por qué.</div>
-    <div class="campo"><label>Tu reescritura académica</label><textarea id="m3-a" placeholder="La problemática de la pobreza constituye..." rows="5"></textarea></div>
-    <div class="campo"><label>¿Qué cambiaste y por qué?</label><textarea id="m3-b" placeholder="Reemplacé '...re grave...' por '...de alta complejidad...' porque..."></textarea></div>
+    <div class="card-header"><div class="mod-icon">✏️</div><div><h2>Reescritura académica</h2><div class="sub">Transformá un texto coloquial en registro académico. Justificá cada decisión de estilo.</div></div></div>
+    <div class="pill-row"><span class="pill verde">🎯 Nivel intermedio</span></div>
+    <div class="consigna"><strong>📌 Consigna</strong>El siguiente texto fue escrito en registro coloquial. Reescribilo en registro académico formal, aplicando desagentivación, tecnicidad léxica y conectores apropiados. Luego explicá los cambios más importantes que realizaste.</div>
+    <div class="fragmento">Hoy en día hay un montón de gente que no tiene laburo y el gobierno no hace nada para arreglarlo. Todos saben que si no trabajás no podés comer, y es una situación muy injusta que pasa en todos lados. Los pobres siempre son los que la tienen más difícil.<div class="fuente">Texto para reescribir en registro académico</div></div>
+    <div class="comp-grid">
+      <div class="comp-col malo"><h4>❌ Rasgos coloquiales</h4><div class="comp-row">Expresiones vagas ("un montón")</div><div class="comp-row">Primera persona ("todos saben")</div><div class="comp-row">Lenguaje emotivo sin datos</div><div class="comp-row">Generalización sin fuente</div></div>
+      <div class="comp-col bueno"><h4>✅ Rasgos académicos</h4><div class="comp-row">Léxico técnico y preciso</div><div class="comp-row">Desagentivación / voz pasiva</div><div class="comp-row">Datos y citas como respaldo</div><div class="comp-row">Conectores argumentativos</div></div>
+    </div>
+    <div class="campo"><label>Tu reescritura en registro académico</label><textarea id="m3-a" rows="5" placeholder="Reescribí el texto aquí manteniendo el contenido pero cambiando el registro..." oninput="updateCounter('m3-a','ct4')"></textarea><span class="counter" id="ct4">0 / 600</span></div>
+    <div class="campo"><label>¿Qué cambiaste y por qué?</label><textarea id="m3-b" placeholder="Explicá las decisiones de estilo más importantes: qué reemplazaste, por qué, qué efecto busca..." oninput="updateCounter('m3-b','ct5')"></textarea><span class="counter" id="ct5">0 / 400</span></div>
     <div class="acciones"><button class="btn btn-p" onclick="iniciar('m3')">Enviar al tutor →</button><button class="btn-r" onclick="resetM('m3')">Reiniciar</button></div>
   </div>
   <div id="w-m3" style="display:none" class="card">
-    <div class="chat-area"><div class="chat-hdr"><span class="dot"></span> Tutor académico — en proceso</div><div class="chat-msgs" id="c-m3"></div><div class="chat-in"><textarea id="i-m3" placeholder="Respondé aquí al tutor..." onkeydown="ee(event,'m3')"></textarea><button class="btn-send" onclick="send('m3')">➤</button></div></div>
+    <div class="chat-area"><div class="chat-hdr"><div class="chat-hdr-left"><span class="dot"></span> Tutor académico</div><button class="btn-r" style="margin:0" onclick="exportarChat('m3')">💾 Exportar</button></div><div class="chat-msgs" id="c-m3"></div><div class="chat-in"><textarea id="i-m3" placeholder="Respondé al tutor..." onkeydown="ee(event,'m3')"></textarea><button class="btn-send" onclick="send('m3')" id="send-m3">➤</button></div></div>
     <div class="acciones" style="margin-top:1rem"><button class="btn btn-p" onclick="verReporte('m3')" style="background:var(--azul)">📧 Generar y enviar reporte</button></div>
   </div>
 </div>
 
-<!-- M4 -->
+<!-- M4 — LABORATORIO DE CITAS -->
 <div id="p4" class="panel m4">
   <div class="card">
-    <div class="card-header"><div class="mod-icon">📚</div><div><h2>Laboratorio de citas</h2><div class="sub">Practicá las tres modalidades de citado con fragmentos reales de la materia.</div></div></div>
-    <div class="fragmento">Puede afirmarse en general que toda explicación pone en juego dos segmentos de base: un objeto por explicar —el explicando— y otro segmento, el explicante, que modifica al objeto para hacerlo más inteligible.<div class="fuente">Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba. (p. 13)</div></div>
-    <div class="consigna"><strong>📌 Consigna</strong>Practicá las tres modalidades: <strong>① Cita directa</strong> (comillas + APA), <strong>② Paráfrasis</strong> (tus palabras + referencia), <strong>③ Referencia indirecta</strong> (la idea sin citar textualmente).</div>
-    <div class="campo"><label>① Cita directa</label><textarea id="m4-a" placeholder='Según Zamudio y Atorresi (2000), "..." (p. 13).' rows="3"></textarea></div>
-    <div class="campo"><label>② Paráfrasis</label><textarea id="m4-b" placeholder="Zamudio y Atorresi (2000) sostienen que..." rows="3"></textarea></div>
-    <div class="campo"><label>③ Referencia indirecta</label><textarea id="m4-c" placeholder="En el marco de los estudios sobre el discurso explicativo..." rows="3"></textarea></div>
+    <div class="card-header"><div class="mod-icon">📎</div><div><h2>Laboratorio de citas</h2><div class="sub">Practicá las tres modalidades de incorporación de fuentes en APA 7.</div></div></div>
+    <div class="pill-row"><span class="pill verde">🎯 Nivel inicial–intermedio</span><span class="pill azul">📑 APA 7ª edición</span></div>
+    <div class="consigna"><strong>📌 Consigna</strong>Tomá el siguiente fragmento y elaborá las tres modalidades de cita según normas APA.</div>
+    <div class="fragmento">Los géneros discursivos son conjuntos más o menos estables de enunciados determinados por las prácticas socioculturales; los hablantes aprenden el uso de los géneros a través de la experiencia comunicativa.<div class="fuente">Arnoux, E. (2006). La lectura y la escritura en la universidad. Eudeba. (p. 47)</div></div>
+    <div class="campo"><label>① Cita directa (textual)</label><textarea id="m4-a" placeholder='Ej: Arnoux (2006) sostiene que "los géneros discursivos son conjuntos más o menos estables..." (p. 47).' oninput="updateCounter('m4-a','ct6')"></textarea><span class="counter" id="ct6">0 / 350</span></div>
+    <div class="campo"><label>② Paráfrasis (reformulación con fuente)</label><textarea id="m4-b" placeholder="Ej: Según Arnoux (2006), los hablantes incorporan los géneros discursivos a través de su participación en prácticas socioculturales específicas." oninput="updateCounter('m4-b','ct7')"></textarea><span class="counter" id="ct7">0 / 350</span></div>
+    <div class="campo"><label>③ Referencia indirecta (mención sin reproducir)</label><textarea id="m4-c" placeholder="Ej: La teoría de los géneros discursivos ha sido ampliamente estudiada en el contexto universitario latinoamericano (Arnoux, 2006)." oninput="updateCounter('m4-c','ct8')"></textarea><span class="counter" id="ct8">0 / 350</span></div>
     <div class="acciones"><button class="btn btn-p" onclick="iniciar('m4')">Enviar al tutor →</button><button class="btn-r" onclick="resetM('m4')">Reiniciar</button></div>
   </div>
   <div id="w-m4" style="display:none" class="card">
-    <div class="chat-area"><div class="chat-hdr"><span class="dot"></span> Tutor académico — en proceso</div><div class="chat-msgs" id="c-m4"></div><div class="chat-in"><textarea id="i-m4" placeholder="Respondé aquí al tutor..." onkeydown="ee(event,'m4')"></textarea><button class="btn-send" onclick="send('m4')">➤</button></div></div>
+    <div class="chat-area"><div class="chat-hdr"><div class="chat-hdr-left"><span class="dot"></span> Tutor académico</div><button class="btn-r" style="margin:0" onclick="exportarChat('m4')">💾 Exportar</button></div><div class="chat-msgs" id="c-m4"></div><div class="chat-in"><textarea id="i-m4" placeholder="Respondé al tutor..." onkeydown="ee(event,'m4')"></textarea><button class="btn-send" onclick="send('m4')" id="send-m4">➤</button></div></div>
     <div class="acciones" style="margin-top:1rem"><button class="btn btn-p" onclick="verReporte('m4')" style="background:var(--azul)">📧 Generar y enviar reporte</button></div>
   </div>
 </div>
 
-<!-- M5 -->
+<!-- M5 — CORRECTOR DE ERRORES -->
 <div id="p5" class="panel m5">
   <div class="card">
-    <div class="card-header"><div class="mod-icon">🔧</div><div><h2>Texto con errores</h2><div class="sub">Detectá los errores, nombralos con vocabulario académico y corregilos.</div></div></div>
-    <div class="guia-btn" onclick="toggleGuia()">📖 Guía de errores académicos — consultar antes de empezar</div>
+    <div class="card-header"><div class="mod-icon">🚨</div><div><h2>Texto con errores</h2><div class="sub">Detectá los errores académicos, nombralos con vocabulario técnico y reescribí el párrafo.</div></div></div>
+    <div class="pill-row"><span class="pill verde">🎯 Nivel inicial–intermedio</span></div>
+    <div class="guia-btn" onclick="toggleGuia()">📖 Ver guía de errores frecuentes</div>
     <div class="guia" id="guia">
-      <div class="eg"><h4>Errores discursivos / argumentativos</h4>
-        <div class="ei"><strong>Argumento circular</strong><span>Se usa la conclusión como premisa.</span><em>Ej: "La sociedad es importante porque sin sociedad no habría sociedad."</em></div>
-        <div class="ei"><strong>Falta de fundamentación</strong><span>Se presenta una opinión como afirmación objetiva sin respaldo.</span></div>
-        <div class="ei"><strong>Salto lógico</strong><span>Se omiten pasos del razonamiento.</span></div>
-        <div class="ei"><strong>Generalización sin datos</strong><span>Afirmaciones universales sin evidencia.</span></div>
-        <div class="ei"><strong>Falta de tesis clara</strong><span>El párrafo no tiene idea central identificable.</span></div>
+      <div class="eg"><h4>Errores de estructura</h4>
+        <div class="ei"><strong>Argumento circular</strong><span>La conclusión repite la premisa sin agregar información. "X es malo porque X hace daño."</span></div>
+        <div class="ei"><strong>Falta de oración tópico</strong><span>El párrafo no tiene una idea central identificable que organice el desarrollo.</span></div>
+        <div class="ei"><strong>Párrafo sin cierre</strong><span>El párrafo termina abruptamente sin sintetizar ni proyectar.</span></div>
       </div>
-      <div class="eg"><h4>Errores de registro y cohesión</h4>
-        <div class="ei"><strong>Mezcla de registros</strong><span>Lenguaje coloquial mezclado con académico.</span></div>
-        <div class="ei"><strong>Uso innecesario de primera persona</strong><span>"Yo creo", "en mi opinión" sin justificación retórica.</span></div>
-        <div class="ei"><strong>Repetición léxica innecesaria</strong><span>Se repite la misma palabra cuando hay alternativas.</span><em>Ej: "Los investigadores investigan con métodos de investigación."</em></div>
-        <div class="ei"><strong>Mal uso de conectores</strong><span>Conector que no corresponde a la relación lógica.</span></div>
-        <div class="ei"><strong>Desagentivación inconsistente</strong><span>Mezcla de voz activa e impersonal sin criterio.</span></div>
+      <div class="eg"><h4>Errores de registro</h4>
+        <div class="ei"><strong>Coloquialismo</strong><span>Expresiones informales: "un montón", "la tienen difícil", "o sea".</span></div>
+        <div class="ei"><strong>Primera persona subjetiva</strong><span>"Yo creo que...", "en mi opinión...", sin respaldo teórico.</span></div>
+        <div class="ei"><strong>Generalización sin datos</strong><span>"Todos saben que...", "siempre pasa que..." sin fuente ni evidencia.</span></div>
       </div>
       <div class="eg"><h4>Errores de precisión</h4>
-        <div class="ei"><strong>Lenguaje vago o ambiguo</strong><span>Términos imprecisos: "algo", "muchos", "a veces".</span></div>
-        <div class="ei"><strong>Exceso de rodeos</strong><span>El argumento se pierde por acumulación innecesaria.</span></div>
+        <div class="ei"><strong>Lenguaje vago o ambiguo</strong><span>Términos imprecisos: "algo", "muchos", "a veces", "ciertas cosas".</span></div>
+        <div class="ei"><strong>Repetición léxica innecesaria</strong><span>El mismo término sin variación: "sociedad... sociedad... sociedad..."</span></div>
       </div>
       <div class="eg"><h4>Errores de citado</h4>
-        <div class="ei"><strong>Cita sin referencia</strong><span>Idea ajena sin fuente = plagio académico.</span></div>
-        <div class="ei"><strong>Paráfrasis que copia</strong><span>Se cambian pocas palabras manteniendo la estructura original.</span></div>
-        <div class="ei"><strong>Cita mal integrada</strong><span>La cita aparece suelta, sin introducción ni análisis.</span></div>
+        <div class="ei"><strong>Cita sin referencia</strong><span>Idea ajena sin fuente = plagio académico, aunque no sea intencional.</span></div>
+        <div class="ei"><strong>Paráfrasis que copia</strong><span>Se cambian pocas palabras manteniendo la estructura original del autor.</span></div>
       </div>
     </div>
     <div class="fragmento">La sociedad es un tema muy importante para las ciencias sociales porque sin sociedad no habría ciencias sociales. Los investigadores investigan la sociedad usando métodos. Estos métodos son científicos. Por eso la investigación es científica. Además, se puede decir que yo creo que la pobreza es muy mala y el Estado debería resolverlo urgente.<div class="fuente">Texto con errores — para analizar y corregir</div></div>
-    <div class="consigna"><strong>📌 Consigna</strong>Este párrafo tiene al menos <strong>4 problemas académicos</strong>. Usá la guía para detectarlos, nombralos con vocabulario de la materia y reescribí el párrafo corrigiéndolos.</div>
-    <div class="campo"><label>Errores que detectás</label><textarea id="m5-a" placeholder="Error 1: Argumento circular — porque...&#10;Error 2: ..."></textarea></div>
-    <div class="campo"><label>Párrafo corregido</label><textarea id="m5-b" placeholder="Reescribí el párrafo corrigiendo todos los problemas..." rows="5"></textarea></div>
+    <div class="campo"><label>Errores que detectás (nombralos con vocabulario técnico)</label><textarea id="m5-a" placeholder="Error 1: Argumento circular — la conclusión repite la premisa porque...&#10;Error 2: Repetición léxica — el término 'sociedad' aparece...&#10;Error 3: ..."></textarea></div>
+    <div class="campo"><label>Párrafo corregido</label><textarea id="m5-b" rows="5" placeholder="Reescribí el párrafo corrigiendo todos los errores que encontraste..."></textarea></div>
     <div class="acciones"><button class="btn btn-p" onclick="iniciar('m5')">Enviar al tutor →</button><button class="btn-r" onclick="resetM('m5')">Reiniciar</button></div>
   </div>
   <div id="w-m5" style="display:none" class="card">
-    <div class="chat-area"><div class="chat-hdr"><span class="dot"></span> Tutor académico — en proceso</div><div class="chat-msgs" id="c-m5"></div><div class="chat-in"><textarea id="i-m5" placeholder="Respondé aquí al tutor..." onkeydown="ee(event,'m5')"></textarea><button class="btn-send" onclick="send('m5')">➤</button></div></div>
+    <div class="chat-area"><div class="chat-hdr"><div class="chat-hdr-left"><span class="dot"></span> Tutor académico</div><button class="btn-r" style="margin:0" onclick="exportarChat('m5')">💾 Exportar</button></div><div class="chat-msgs" id="c-m5"></div><div class="chat-in"><textarea id="i-m5" placeholder="Respondé al tutor..." onkeydown="ee(event,'m5')"></textarea><button class="btn-send" onclick="send('m5')" id="send-m5">➤</button></div></div>
     <div class="acciones" style="margin-top:1rem"><button class="btn btn-p" onclick="verReporte('m5')" style="background:var(--azul)">📧 Generar y enviar reporte</button></div>
+  </div>
+</div>
+
+<!-- M6 — ANÁLISIS COMPARATIVO (NUEVO) -->
+<div id="p6" class="panel m6">
+  <div class="card">
+    <div class="card-header"><div class="mod-icon">🧠</div><div><h2>Análisis comparativo de textos</h2><div class="sub">Seleccioná dos fragmentos del corpus y analizalos según el enfoque temático que elijas.</div></div></div>
+    <div class="pill-row"><span class="pill verde">🎯 Nivel intermedio–avanzado</span><span class="pill azul">🔗 Enfoques múltiples</span></div>
+    <div class="consigna"><strong>📌 Consigna</strong>Elegí dos fragmentos del corpus y un enfoque de análisis. El tutor te guiará para establecer conexiones entre los textos desde esa perspectiva.</div>
+    <div class="campo"><label>① Seleccioná el primer fragmento</label><select id="sel-frag1" onchange="renderFragSel('sel-frag1','prev-frag1')"><option value="">— Elegí un texto —</option></select></div>
+    <div class="fragmento" id="prev-frag1" style="display:none"></div>
+    <div class="campo"><label>② Seleccioná el segundo fragmento</label><select id="sel-frag2" onchange="renderFragSel('sel-frag2','prev-frag2')"><option value="">— Elegí un texto —</option></select></div>
+    <div class="fragmento" id="prev-frag2" style="display:none"></div>
+    <div class="campo">
+      <label>③ Enfoque de análisis</label>
+      <div class="enfoques-grid" id="enfoques-grid">
+        <div class="enfoque-chip" onclick="selEnfoque(this,'causal')">🔗 Causal</div>
+        <div class="enfoque-chip" onclick="selEnfoque(this,'comparativo')">⚖️ Comparativo</div>
+        <div class="enfoque-chip" onclick="selEnfoque(this,'argumentativo')">🗣️ Argumentativo</div>
+        <div class="enfoque-chip" onclick="selEnfoque(this,'conceptual')">📚 Conceptual</div>
+        <div class="enfoque-chip" onclick="selEnfoque(this,'disciplinar')">🎓 Disciplinar</div>
+        <div class="enfoque-chip" onclick="selEnfoque(this,'contextual')">🌍 Contextual</div>
+        <div class="enfoque-chip" onclick="selEnfoque(this,'metodologico')">🔬 Metodológico</div>
+        <div class="enfoque-chip" onclick="selEnfoque(this,'critico')">⚡ Crítico</div>
+      </div>
+    </div>
+    <div id="enfoque-desc" style="display:none" class="consigna m6" style="margin-bottom:1rem"></div>
+    <div class="campo"><label>④ Tu análisis inicial</label><textarea id="m6-a" rows="5" placeholder="Comenzá tu análisis aquí. ¿Qué relaciones encontrás entre ambos textos desde el enfoque elegido?..." oninput="updateCounter('m6-a','ct9')"></textarea><span class="counter" id="ct9">0 / 800</span></div>
+    <div class="acciones"><button class="btn btn-p" onclick="iniciar('m6')">Enviar al tutor →</button><button class="btn-r" onclick="resetM('m6')">Reiniciar</button></div>
+  </div>
+  <div id="w-m6" style="display:none" class="card">
+    <div class="chat-area"><div class="chat-hdr"><div class="chat-hdr-left"><span class="dot"></span> Tutor académico — Análisis comparativo</div><button class="btn-r" style="margin:0" onclick="exportarChat('m6')">💾 Exportar</button></div><div class="chat-msgs" id="c-m6"></div><div class="chat-in"><textarea id="i-m6" placeholder="Continuá el análisis o respondé al tutor..." onkeydown="ee(event,'m6')"></textarea><button class="btn-send" onclick="send('m6')" id="send-m6">➤</button></div></div>
+    <div class="acciones" style="margin-top:1rem"><button class="btn btn-p" onclick="verReporte('m6')" style="background:var(--azul)">📧 Generar y enviar reporte</button></div>
+  </div>
+</div>
+
+<!-- M7 — PLANIFICADOR DE ESCRITURA (NUEVO) -->
+<div id="p7" class="panel m7">
+  <div class="card">
+    <div class="card-header"><div class="mod-icon">📐</div><div><h2>Planificador de escritura</h2><div class="sub">Planificá un texto académico en 5 etapas: desde la consigna hasta el borrador final.</div></div></div>
+    <div class="pill-row"><span class="pill verde">🎯 Nivel inicial–intermedio</span><span class="pill naranja">📋 Proceso completo</span></div>
+    <div class="consigna"><strong>📌 Consigna</strong>Usá este planificador para organizar la escritura de un texto académico. Completá cada etapa antes de avanzar. El tutor evalúa tu planificación al final.</div>
+    <div class="plan-steps">
+      <div class="plan-step active-step" onclick="irPlan(0,this)">1. Situación</div>
+      <div class="plan-step" onclick="irPlan(1,this)">2. Propósito</div>
+      <div class="plan-step" onclick="irPlan(2,this)">3. Estructura</div>
+      <div class="plan-step" onclick="irPlan(3,this)">4. Fuentes</div>
+      <div class="plan-step" onclick="irPlan(4,this)">5. Borrador</div>
+    </div>
+    <div class="plan-content active" id="plan0">
+      <div class="campo"><label>Situación comunicativa — ¿Qué tenés que escribir?</label><textarea id="p7-0" class="plan-textarea" placeholder="Describí la consigna o tarea: ¿qué tipo de texto pide? ¿Para qué materia? ¿Cuántas páginas? ¿Hay restricciones?"></textarea></div>
+      <div class="acciones"><button class="btn btn-p" onclick="irPlan(1,null)">Siguiente →</button></div>
+    </div>
+    <div class="plan-content" id="plan1">
+      <div class="campo"><label>Propósito y destinatario — ¿Para qué y para quién escribís?</label><textarea id="p7-1" class="plan-textarea" placeholder="¿Qué efecto buscás en el lector? ¿Informar, argumentar, demostrar? ¿Quién va a leer esto?"></textarea></div>
+      <div class="acciones"><button class="btn btn-p" onclick="irPlan(2,null)">Siguiente →</button><button class="btn-r" onclick="irPlan(0,null)">← Anterior</button></div>
+    </div>
+    <div class="plan-content" id="plan2">
+      <div class="campo"><label>Estructura tentativa — ¿Cómo vas a organizar el texto?</label><textarea id="p7-2" class="plan-textarea" placeholder="Bosquejo: Introducción (idea...), Desarrollo punto 1 (porque...), Desarrollo punto 2..., Conclusión (síntesis de...)"></textarea></div>
+      <div class="acciones"><button class="btn btn-p" onclick="irPlan(3,null)">Siguiente →</button><button class="btn-r" onclick="irPlan(1,null)">← Anterior</button></div>
+    </div>
+    <div class="plan-content" id="plan3">
+      <div class="campo"><label>Fuentes a usar — ¿Con qué autores o textos vas a trabajar?</label><textarea id="p7-3" class="plan-textarea" placeholder="Listá los textos, autores o fuentes que vas a citar. ¿Cómo los vas a incorporar (cita directa, paráfrasis)?"></textarea></div>
+      <div class="acciones"><button class="btn btn-p" onclick="irPlan(4,null)">Siguiente →</button><button class="btn-r" onclick="irPlan(2,null)">← Anterior</button></div>
+    </div>
+    <div class="plan-content" id="plan4">
+      <div class="campo"><label>Borrador del primer párrafo — Escribí el inicio</label><textarea id="p7-4" rows="6" class="plan-textarea" placeholder="Escribí el primer párrafo de tu texto. Va a ser revisado por el tutor."></textarea></div>
+      <div class="acciones"><button class="btn btn-p" onclick="iniciar('m7')">Enviar planificación al tutor →</button><button class="btn-r" onclick="irPlan(3,null)">← Anterior</button></div>
+    </div>
+  </div>
+  <div id="w-m7" style="display:none" class="card">
+    <div class="chat-area"><div class="chat-hdr"><div class="chat-hdr-left"><span class="dot"></span> Tutor académico — Planificación</div><button class="btn-r" style="margin:0" onclick="exportarChat('m7')">💾 Exportar</button></div><div class="chat-msgs" id="c-m7"></div><div class="chat-in"><textarea id="i-m7" placeholder="Respondé al tutor..." onkeydown="ee(event,'m7')"></textarea><button class="btn-send" onclick="send('m7')" id="send-m7">➤</button></div></div>
+    <div class="acciones" style="margin-top:1rem"><button class="btn btn-p" onclick="verReporte('m7')" style="background:var(--azul)">📧 Generar y enviar reporte</button></div>
+  </div>
+</div>
+
+<!-- DIAGNÓSTICO INICIAL (NUEVO) -->
+<div id="pd" class="panel">
+  <div class="card" style="border-top:4px solid var(--azul)">
+    <div class="card-header"><div class="mod-icon" style="background:var(--azul-suave)">🎯</div><div><h2 style="color:var(--azul)">Diagnóstico de saberes previos</h2><div class="sub">Evaluación inicial para conocer tu punto de partida. No hay calificación — solo orientación.</div></div></div>
+    <div class="diag-intro"><p>Este diagnóstico te ayuda a conocer tu punto de partida en escritura académica. No hay respuestas incorrectas en el sentido de "mala nota": es información para que vos y tu docente sepan en qué aspectos conviene profundizar.</p></div>
+    <div id="diag-preguntas"></div>
+    <div id="diag-score" style="display:none" class="diag-score">
+      <div class="diag-puntaje" id="diag-num">0/8</div>
+      <div class="diag-nivel" id="diag-nivel-txt"></div>
+      <div class="diag-recom" id="diag-recom"></div>
+      <div class="acciones" style="justify-content:center;margin-top:1.2rem">
+        <button class="btn btn-p" onclick="reiniciarDiag()">🔄 Repetir diagnóstico</button>
+        <button class="btn btn-sec" onclick="verReporteDiag()">📧 Enviar resultado al docente</button>
+      </div>
+    </div>
+    <div id="diag-nav" style="display:none" class="acciones">
+      <button class="btn btn-p" onclick="siguienteDiag()">Siguiente →</button>
+    </div>
   </div>
 </div>
 
 <!-- CONECTORES -->
 <div id="pc" class="panel">
   <div class="card" style="border-top:4px solid var(--azul)">
-    <div class="card-header"><div class="mod-icon" style="background:var(--azul-suave)">📋</div><div><h2 style="color:var(--azul)">Conectores textuales</h2><div class="sub">22 categorías funcionales — Bravo (2005), Cassany (1995), Díaz (1987).</div></div></div>
-    <div class="busq"><span class="ico">🔍</span><input type="text" id="busq-c" placeholder="Buscar conector o categoría..." oninput="filtC()"></div>
+    <div class="card-header"><div class="mod-icon" style="background:var(--azul-suave)">📋</div><div><h2 style="color:var(--azul)">Conectores textuales</h2><div class="sub">22 categorías funcionales — Bravo (2005), Cassany (1995), Díaz (1987). Hacé clic en un conector para copiarlo.</div></div></div>
+    <div class="busq"><span class="ico">🔍</span><input type="text" id="busq-c" placeholder="Buscar conector o categoría..." oninput="filtC()" style="padding-left:2.5rem"></div>
     <div class="cgrid" id="cgrid"></div>
   </div>
 </div>
 
+<!-- GLOSARIO (NUEVO) -->
+<div id="pg" class="panel">
+  <div class="card" style="border-top:4px solid var(--teal)">
+    <div class="card-header"><div class="mod-icon" style="background:var(--teal-suave)">📖</div><div><h2 style="color:var(--teal)">Glosario de escritura académica</h2><div class="sub">Términos fundamentales para leer y producir textos académicos. Filtrá por categoría.</div></div></div>
+    <div class="busq"><span class="ico">🔍</span><input type="text" id="busq-g" placeholder="Buscar término..." oninput="filtG()" style="padding-left:2.5rem"></div>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem" id="glos-filtros"></div>
+    <div class="glos-grid" id="glos-grid"></div>
+  </div>
+</div>
+
 <!-- MODAL REPORTE -->
-<div id="modal-reporte" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center">
-  <div style="background:white;border-radius:var(--radio);padding:2rem;max-width:680px;width:90%;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.2)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem">
-      <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--verde)">📧 Reporte de actividad</h3>
-      <button onclick="cerrarModal()" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--gris-medio)">✕</button>
+<div id="modal-reporte" class="modal-over">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <h3 style="color:var(--verde)">📧 Reporte de actividad</h3>
+      <button class="btn-close" onclick="cerrarModal()">✕</button>
     </div>
     <div class="reporte-resumen" id="reporte-preview"></div>
     <div style="margin-top:1rem;display:flex;flex-direction:column;gap:0.8rem">
-      <div class="envio-ok" id="envio-ok">✅ Reporte enviado correctamente al profesor</div>
+      <div class="envio-ok" id="envio-ok">✅ Reporte enviado correctamente al/la docente</div>
       <div class="envio-err" id="envio-err">❌ <span id="envio-err-msg">Error al enviar. Intentá de nuevo.</span></div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap">
-        <button class="btn-enviar-mail" id="btn-enviar-mail" onclick="enviarMail()">📨 Enviar reporte al profesor</button>
+        <button class="btn-enviar-mail" id="btn-enviar-mail" onclick="enviarMail()">📨 Enviar al docente</button>
+        <button class="btn btn-sec" onclick="descargarReporte()">💾 Descargar .txt</button>
         <button class="btn-r" onclick="cerrarModal()">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- MODAL PROGRESO -->
+<div id="modal-progreso" class="modal-over">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <h3 style="color:var(--azul)">📊 Mi progreso en el taller</h3>
+      <button class="btn-close" onclick="document.getElementById('modal-progreso').style.display='none'">✕</button>
+    </div>
+    <div id="progreso-detalle"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 </main>
 
 <script>
-// ===== EMAILJS =====
+// ===== EMAIL JS =====
 emailjs.init('bCix4_QoJPvqtQ5Ml');
+
+// ===== CORPUS DE TEXTOS =====
+let CORPUS = [];
 
 // ===== CONECTORES =====
 const CD=[
-  {c:"1. Aclaración / Repetición",d:"Proporcionan claridad y énfasis",t:["Es decir","En otras palabras","Dicho de otra manera","Esto es","Conviene subrayar","Lo anterior no quiere decir que"]},
-  {c:"2. Adición",d:"Agregan nuevos datos o aspectos",t:["Además","Asimismo","También","No sólo... sino también","Por otra parte","Se debe agregar que"]},
-  {c:"3. Cambio de perspectiva",d:"Anuncian otro aspecto del mismo tema",t:["A su vez","Con respecto a","En cuanto a","En relación con","Por lo que se refiere a","Por otro lado"]},
-  {c:"4. Causa",d:"Introducen ideas que actúan como causa",t:["Porque","Ya que","Dado que","Puesto que","A causa de","Considerando que"]},
-  {c:"5. Coexistencia",d:"Expresan simultaneidad entre eventos",t:["Al mismo tiempo","Igualmente","Mientras tanto","Simultáneamente","De igual modo"]},
-  {c:"6. Comienzo",d:"Inician un tema nuevo",t:["Acerca de","Con respecto a","En cuanto a","Sobre","En lo que toca a"]},
-  {c:"7. Concesión / Restricción",d:"Objeción que no invalida la idea central",t:["Sin embargo","Aunque","No obstante","A pesar de que","Si bien","Con todo"]},
-  {c:"8. Conclusión / Consecuencia",d:"Anuncian conclusión o efecto",t:["Por lo tanto","En consecuencia","De ahí que","Por consiguiente","En conclusión","De modo que"]},
-  {c:"9. Condición",d:"Expresan una condición necesaria",t:["Si… entonces","Siempre que","A condición de que","En caso de que","A menos que"]},
-  {c:"10. Continuidad",d:"Dan continuidad o muestran transición",t:["A continuación","Dicho lo anterior","Llegados a este punto","Luego","Volviendo al tema"]},
-  {c:"11. Contraste / Oposición",d:"Expresan contraste entre dos ideas",t:["Sin embargo","Por el contrario","En cambio","No obstante","Ahora bien","Antes bien"]},
-  {c:"12. Conformidad / Semejanza",d:"Anuncian similitud con algo anterior",t:["De acuerdo con","Igualmente","Del mismo modo","De manera análoga","En consonancia con"]},
-  {c:"13. Detalles",d:"Señalan un aspecto preciso",t:["En concreto","En particular","En el caso de","Para ser más específicos"]},
-  {c:"14. Ejemplificar",d:"Ilustran o ejemplifican una idea",t:["Por ejemplo","Así, por ejemplo","Para ilustrar","Pongamos por caso","Sirva de ejemplo"]},
-  {c:"15. Énfasis",d:"Destacan ideas importantes",t:["Sobre todo","En efecto","Precisamente","En realidad","Lo más importante"]},
-  {c:"16. Finalidad",d:"Expresan una finalidad o propósito",t:["Con el fin de","Con el objetivo de","Para que","Con la finalidad de","A fin de"]},
-  {c:"17. Hipótesis",d:"Encabezan juicios de los que no se tiene certeza",t:["Posiblemente","Es probable que","Quizás","Supongamos","Tal vez"]},
-  {c:"18. Introducción",d:"Introducen el tema del texto",t:["El objetivo principal de","Me propongo exponer","En lo que sigue","Este texto trata de"]},
-  {c:"19. Objeción",d:"Se anticipa a posibles objeciones",t:["Se podría objetar que","Para quienes piensan que","Ante la objeción"]},
-  {c:"20. Resumen",d:"Recapitulan o sintetizan",t:["En resumen","En síntesis","En definitiva","En pocas palabras","Resumiendo"]},
-  {c:"21. Secuencia / Orden",d:"Organizan siguiendo un orden lógico",t:["En primer lugar","En segundo lugar","Finalmente","A continuación","Luego","Para empezar"]},
-  {c:"22. Semejanza",d:"Colocan dos juicios en el mismo plano",t:["Igualmente","De igual manera","De la misma forma","Asimismo"]}
+  {c:"1. Aclaración / Repetición",d:"Proporcionan claridad y énfasis",t:["Es decir","En otras palabras","Dicho de otra manera","Esto es","Conviene subrayar","Lo anterior no quiere decir que","Vale decir","Es más"]},
+  {c:"2. Adición",d:"Agregan nuevos datos o aspectos",t:["Además","Asimismo","También","No sólo… sino también","Por otra parte","Se debe agregar que","Incluso","Del mismo modo"]},
+  {c:"3. Cambio de perspectiva",d:"Anuncian otro aspecto del mismo tema",t:["A su vez","Con respecto a","En cuanto a","En relación con","Por lo que se refiere a","Por otro lado","En otro orden de ideas"]},
+  {c:"4. Causa",d:"Introducen ideas que actúan como causa",t:["Porque","Ya que","Dado que","Puesto que","A causa de","Considerando que","En virtud de que","Debido a"]},
+  {c:"5. Coexistencia",d:"Expresan simultaneidad entre eventos",t:["Al mismo tiempo","Igualmente","Mientras tanto","Simultáneamente","De igual modo","Paralelamente"]},
+  {c:"6. Comienzo",d:"Inician un tema nuevo",t:["Acerca de","Con respecto a","En cuanto a","Sobre","En lo que toca a","En relación con el tema de"]},
+  {c:"7. Concesión / Restricción",d:"Objeción que no invalida la idea central",t:["Sin embargo","Aunque","No obstante","A pesar de que","Si bien","Con todo","Aún así","Pese a"]},
+  {c:"8. Conclusión / Consecuencia",d:"Anuncian conclusión o efecto",t:["Por lo tanto","En consecuencia","De ahí que","Por consiguiente","En conclusión","De modo que","Se infiere que","Cabe concluir que"]},
+  {c:"9. Condición",d:"Expresan una condición necesaria",t:["Si… entonces","Siempre que","A condición de que","En caso de que","A menos que","Con tal de que"]},
+  {c:"10. Continuidad",d:"Dan continuidad o muestran transición",t:["A continuación","Dicho lo anterior","Llegados a este punto","Luego","Volviendo al tema","Retomando lo anterior"]},
+  {c:"11. Contraste / Oposición",d:"Expresan contraste entre dos ideas",t:["Sin embargo","Por el contrario","En cambio","No obstante","Ahora bien","Antes bien","Frente a esto"]},
+  {c:"12. Conformidad / Semejanza",d:"Anuncian similitud con algo anterior",t:["De acuerdo con","Igualmente","Del mismo modo","De manera análoga","En consonancia con","En línea con"]},
+  {c:"13. Detalles",d:"Señalan un aspecto preciso",t:["En concreto","En particular","En el caso de","Para ser más específicos","Específicamente","Puntualmente"]},
+  {c:"14. Ejemplificar",d:"Ilustran o ejemplifican una idea",t:["Por ejemplo","Así, por ejemplo","Para ilustrar","Pongamos por caso","Sirva de ejemplo","A modo de ejemplo"]},
+  {c:"15. Énfasis",d:"Destacan ideas importantes",t:["Sobre todo","En efecto","Precisamente","En realidad","Lo más importante","Especialmente","Principalmente"]},
+  {c:"16. Finalidad",d:"Expresan una finalidad o propósito",t:["Con el fin de","Con el objetivo de","Para que","Con la finalidad de","A fin de","Con el propósito de"]},
+  {c:"17. Hipótesis",d:"Encabezan juicios de los que no se tiene certeza",t:["Posiblemente","Es probable que","Quizás","Supongamos","Tal vez","Cabría suponer que"]},
+  {c:"18. Introducción",d:"Introducen el tema del texto",t:["El objetivo principal de","Me propongo exponer","En lo que sigue","Este texto trata de","El presente trabajo analiza","A lo largo de estas páginas"]},
+  {c:"19. Objeción",d:"Se anticipa a posibles objeciones",t:["Se podría objetar que","Para quienes piensan que","Ante la objeción","Cabe señalar que","No obstante lo anterior"]},
+  {c:"20. Resumen",d:"Recapitulan o sintetizan",t:["En resumen","En síntesis","En definitiva","En pocas palabras","Resumiendo","Para sintetizar"]},
+  {c:"21. Secuencia / Orden",d:"Organizan siguiendo un orden lógico",t:["En primer lugar","En segundo lugar","Finalmente","A continuación","Luego","Para empezar","Por último","En primera instancia"]},
+  {c:"22. Semejanza",d:"Colocan dos juicios en el mismo plano",t:["Igualmente","De igual manera","De la misma forma","Asimismo","En el mismo sentido","De manera similar"]}
 ];
+
+// ===== GLOSARIO =====
+const GLOSARIO = [
+  {term:"Argumento",def:"Razón o conjunto de razones que se ofrecen para sostener una afirmación o refutar la posición contraria.",cat:"Argumentación"},
+  {term:"Coherencia",def:"Propiedad del texto que garantiza la unidad temática y la progresión lógica de las ideas.",cat:"Coherencia y cohesión"},
+  {term:"Cohesión",def:"Conjunto de mecanismos lingüísticos (conectores, referencia, elipsis) que articulan las partes de un texto.",cat:"Coherencia y cohesión"},
+  {term:"Conectores",def:"Palabras o frases que establecen relaciones lógicas entre oraciones o párrafos (causa, consecuencia, contraste, adición).",cat:"Coherencia y cohesión"},
+  {term:"Desagentivación",def:"Recurso del discurso académico que diluye la presencia del sujeto enunciador mediante voz pasiva o construcciones impersonales.",cat:"Registro"},
+  {term:"Enunciado",def:"Unidad de comunicación completa con sentido propio, emitida en una situación concreta.",cat:"Teoría del discurso"},
+  {term:"Explicación",def:"Tipo de texto que busca hacer comprensible un fenómeno o concepto, poniendo en juego el explicando y el explicante.",cat:"Tipos textuales"},
+  {term:"Explicando",def:"El objeto o fenómeno que necesita ser aclarado o hecho inteligible en una secuencia explicativa.",cat:"Tipos textuales"},
+  {term:"Explicante",def:"El segmento textual que modifica o aclara el objeto de la explicación para hacerlo comprensible.",cat:"Tipos textuales"},
+  {term:"Género discursivo",def:"Tipo relativamente estable de enunciados determinado por las prácticas socioculturales de una esfera de comunicación (Bajtín).",cat:"Teoría del discurso"},
+  {term:"Intertextualidad",def:"Relación que un texto mantiene con otros textos, manifestada a través de citas, referencias, alusiones o reformulaciones.",cat:"Teoría del discurso"},
+  {term:"Macroestructura",def:"Organización global del contenido de un texto; su tema o asunto central y la jerarquía de sus ideas.",cat:"Estructura textual"},
+  {term:"Oración tópico",def:"Primera oración de un párrafo que enuncia la idea central que se va a desarrollar en ese segmento.",cat:"Estructura textual"},
+  {term:"Paráfrasis",def:"Reformulación del contenido de otro texto con palabras propias, sin perder el sentido y con mención de la fuente.",cat:"Citación"},
+  {term:"Párrafo",def:"Unidad básica de organización de un texto escrito, delimitada visualmente y organizada en torno a una idea principal.",cat:"Estructura textual"},
+  {term:"Plagio",def:"Uso de ideas, palabras o estructura de otro autor sin la debida atribución, presentándolas como propias.",cat:"Ética académica"},
+  {term:"Registro",def:"Variedad de uso de la lengua adecuada a una situación comunicativa; el académico se caracteriza por la formalidad y precisión.",cat:"Registro"},
+  {term:"Reformulación",def:"Estrategia explicativa que vuelve a decir lo anterior con otras palabras para aclarar o reforzar su comprensión.",cat:"Tipos textuales"},
+  {term:"Secuencia argumentativa",def:"Organización textual que presenta una tesis y la sostiene mediante argumentos y contraargumentos.",cat:"Argumentación"},
+  {term:"Tesis",def:"Posición o hipótesis que el autor defiende a lo largo de un texto argumentativo.",cat:"Argumentación"},
+  {term:"Voz pasiva",def:"Construcción gramatical que pone el foco en la acción o el objeto más que en quien la realiza; frecuente en el discurso académico.",cat:"Registro"},
+  {term:"Alfabetización académica",def:"Proceso continuo de apropiación de las prácticas de lectura y escritura propias de la cultura académica universitaria (Carlino, 2005).",cat:"Pedagogía"},
+  {term:"Citación",def:"Procedimiento de incorporar en el propio texto palabras, ideas o datos de otros autores, con la correspondiente referencia bibliográfica.",cat:"Citación"},
+  {term:"Normas APA",def:"Sistema de citación y referenciación bibliográfica de la American Psychological Association, ampliamente usado en ciencias sociales.",cat:"Citación"},
+  {term:"Polifonía",def:"Presencia de múltiples voces en un texto; la academia reconoce las fuentes para mostrar el diálogo con otros autores.",cat:"Teoría del discurso"},
+  {term:"Tecnicidad léxica",def:"Uso de términos específicos de una disciplina que permiten mayor precisión y economía en la expresión académica.",cat:"Registro"},
+];
+
+// ===== DIAGNÓSTICO =====
+const DIAG_PREGUNTAS = [
+  {p:"¿Qué función principal cumple la oración tópico en un párrafo académico?",ops:[{t:"Resumir lo que se dijo antes.",ok:false},{t:"Presentar la idea central que se va a desarrollar.",ok:true},{t:"Citar a un autor relevante.",ok:false},{t:"Introducir una anécdota personal.",ok:false}]},
+  {p:"¿Cuál de los siguientes es un rasgo del registro académico?",ops:[{t:"Uso de expresiones coloquiales para conectar con el lector.",ok:false},{t:"Primera persona con opiniones subjetivas ('yo creo que...').",ok:false},{t:"Desagentivación y léxico técnico específico de la disciplina.",ok:true},{t:"Oraciones cortas y lenguaje emotivo.",ok:false}]},
+  {p:"Al citar textualmente a un autor en APA 7ª edición, ¿qué datos son obligatorios?",ops:[{t:"Nombre completo del autor y editorial.",ok:false},{t:"Apellido del autor, año de publicación y número de página.",ok:true},{t:"Solo el apellido del autor entre paréntesis.",ok:false},{t:"Título del libro y país de edición.",ok:false}]},
+  {p:"¿Qué distingue a un texto argumentativo de uno expositivo-explicativo?",ops:[{t:"El argumentativo solo usa datos estadísticos.",ok:false},{t:"El expositivo contiene siempre una tesis explícita.",ok:false},{t:"El argumentativo busca la adhesión del lector a una posición; el expositivo busca informar o aclarar.",ok:true},{t:"Son el mismo tipo textual con distintos nombres.",ok:false}]},
+  {p:"¿Qué es una paráfrasis?",ops:[{t:"Copiar un fragmento textual y ponerlo entre comillas.",ok:false},{t:"Reformular con palabras propias una idea de otro autor, citando la fuente.",ok:true},{t:"Resumir un texto suprimiendo datos secundarios.",ok:false},{t:"Traducir un texto de otro idioma.",ok:false}]},
+  {p:"¿En qué consiste el argumento circular?",ops:[{t:"Un argumento que cita varias fuentes distintas.",ok:false},{t:"Un argumento que lleva a una conclusión opuesta a la premisa.",ok:false},{t:"Una afirmación que se sostiene con la misma afirmación reformulada.",ok:true},{t:"Un argumento que usa metáforas para ilustrar.",ok:false}]},
+  {p:"¿Qué son los géneros discursivos según Bajtín?",ops:[{t:"Los tipos de oraciones gramaticales de una lengua.",ok:false},{t:"Tipos relativamente estables de enunciados determinados por prácticas socioculturales.",ok:true},{t:"Las normas de puntuación académica.",ok:false},{t:"Los estilos literarios reconocidos por la academia.",ok:false}]},
+  {p:"La alfabetización académica, según Paula Carlino, debe entenderse como:",ops:[{t:"Un taller de redacción que se hace una vez al inicio de la carrera.",ok:false},{t:"El proceso de aprender a escribir en computadora.",ok:false},{t:"Un proceso continuo, transversal a las disciplinas y a lo largo de toda la carrera.",ok:true},{t:"La corrección gramatical y ortográfica de los textos.",ok:false}]}
+];
+
+// ===== ENFOQUES COMPARATIVOS =====
+const ENFOQUES_DESC = {
+  causal: "🔗 Causal — Analizá qué relaciones de causa y efecto se pueden establecer entre los conceptos, procesos o situaciones que presentan ambos textos.",
+  comparativo: "⚖️ Comparativo — Identificá semejanzas y diferencias entre los planteos teóricos, metodológicos o contextuales de los dos fragmentos.",
+  argumentativo: "🗣️ Argumentativo — Evaluá cómo cada texto sostiene su posición: ¿qué argumentos usa? ¿Cuáles son más sólidos? ¿Se refutan o complementan?",
+  conceptual: "📚 Conceptual — Rastreá los conceptos clave que aparecen en ambos textos y analizá cómo se definen, amplían o tensionan entre sí.",
+  disciplinar: "🎓 Disciplinar — ¿Desde qué disciplinas o tradiciones teóricas hablan los textos? ¿Cómo dialoga el corpus con el campo de Trabajo Social?",
+  contextual: "🌍 Contextual — ¿En qué contextos sociopolíticos o institucionales se inscriben los planteos? ¿Cómo incide el contexto en la perspectiva del texto?",
+  metodologico: "🔬 Metodológico — ¿Qué enfoques, fuentes o procedimientos de conocimiento se ponen en juego? ¿Cómo se valida el saber en cada texto?",
+  critico: "⚡ Crítico — ¿Qué relaciones de poder, exclusión o naturalización se pueden detectar en los planteos? ¿Qué voces están ausentes?"
+};
 
 // ===== ESTADOS =====
 const E={
   m1:{h:[],r:0},m2:{h:[],r:0,frag:null},
-  m3:{h:[],r:0},m4:{h:[],r:0},m5:{h:[],r:0}
+  m3:{h:[],r:0},m4:{h:[],r:0},m5:{h:[],r:0},
+  m6:{h:[],r:0,frag1:null,frag2:null,enfoque:null},
+  m7:{h:[],r:0}
 };
 let modalidadActual='Individual';
-let reporteActual={modulo:'',contenido:''};
+let reporteActual={modulo:'',data:null};
+let diagIdx=0,diagResp=[],enfoqueSel=null;
+let planIdx=0;
+
+// ===== INIT =====
+async function cargarCorpus(){
+  try{
+    const r=await fetch('textos.json?v='+Date.now());
+    CORPUS=await r.json();
+  }catch(e){
+    CORPUS=[{
+      texto:"Puede afirmarse en general que toda explicación pone en juego dos segmentos de base: un objeto por explicar —el explicando— y otro segmento, el explicante.",
+      fuente:"Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba.",
+      tipo_sugerido:"explicativo",nivel:"inicial"
+    }];
+  }
+}
+
+function poblarSelectores(){
+  if(!CORPUS.length)return;
+  ['sel-frag1','sel-frag2'].forEach(id=>{
+    const sel=document.getElementById(id);
+    if(!sel)return;
+    CORPUS.forEach((t,i)=>{
+      const op=document.createElement('option');
+      op.value=i;
+      op.textContent=`[${t.nivel}] ${t.texto.substring(0,60)}...`;
+      sel.appendChild(op);
+    });
+  });
+}
 
 // ===== NAVEGACIÓN =====
 function ir(id,el){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+  if(el)el.classList.add('active');
 }
 
 // ===== MODALIDAD =====
@@ -393,115 +824,117 @@ function setMod(m,btn){
   modalidadActual=m;
   document.querySelectorAll('.mod-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
-  const n2=document.getElementById('campo-nombre2');
-  const n3=document.getElementById('row-nombre3');
-  const etiqueta=document.getElementById('label-nombre1');
-  if(m==='Grupal'){
-    n2.style.cssText='display:block';
-    n3.style.cssText='display:flex';
-    if(etiqueta) etiqueta.textContent='Integrante 1';
-  } else {
-    n2.style.cssText='display:none';
-    n3.style.cssText='display:none';
-    if(etiqueta) etiqueta.textContent='Tu nombre completo';
-  }
+  document.getElementById('campo-nombre2').style.display=m==='Grupal'?'block':'none';
+  document.getElementById('row-nombre3').style.display=m==='Grupal'?'flex':'none';
+  document.getElementById('label-nombre1').textContent=m==='Grupal'?'Integrante 1':'Nombre completo';
 }
 
 function getNombres(){
   const n1=document.getElementById('nombre1').value.trim();
   if(!n1)return null;
   if(modalidadActual==='Individual')return n1;
-  const n2=document.getElementById('nombre2').value.trim();
-  const n3=document.getElementById('nombre3').value.trim();
-  const n4=document.getElementById('nombre4').value.trim();
-  return [n1,n2,n3,n4].filter(n=>n).join(' / ');
+  const ns=[n1,document.getElementById('nombre2').value.trim(),document.getElementById('nombre3').value.trim(),document.getElementById('nombre4').value.trim()];
+  return ns.filter(n=>n).join(' / ');
+}
+
+// ===== COUNTER =====
+function updateCounter(id,cid){
+  const el=document.getElementById(id);
+  const c=document.getElementById(cid);
+  if(el&&c)c.textContent=el.value.length+' / '+el.getAttribute('placeholder')?.length||500;
 }
 
 // ===== GUÍA =====
-function toggleGuia(){document.getElementById('guia').classList.toggle('open')}
+function toggleGuia(){
+  const g=document.getElementById('guia');
+  g.classList.toggle('open');
+}
 
-// ===== FRAGMENTO =====
-async function cargarFrag(){
+// ===== FRAGMENTOS =====
+function cargarFrag(nivel='todos'){
   const c=document.getElementById('frag-cont');
+  if(!c)return;
   c.innerHTML='<div class="cargando">⏳ Cargando fragmento...</div>';
-  try{
-    const r=await fetch('textos.json?v='+Date.now());
-    const tx=await r.json();
-    const t=tx[Math.floor(Math.random()*tx.length)];
-    E.m2.frag=t;
-    const nb={inicial:'bi',intermedio:'bm',avanzado:'ba'};
-    c.innerHTML=`<div class="fragmento">${t.texto}<div class="fuente">${t.fuente} <span class="badge ${nb[t.nivel]||'bi'}">${t.nivel||'inicial'}</span></div></div>`;
-  }catch(e){
-    const fb={texto:"Puede afirmarse en general que toda explicación pone en juego dos segmentos de base: un objeto por explicar —el explicando— y otro segmento, el explicante, que modifica al objeto para hacerlo más inteligible.",fuente:"Zamudio, B. y Atorresi, A. (2000). La explicación. Eudeba.",nivel:"inicial"};
-    E.m2.frag=fb;
-    c.innerHTML=`<div class="fragmento">${fb.texto}<div class="fuente">${fb.fuente} <span class="badge bi">inicial</span></div></div>`;
-  }
+  let pool=CORPUS.length?CORPUS:[{texto:"Los géneros discursivos son conjuntos más o menos estables de enunciados determinados por las prácticas socioculturales.",fuente:"Arnoux, E. (2006).",nivel:"inicial",tipo_sugerido:"expositivo"}];
+  if(nivel!=='todos')pool=pool.filter(t=>t.nivel===nivel);
+  if(!pool.length)pool=CORPUS;
+  const t=pool[Math.floor(Math.random()*pool.length)];
+  E.m2.frag=t;
+  const nb={inicial:'bi',intermedio:'bm',avanzado:'ba'};
+  c.innerHTML=`<div class="fragmento">${t.texto}<div class="fuente">${t.fuente} <span class="badge ${nb[t.nivel]||'bi'}">${t.nivel||'inicial'}</span> <span class="badge bt">${t.tipo_sugerido||'expositivo'}</span></div></div>`;
 }
-function nuevoFrag(){resetM('m2');cargarFrag();}
 
-// ===== SYSTEM PROMPT =====
+function nuevoFrag(){
+  resetM('m2');
+  const nivel=document.getElementById('sel-nivel')?.value||'todos';
+  cargarFrag(nivel);
+}
+
+function filtrarFrags(){
+  const d=document.getElementById('filtro-nivel');
+  d.style.display=d.style.display==='none'?'block':'none';
+}
+
+function cargarFragNivel(){
+  const nivel=document.getElementById('sel-nivel').value;
+  resetM('m2');
+  cargarFrag(nivel);
+}
+
+// ===== SELECTOR FRAGMENTOS M6 =====
+function renderFragSel(selId,prevId){
+  const sel=document.getElementById(selId);
+  const prev=document.getElementById(prevId);
+  const idx=parseInt(sel.value);
+  if(isNaN(idx)){prev.style.display='none';return;}
+  const t=CORPUS[idx];
+  if(selId==='sel-frag1')E.m6.frag1=t;
+  else E.m6.frag2=t;
+  const nb={inicial:'bi',intermedio:'bm',avanzado:'ba'};
+  prev.innerHTML=`${t.texto}<div class="fuente">${t.fuente} <span class="badge ${nb[t.nivel]||'bi'}">${t.nivel}</span></div>`;
+  prev.style.display='block';
+}
+
+function selEnfoque(el,enfoque){
+  document.querySelectorAll('.enfoque-chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  enfoqueSel=enfoque;
+  const d=document.getElementById('enfoque-desc');
+  d.textContent=ENFOQUES_DESC[enfoque];
+  d.style.display='block';
+}
+
+// ===== PLAN STEPS =====
+function irPlan(idx,btn){
+  planIdx=idx;
+  document.querySelectorAll('.plan-content').forEach(p=>p.classList.remove('active'));
+  document.getElementById('plan'+idx).classList.add('active');
+  document.querySelectorAll('.plan-step').forEach((s,i)=>{
+    s.classList.remove('active-step');
+    if(i<idx)s.classList.add('done-step');
+    else s.classList.remove('done-step');
+  });
+  if(btn)btn.classList.add('active-step');
+  else document.querySelectorAll('.plan-step')[idx]?.classList.add('active-step');
+}
+
+// ===== SYSTEM PROMPTS =====
 function getSP(m){
-  const b = "Sos un tutor de escritura academica para estudiantes universitarias de Trabajo Social en Argentina. Tu rol es acompanar el proceso con inteligencia pedagogica, no sos un interrogador automatico.\n\n" +
-    "PRINCIPIOS:\n" +
-    "1. Evalua si la respuesta es correcta, parcial o incorrecta antes de preguntar.\n" +
-    "2. Si la respuesta es CORRECTA o SOLIDA: reconocelo brevemente y avanza al siguiente aspecto.\n" +
-    "3. Si la respuesta es PARCIAL: hace UNA sola pregunta orientadora sobre lo que falta.\n" +
-    "4. Si despues de 2 rondas no llega: da una PISTA CONCRETA sin dar la respuesta completa.\n" +
-    "5. Si despues de 3 rondas sigue sin llegar: explica directamente ese punto y avanza.\n" +
-    "6. NUNCA reescribas por ella ni completes su trabajo.\n" +
-    "7. Si intenta que hagas el trabajo: senalalo con amabilidad y devuelve la responsabilidad.\n" +
-    "8. Podes citar conectores de Bravo (2005) mencionando la categoria cuando sea util.\n" +
-    "9. Tono directo, calido, profesional. OBLIGATORIO: usa SIEMPRE voseo rioplatense argentino. Ejemplos correctos: vos tenes, escribi, pasemos, \u00bfpodrias?, anda bien. PROHIBIDO usar formas de Espana como: tienes, teneis, estas listo/a, podrias (con acento en o), escribid, vosotros, habeis. Si no usas voseo rioplatense estaras cometiendo un error grave.\n" +
-    "10. El objetivo es que aprenda y avance, no que se sienta agobiada.\n\n" +
-    "CIERRE: Si el intercambio fue productivo y la alumna demostro comprension, cerra con devolucion final aunque hayan sido solo 2 rondas.";
-
-  const sp = {
-    m1: "\nMODULO 1 - Constructor de parrafos en 3 etapas: ORACION TOPICO → FUNDAMENTACION → CIERRE.\n" +
-        "El parrafo academico tiene 3 etapas claras y debes guiar a la alumna por cada una explicitamente:\n\n" +
-        "ETAPA 1 - ORACION TOPICO:\n" +
-        "- Evalua si la oracion topico presenta una idea central clara y sostenible.\n" +
-        "- Si es correcta: reconocelo con una frase breve y anunciá el avance: 'Bien, tu oracion topico es solida. Pasemos a construir la FUNDAMENTACION.'\n" +
-        "- Si es vaga o circular: hacé UNA pregunta para que la precise antes de avanzar.\n\n" +
-        "ETAPA 2 - FUNDAMENTACION:\n" +
-        "- Pedile que desarrolle 2 o 3 argumentos, datos o razones que sostengan la oracion topico.\n" +
-        "- Guia con preguntas como: '¿Que evidencia o argumento respalda esa afirmacion?' o '¿Como se vincula ese aspecto con tu idea central?'\n" +
-        "- Cuando la fundamentacion sea suficiente: anunciá: 'Muy bien, tenes una fundamentacion solida. Pasemos al CIERRE del parrafo.'\n\n" +
-        "ETAPA 3 - CIERRE:\n" +
-        "- Pedile que escriba una oracion de cierre que retome la idea central sin repetirla textualmente.\n" +
-        "- El cierre debe sintetizar o proyectar, no copiar la oracion topico.\n" +
-        "- Cuando el cierre sea correcto: hace una devolucion final integrando las 3 etapas y felicitala por el parrafo construido.\n\n" +
-        "IMPORTANTE: Siempre anuncia en que etapa estan con una linea clara como 'Pasemos a la FUNDAMENTACION' o 'Pasemos al CIERRE'. Nunca des la devolucion final antes de haber trabajado las 3 etapas.",
-    m2: "\nMODULO 2 - Identificador de tipo textual. Los 4 tipos posibles son:\n" +
-        "- EXPOSITIVO-EXPLICATIVO: informa y hace comprensible un concepto. Rasgos: definiciones, reformulaciones, ejemplos, conectores aclaratorios (es decir, esto es), voz impersonal, sin opinion del autor.\n" +
-        "- ARGUMENTATIVO: busca convencer. Rasgos: tesis explicita, argumentos que la respaldan, conectores causales/condicionales, marcas de opinion del autor (consideramos, es necesario), refutacion de posturas contrarias.\n" +
-        "- NARRATIVO: relata hechos en secuencia temporal. Rasgos: verbos en pasado, orden cronologico, personajes o actores, conectores temporales (luego, despues, entonces).\n" +
-        "- DIALOGAL: reproduce intercambio entre voces. Rasgos: turnos de habla, interlocucion directa, preguntas y respuestas, citas de voces distintas.\n" +
-        "INSTRUCCIONES:\n" +
-        "- Si identifica correctamente y da un rasgo concreto del texto: confirma y pide que profundice otro rasgo.\n" +
-        "- Si identifica bien pero no fundamenta con el texto: pedile que senale donde exactamente ve ese rasgo.\n" +
-        "- Si identifica mal: pregunta que funcion cumple el texto (informar, convencer, relatar, dialogar).\n" +
-        "- No confirmes hasta que cite al menos un rasgo concreto del fragmento, no de la teoria.",
-    m3: "\nMODULO 3 - Reescritura academica.\n" +
-        "- Revisa: elimino marcas coloquiales, uso desagentivacion, el registro es uniforme, conectores apropiados.\n" +
-        "- Si esta bien: decilo y pregunta solo sobre el aspecto mas debil.\n" +
-        "- Si hay problemas: senala UNO por vez.",
-    m4: "\nMODULO 4 - Laboratorio de citas.\n" +
-        "- Cita directa: tiene comillas, autor, anio y pagina? Si si: confirma.\n" +
-        "- Parafrasis: respeta el sentido sin copiar la estructura? Si si: confirma.\n" +
-        "- Referencia indirecta: integra la idea sin reproducir el texto? Si si: confirma.\n" +
-        "- Solo pregunta sobre lo que esta mal o incompleto.",
-    m5: "\nMODULO 5 - Texto con errores (argumento circular, repeticion lexica, falta de fundamentacion, mezcla de registros, generalizacion sin datos).\n" +
-        "- Si detecto todos: confirma y pedile que justifique el mas complejo.\n" +
-        "- Si detecto algunos: pregunta si encontro todos y da una pista sobre la categoria del que falta.\n" +
-        "- Al cierre: revela todos los errores con explicacion completa."
+  const b="Sos un tutor de escritura academica para estudiantes universitaries y terciaries en Argentina. Tu rol es acompañar el proceso con inteligencia pedagogica, no sos un interrogador automatico.\n\nREGLA CRITICA ABSOLUTA — VIOLACION GRAVE:\nSi el mensaje del estudiante termina con dos puntos (':'), una coma, un guion, o cualquier signo que indique que la oracion esta incompleta: NO la completes, NO la continues, NO inventes lo que faltaba. Simplemente pedile que complete su idea. Ejemplo correcto: 'Tu respuesta parece incompleta, ¿podés terminar la idea?'. NUNCA escribas contenido que el estudiante no haya escrito. NUNCA inventes argumentos, datos ni continuaciones de sus oraciones. Si ves que la respuesta es un fragmento cortado, solo señalalo y esperá.\n\nPRINCIPIOS PEDAGOGICOS:\n1. Evalua SOLO lo que el estudiante escribio, sin agregar ni completar nada.\n2. Si es CORRECTA o SOLIDA: reconocelo brevemente y avanza al siguiente aspecto.\n3. Si es PARCIAL o INCOMPLETA: hace UNA sola pregunta orientadora sobre lo que falta.\n4. Despues de 2 rondas sin llegar: da una PISTA CONCRETA sin dar la respuesta completa.\n5. Despues de 3 rondas: explica directamente ese punto y avanza.\n6. NUNCA reescribas por elle ni completes su trabajo.\n7. Si intenta que hagas el trabajo: senalalo con amabilidad y devuelve la responsabilidad.\n8. Podes citar conectores de Bravo (2005) mencionando la categoria cuando sea util.\n9. TONO: directo, calido, profesional. OBLIGATORIO: voseo rioplatense argentino siempre. 'vos tenes', 'escribi', 'pasemos', 'podes'. PROHIBIDO: 'tienes', 'podeis', 'vosotros', 'teneis', formas de Espana.\n10. El objetivo es que aprenda y avance, no que se sienta agobiade.\n\nCIERRE: Si el intercambio fue productivo y le estudiante demostro comprension, cerra con devolucion final aunque hayan sido solo 2 rondas.";
+  const sp={
+    m1:"\nMODULO 1 — Constructor de parrafos en 3 etapas: ORACION TOPICO → FUNDAMENTACION → CIERRE.\nGuia explicitamente por cada etapa:\nETAPA 1: Evalua si la oracion topico presenta una idea central clara y sostenible. Si es correcta: 'Bien, tu oracion topico es solida. Pasemos a la FUNDAMENTACION.' Si es vaga: UNA pregunta para precisarla.\nETAPA 2: Pedile 2-3 argumentos, datos o razones que sostengan la oracion. Cuando sea suficiente: 'Muy bien. Pasemos al CIERRE.'\nETAPA 3: Pedile una oracion de cierre que retome la idea central sin repetirla textualmente. Cuando cierre, hace devolucion final integrando las 3 etapas.\nSiempre anuncia en que etapa estan. Nunca des devolucion final antes de trabajar las 3 etapas.",
+    m2:"\nMODULO 2 — Identificador de tipo textual. Los tipos posibles son:\n- EXPOSITIVO-EXPLICATIVO: informa y hace comprensible. Rasgos: definiciones, reformulaciones, ejemplos, voz impersonal, sin opinion del autor.\n- ARGUMENTATIVO: busca convencer. Rasgos: tesis, argumentos, conectores causales, marcas de opinion ('consideramos', 'es necesario'), refutacion.\n- NARRATIVO: relata hechos. Rasgos: verbos en pasado, orden cronologico, personajes, conectores temporales.\n- DIALOGAL: reproduce intercambio. Rasgos: turnos de habla, interlocucion directa, citas de voces distintas.\nSi identifica correctamente con rasgo concreto: confirma y pide otro rasgo. Si identifica mal: pregunta que funcion cumple el texto. No confirmes hasta que cite al menos un rasgo concreto del fragmento.",
+    m3:"\nMODULO 3 — Reescritura academica.\nRevisa: elimino marcas coloquiales, uso desagentivacion, registro uniforme, conectores apropiados, precision lexica. Si esta bien: decilo y pregunta sobre el aspecto mas debil. Si hay problemas: senala UNO por vez con precision. Al final evalua la justificacion de las decisiones de estilo.",
+    m4:"\nMODULO 4 — Laboratorio de citas APA 7.\nCita directa: tiene comillas, apellido autor, año y pagina? Parafrasis: respeta el sentido sin copiar la estructura ni las palabras? Referencia indirecta: integra la idea sin reproducir el texto, con cita entre parentesis? Evalua cada modalidad. Solo pregunta sobre lo que esta mal o incompleto. Al final hace una devolucion sintetica sobre las tres.",
+    m5:"\nMODULO 5 — Texto con errores (argumento circular, repeticion lexica, falta de fundamentacion, mezcla de registros, generalizacion sin datos).\nSi detecto todos: confirma y pedile que justifique el mas complejo. Si detecto algunos: pregunta si encontro todos y da pista sobre la categoria del que falta. Al cierre: revela todos los errores con explicacion completa y evalua el parrafo corregido.",
+    m6:"\nMODULO 6 — Analisis comparativo de textos academicos.\nLe estudiante eligio dos fragmentos del corpus y un enfoque de analisis. Tu rol:\n1. Evalua si el analisis inicial establece conexiones genuinas entre los textos desde el enfoque elegido.\n2. Si el analisis es superficial: pedile que profundice senalando especificamente que aspectos no fueron explorados.\n3. Guia la identificacion de relaciones causales, comparativas, conceptuales, criticas segun el enfoque seleccionado.\n4. Pedi que incorpore terminologia academica especifica.\n5. Al cierre: ofrece una devolucion que integre los hallazgos del analisis y sugiera como podrían articularse en un texto academico.",
+    m7:"\nMODULO 7 — Planificador de escritura academica.\nLe estudiante entrego su planificacion completa en 5 etapas. Evalua:\n1. SITUACION: ¿Entendio correctamente la consigna? ¿Identifico el tipo de texto, la extension y las restricciones?\n2. PROPOSITO: ¿Tiene claro para que escribe y a quien le escribe? ¿El proposito es coherente con la situacion?\n3. ESTRUCTURA: ¿El bosquejo es coherente con el tipo de texto? ¿Tiene introduccion, desarrollo y cierre? ¿Las ideas estan jerarquizadas?\n4. FUENTES: ¿Identifico fuentes pertinentes? ¿Plantea distintas modalidades de citacion?\n5. BORRADOR: ¿El primer parrafo tiene oracion topico? ¿El registro es academico? ¿Hay coherencia con la planificacion?\nSenala los puntos fuertes y los aspectos a mejorar de manera especifica y pedagogica."
   };
-  return b + (sp[m] || '');
+  return b+(sp[m]||'');
 }
 
-// ===== OPENROUTER API =====
-const OR_KEY = '';
+// ===== API — IDÉNTICA AL ORIGINAL DE RODOLFO =====
 const OR_URL = 'https://taller-proxy.rodocabral.workers.dev';
-const OR_MODEL = 'meta-llama/llama-3.3-70b-instruct:free';
 
 async function llamar(m, msg) {
   const est = E[m];
@@ -535,18 +968,13 @@ async function llamar(m, msg) {
   }
 }
 
-function activarEtapaM1(ronda) {
-  const etapas = document.querySelectorAll('#p1 .etapa');
-  if (!etapas.length) return;
-  etapas.forEach(e => e.classList.remove('on'));
-  if (ronda <= 1) {
-    etapas[0].classList.add('on');
-  } else if (ronda <= 3) {
-    etapas[0].classList.add('on');
-    etapas[1].classList.add('on');
-  } else {
-    etapas.forEach(e => e.classList.add('on'));
-  }
+function activarEtapaM1(ronda){
+  const etapas=document.querySelectorAll('#p1 .etapa');
+  if(!etapas.length)return;
+  etapas.forEach(e=>e.classList.remove('on'));
+  if(ronda<=1)etapas[0].classList.add('on');
+  else if(ronda<=3){etapas[0].classList.add('on');etapas[1].classList.add('on');}
+  else etapas.forEach(e=>e.classList.add('on'));
 }
 
 // ===== CHAT UI =====
@@ -558,27 +986,55 @@ function addMsg(m,txt,tipo,cierre=false){
   d.innerHTML=`<div class="msg-lbl">${l}</div>${txt.replace(/\n/g,'<br>')}`;
   c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
-function load(m){
-  const c=document.getElementById('c-'+m);
-  const d=document.createElement('div');d.className='load-msg';d.id='ld-'+m;
-  d.innerHTML=`<span>El tutor está pensando</span><span class="dots"><span></span><span></span><span></span></span>`;
-  c.appendChild(d);c.scrollTop=c.scrollHeight;
-}
+function load(m){const c=document.getElementById('c-'+m);if(!c)return;const d=document.createElement('div');d.className='load-msg';d.id='ld-'+m;d.innerHTML=`<span>El tutor está pensando</span><span class="dots"><span></span><span></span><span></span></span>`;c.appendChild(d);c.scrollTop=c.scrollHeight;}
 function unload(m){const e=document.getElementById('ld-'+m);if(e)e.remove();}
+function estaIncompleto(txt) {
+  // Detecta si el texto termina con signos que indican oración cortada
+  const trimmed = txt.trim();
+  return /[,:;\-–—]$/.test(trimmed) || trimmed.endsWith('...');
+}
+
 function ee(ev,m){if(ev.key==='Enter'&&!ev.shiftKey){ev.preventDefault();send(m);}}
+
 async function send(m){
   const inp=document.getElementById('i-'+m);
-  const txt=inp.value.trim();if(!txt)return;
+  const txt=inp.value.trim();
+  if(!txt)return;
+  if(estaIncompleto(txt)){
+    // Mostrar advertencia inline sin bloquear con alert()
+    const c=document.getElementById('c-'+m);
+    const warn=document.createElement('div');
+    warn.className='msg ia';
+    warn.style.background='#fff8e1';warn.style.borderColor='#d4a017';
+    warn.innerHTML=`<div class="msg-lbl" style="color:#d4a017">⚠️ Atención</div>Tu mensaje parece incompleto (termina con "${txt.slice(-1)}"). ¿Querés completar la idea antes de enviarlo? Si es intencional, hacé clic en ➤ de nuevo para enviarlo igual.`;
+    warn.dataset.warning='1';
+    // Si ya hay una advertencia previa, ignorarla y enviar igual
+    const prevWarn=c.querySelector('[data-warning]');
+    if(prevWarn){
+      prevWarn.remove();
+      inp.value='';
+      addMsg(m,txt,'usr');
+      await llamar(m,txt);
+      return;
+    }
+    c.appendChild(warn);c.scrollTop=c.scrollHeight;
+    return; // Primera vez: solo avisa, no envía
+  }
   inp.value='';addMsg(m,txt,'usr');await llamar(m,txt);
 }
 
-// ===== INICIAR =====
+// ===== INICIAR MÓDULOS =====
 async function iniciarM1(){
   const nombres=getNombres();
   if(!nombres){alert('Completá tu nombre antes de empezar.');document.getElementById('nombre1').focus();return;}
   const tema=document.getElementById('m1-tema').value.trim();
   const or=document.getElementById('m1-oracion').value.trim();
   if(!tema||!or){alert('Completá el tema y tu oración tópico.');return;}
+  if(estaIncompleto(or)){
+    alert('Tu oración tópico parece incompleta (termina con "' + or.slice(-1) + '"). Completala antes de enviar.');
+    document.getElementById('m1-oracion').focus();
+    return;
+  }
   const w=document.getElementById('w-m1');w.style.display='block';w.scrollIntoView({behavior:'smooth',block:'center'});
   const msg=`Mi tema: "${tema}". Mi oración tópico: "${or}".`;
   addMsg('m1',msg,'usr');await llamar('m1',msg);
@@ -592,22 +1048,39 @@ async function iniciar(m){
     const r=document.getElementById('m2-r').value.trim();
     if(!E.m2.frag){alert('Esperá a que cargue el fragmento.');return;}
     if(!r){alert('Escribí tu identificación y justificación.');return;}
-    msg=`Fragmento: "${E.m2.frag.texto}" (${E.m2.frag.fuente}). Mi respuesta: ${r}`;
+    msg=`Fragmento analizado: "${E.m2.frag.texto}" (${E.m2.frag.fuente}). Mi respuesta: ${r}`;
   }
   if(m==='m3'){
     const a=document.getElementById('m3-a').value.trim(),b=document.getElementById('m3-b').value.trim();
     if(!a||!b){alert('Completá la reescritura y la justificación.');return;}
-    msg=`Mi reescritura: "${a}". Lo que cambié y por qué: "${b}".`;
+    msg=`Mi reescritura: "${a}". Decisiones de estilo: "${b}".`;
   }
   if(m==='m4'){
     const a=document.getElementById('m4-a').value.trim(),b=document.getElementById('m4-b').value.trim(),c=document.getElementById('m4-c').value.trim();
     if(!a||!b||!c){alert('Completá las tres modalidades de cita.');return;}
-    msg=`Mis tres modalidades:\n① Cita directa: ${a}\n② Paráfrasis: ${b}\n③ Referencia indirecta: ${c}`;
+    msg=`Mis tres modalidades de cita:\n① Cita directa: ${a}\n② Paráfrasis: ${b}\n③ Referencia indirecta: ${c}`;
   }
   if(m==='m5'){
     const a=document.getElementById('m5-a').value.trim(),b=document.getElementById('m5-b').value.trim();
     if(!a||!b){alert('Completá la detección de errores y el párrafo corregido.');return;}
     msg=`Errores detectados:\n${a}\n\nPárrafo corregido:\n${b}`;
+  }
+  if(m==='m6'){
+    if(!E.m6.frag1||!E.m6.frag2){alert('Seleccioná los dos fragmentos.');return;}
+    if(!enfoqueSel){alert('Elegí un enfoque de análisis.');return;}
+    const a=document.getElementById('m6-a').value.trim();
+    if(!a){alert('Escribí tu análisis inicial.');return;}
+    E.m6.enfoque=enfoqueSel;
+    msg=`Fragmento 1: "${E.m6.frag1.texto}" (${E.m6.frag1.fuente})\n\nFragmento 2: "${E.m6.frag2.texto}" (${E.m6.frag2.fuente})\n\nEnfoque de análisis: ${enfoqueSel.toUpperCase()}\n\nMi análisis inicial: ${a}`;
+  }
+  if(m==='m7'){
+    const s0=document.getElementById('p7-0').value.trim();
+    const s1=document.getElementById('p7-1').value.trim();
+    const s2=document.getElementById('p7-2').value.trim();
+    const s3=document.getElementById('p7-3').value.trim();
+    const s4=document.getElementById('p7-4').value.trim();
+    if(!s0||!s4){alert('Completá al menos la situación comunicativa y el borrador del primer párrafo.');return;}
+    msg=`PLANIFICACIÓN COMPLETA:\n\n1. Situación comunicativa:\n${s0}\n\n2. Propósito y destinatario:\n${s1||'No completado'}\n\n3. Estructura tentativa:\n${s2||'No completado'}\n\n4. Fuentes a usar:\n${s3||'No completado'}\n\n5. Borrador del primer párrafo:\n${s4}`;
   }
   const w=document.getElementById('w-'+m);w.style.display='block';w.scrollIntoView({behavior:'smooth',block:'center'});
   addMsg(m,msg,'usr');await llamar(m,msg);
@@ -616,27 +1089,81 @@ async function iniciar(m){
 // ===== RESET =====
 function resetM(m){
   const chat=document.getElementById('c-'+m);
-  if(chat?.innerHTML&&!confirm('¿Reiniciar? Se perderá el progreso actual.'))return;
-  E[m]={h:[],r:0,frag:E[m].frag||null};
+  if(chat?.innerHTML&&E[m]?.h?.length&&!confirm('¿Reiniciar? Se perderá el progreso actual.'))return;
+  E[m]={h:[],r:0,frag:E[m]?.frag||null};
   if(chat)chat.innerHTML='';
   const w=document.getElementById('w-'+m);if(w)w.style.display='none';
-  const campos={m1:['m1-tema','m1-oracion'],m2:['m2-r'],m3:['m3-a','m3-b'],m4:['m4-a','m4-b','m4-c'],m5:['m5-a','m5-b']};
+  const campos={m1:['m1-tema','m1-oracion'],m2:['m2-r'],m3:['m3-a','m3-b'],m4:['m4-a','m4-b','m4-c'],m5:['m5-a','m5-b'],m6:['m6-a'],m7:['p7-0','p7-1','p7-2','p7-3','p7-4']};
   (campos[m]||[]).forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
 }
 
+// ===== PROGRESO =====
+function updateProgreso(m){
+  const pm=document.getElementById('pm-'+m);
+  if(!pm)return;
+  if(E[m].r>=2)pm.classList.add('done');
+  else if(E[m].r>=1)pm.classList.add('partial');
+}
+
+function verProgreso(){
+  const modulos=[
+    {id:'m1',nombre:'Constructor de párrafos'},
+    {id:'m2',nombre:'Identificador textual'},
+    {id:'m3',nombre:'Reescritura académica'},
+    {id:'m4',nombre:'Laboratorio de citas'},
+    {id:'m5',nombre:'Corrector de errores'},
+    {id:'m6',nombre:'Análisis comparativo'},
+    {id:'m7',nombre:'Planificador de escritura'},
+    {id:'pd',nombre:'Diagnóstico inicial'}
+  ];
+  let html='<div style="display:flex;flex-direction:column;gap:0.8rem">';
+  modulos.forEach(mod=>{
+    const est=E[mod.id];
+    const rondas=est?.r||0;
+    const estado=rondas===0?'⬜ Sin iniciar':rondas>=4?'✅ Completado':rondas>=2?'🔶 En progreso':'🔵 Iniciado';
+    html+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:0.8rem 1rem;background:var(--gris-claro);border-radius:8px">
+      <span style="font-size:0.88rem;font-weight:500">${mod.nombre}</span>
+      <span style="font-size:0.82rem">${estado} ${rondas>0?`(${rondas} intercambios)`:''}</span>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('progreso-detalle').innerHTML=html;
+  document.getElementById('modal-progreso').style.display='flex';
+}
+
+// ===== EXPORTAR CHAT =====
+function exportarChat(m){
+  if(!E[m]||!E[m].h.length){alert('No hay contenido para exportar.');return;}
+  const nombres=getNombres()||'Sin identificar';
+  const fecha=new Date().toLocaleString('es-AR');
+  const nm={m1:'Constructor de párrafos',m2:'Identificador textual',m3:'Reescritura',m4:'Citas',m5:'Errores',m6:'Análisis comparativo',m7:'Planificador'};
+  let txt=`TALLER DE ESCRITURA ACADÉMICA — Prof. Rodolfo Cabral\n${nm[m]||m}\nEstudiante: ${nombres}\nFecha: ${fecha}\n${'─'.repeat(50)}\n\n`;
+  E[m].h.forEach(msg=>{txt+=(msg.role==='user'?'✍️ ESTUDIANTE':'🎓 TUTOR')+':\n'+msg.content+'\n\n';});
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`taller-${m}-${Date.now()}.txt`;a.click();
+  URL.revokeObjectURL(url);
+  showToast('💾 Chat exportado');
+}
+
+// ===== TOAST =====
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
 // ===== REPORTE =====
-const nombresModulos={m1:'Módulo 1 — Constructor de párrafos',m2:'Módulo 2 — Identificador de tipo textual',m3:'Módulo 3 — Reescritura académica',m4:'Módulo 4 — Laboratorio de citas',m5:'Módulo 5 — Texto con errores'};
+const nombresModulos={m1:'Módulo 1 — Constructor de párrafos',m2:'Módulo 2 — Identificador de tipo textual',m3:'Módulo 3 — Reescritura académica',m4:'Módulo 4 — Laboratorio de citas',m5:'Módulo 5 — Texto con errores',m6:'Módulo 6 — Análisis comparativo',m7:'Módulo 7 — Planificador de escritura'};
 
 function construirReporte(m){
   const est=E[m];
   const nombres=getNombres()||'Sin identificar';
   const fecha=new Date().toLocaleString('es-AR',{dateStyle:'full',timeStyle:'short'});
+  const institucion=document.getElementById('institucion').value.trim()||'No especificada';
   let detalle='';
-  est.h.forEach(msg=>{
-    const rol=msg.role==='user'?'✍️ ALUMNA':'🎓 TUTOR';
-    detalle+=`${rol}:\n${msg.content}\n\n`;
-  });
-  return{fecha,modalidad:modalidadActual,nombres,modulos:nombresModulos[m]||m,reporte:detalle||'Sin actividad registrada.'};
+  est.h.forEach(msg=>{const rol=msg.role==='user'?'✍️ ESTUDIANTE':'🎓 TUTOR';detalle+=`${rol}:\n${msg.content}\n\n`;});
+  return{fecha,modalidad:modalidadActual,nombres,modulos:nombresModulos[m]||m,reporte:detalle||'Sin actividad registrada.',institucion};
 }
 
 function verReporte(m){
@@ -646,11 +1173,11 @@ function verReporte(m){
   const data=construirReporte(m);
   reporteActual={modulo:m,data};
   const preview=document.getElementById('reporte-preview');
-  preview.textContent=`REPORTE — TALLER DE ESCRITURA ACADÉMICA\n\nFecha: ${data.fecha}\nModalidad: ${data.modalidad}\nIntegrantes: ${data.nombres}\nMódulo: ${data.modulos}\n\n--- ACTIVIDAD REALIZADA ---\n\n${data.reporte}`;
+  preview.textContent=`REPORTE — TALLER DE ESCRITURA ACADÉMICA\n\nFecha: ${data.fecha}\nInstitución/Materia: ${data.institucion}\nModalidad: ${data.modalidad}\nEstudiante(s): ${data.nombres}\nMódulo: ${data.modulos}\n${'─'.repeat(50)}\n\n${data.reporte}`;
   document.getElementById('envio-ok').classList.remove('show');
   document.getElementById('envio-err').classList.remove('show');
   document.getElementById('btn-enviar-mail').disabled=false;
-  document.getElementById('btn-enviar-mail').textContent='📨 Enviar reporte al profesor';
+  document.getElementById('btn-enviar-mail').textContent='📨 Enviar al docente';
   document.getElementById('modal-reporte').style.display='flex';
 }
 
@@ -661,16 +1188,104 @@ async function enviarMail(){
   btn.disabled=true;btn.textContent='⏳ Enviando...';
   const d=reporteActual.data;
   try{
-    await emailjs.send('service_pm7wx9l','template_84cnoe2',{
-      nombres:d.nombres,fecha:d.fecha,modalidad:d.modalidad,modulos:d.modulos,reporte:d.reporte
-    });
+    await emailjs.send('service_pm7wx9l','template_84cnoe2',{nombres:d.nombres,fecha:d.fecha,modalidad:d.modalidad,modulos:d.modulos,reporte:d.reporte});
     document.getElementById('envio-ok').classList.add('show');
     btn.textContent='✅ Enviado';
   }catch(e){
     document.getElementById('envio-err').classList.add('show');
-    document.getElementById('envio-err-msg').textContent='Error al enviar: '+(e.text||e.message||'Intentá de nuevo.');
+    document.getElementById('envio-err-msg').textContent='Error: '+(e.text||e.message||'Intentá de nuevo.');
     btn.disabled=false;btn.textContent='📨 Reintentar';
   }
+}
+
+function descargarReporte(){
+  const d=reporteActual.data;
+  if(!d){alert('Generá el reporte primero.');return;}
+  const txt=`REPORTE — TALLER DE ESCRITURA ACADÉMICA\n\nFecha: ${d.fecha}\nInstitución/Materia: ${d.institucion}\nModalidad: ${d.modalidad}\nEstudiante(s): ${d.nombres}\nMódulo: ${d.modulos}\n${'─'.repeat(50)}\n\n${d.reporte}`;
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`reporte-taller-${Date.now()}.txt`;a.click();
+  URL.revokeObjectURL(url);
+  showToast('💾 Reporte descargado');
+}
+
+// ===== DIAGNÓSTICO =====
+function renderDiag(){
+  const cont=document.getElementById('diag-preguntas');
+  if(!cont)return;
+  diagIdx=0;diagResp=[];
+  cont.innerHTML='';
+  DIAG_PREGUNTAS.forEach((p,i)=>{
+    const div=document.createElement('div');
+    div.className='diag-pregunta';div.id='diag-p'+i;div.style.display=i===0?'block':'none';
+    let opsHTML=p.ops.map((op,j)=>`<button class="diag-op" onclick="selDiagOp(${i},${j},this)">${op.t}</button>`).join('');
+    div.innerHTML=`<p><strong>${i+1}/${DIAG_PREGUNTAS.length}.</strong> ${p.p}</p><div class="diag-opciones">${opsHTML}</div>`;
+    cont.appendChild(div);
+  });
+  document.getElementById('diag-nav').style.display='flex';
+  document.getElementById('diag-score').style.display='none';
+}
+
+function selDiagOp(pregIdx,opIdx,btn){
+  const pEl=document.getElementById('diag-p'+pregIdx);
+  pEl.querySelectorAll('.diag-op').forEach(b=>{b.classList.remove('sel');});
+  btn.classList.add('sel');
+  diagResp[pregIdx]=opIdx;
+}
+
+function siguienteDiag(){
+  if(diagResp[diagIdx]===undefined){alert('Seleccioná una opción antes de continuar.');return;}
+  const p=DIAG_PREGUNTAS[diagIdx];
+  const correcto=p.ops[diagResp[diagIdx]].ok;
+  const pEl=document.getElementById('diag-p'+diagIdx);
+  pEl.querySelectorAll('.diag-op').forEach((b,j)=>{
+    if(p.ops[j].ok)b.classList.add('correcta');
+    else if(j===diagResp[diagIdx])b.classList.add('incorrecta');
+    b.disabled=true;
+  });
+  setTimeout(()=>{
+    diagIdx++;
+    if(diagIdx<DIAG_PREGUNTAS.length){
+      document.getElementById('diag-p'+(diagIdx-1)).style.display='none';
+      document.getElementById('diag-p'+diagIdx).style.display='block';
+    }else{
+      mostrarResultadoDiag();
+    }
+  },1000);
+}
+
+function mostrarResultadoDiag(){
+  document.getElementById('diag-nav').style.display='none';
+  DIAG_PREGUNTAS.forEach((_,i)=>document.getElementById('diag-p'+i).style.display='none');
+  const puntaje=diagResp.filter((r,i)=>DIAG_PREGUNTAS[i].ops[r].ok).length;
+  const total=DIAG_PREGUNTAS.length;
+  document.getElementById('diag-num').textContent=`${puntaje}/${total}`;
+  let nivel,recom;
+  if(puntaje<=3){nivel='🟡 Nivel inicial — Hay mucho por aprender y eso está muy bien';recom='Te recomendamos empezar por los Módulos 1 (Constructor de párrafos) y 2 (Identificador de tipo textual). El Glosario puede ser un gran aliado para familiarizarte con los conceptos clave.';}
+  else if(puntaje<=6){nivel='🟠 Nivel intermedio — Tenés una base, ahora hay que consolidarla';recom='Tu punto de partida es sólido. Reforzá con los Módulos 3 (Reescritura) y 4 (Citas). El Módulo 6 (Análisis comparativo) puede desafiarte productivamente.';}
+  else{nivel='🟢 Nivel avanzado — Manejás bien los conceptos centrales';recom='¡Excelente punto de partida! Desafiarte con el Módulo 6 (Análisis comparativo) y el Módulo 7 (Planificador) puede llevar tu escritura al siguiente nivel.';}
+  document.getElementById('diag-nivel-txt').textContent=nivel;
+  document.getElementById('diag-recom').textContent=recom;
+  document.getElementById('diag-score').style.display='block';
+  const pm=document.getElementById('pm-pd');if(pm)pm.classList.add('done');
+}
+
+function reiniciarDiag(){renderDiag();}
+
+function verReporteDiag(){
+  const puntaje=diagResp.filter((r,i)=>DIAG_PREGUNTAS[i]?.ops?.[r]?.ok).length;
+  const nombres=getNombres()||'Sin identificar';
+  const fecha=new Date().toLocaleString('es-AR',{dateStyle:'full',timeStyle:'short'});
+  const detalle=DIAG_PREGUNTAS.map((p,i)=>{const r=diagResp[i];const ok=p.ops[r]?.ok;return `${i+1}. ${p.p}\nRespuesta: ${p.ops[r]?.t||'No respondida'} — ${ok?'✅ Correcta':'❌ Incorrecta'}\n`;}).join('\n');
+  const data={fecha,modalidad:modalidadActual,nombres,modulos:'Diagnóstico inicial',reporte:`Puntaje: ${puntaje}/${DIAG_PREGUNTAS.length}\n\nDetalle:\n${detalle}`,institucion:document.getElementById('institucion').value.trim()||'No especificada'};
+  reporteActual={modulo:'pd',data};
+  const preview=document.getElementById('reporte-preview');
+  preview.textContent=`DIAGNÓSTICO INICIAL — TALLER DE ESCRITURA ACADÉMICA\n\nFecha: ${data.fecha}\nEstudiante(s): ${data.nombres}\nInstitución: ${data.institucion}\n${'─'.repeat(50)}\n\nPuntaje: ${puntaje}/${DIAG_PREGUNTAS.length}\n\n${detalle}`;
+  document.getElementById('envio-ok').classList.remove('show');
+  document.getElementById('envio-err').classList.remove('show');
+  document.getElementById('btn-enviar-mail').disabled=false;
+  document.getElementById('btn-enviar-mail').textContent='📨 Enviar al docente';
+  document.getElementById('modal-reporte').style.display='flex';
 }
 
 // ===== CONECTORES =====
@@ -683,16 +1298,59 @@ function renderC(f=''){
     if(!fl||cm||tf.length>0){
       const d=document.createElement('div');d.className='ccat';
       const ta=cm&&!fl?x.t:(tf.length>0?tf:x.t);
-      d.innerHTML=`<h3>${x.c}</h3><div class="desc">${x.d}</div><div class="tags">${ta.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
+      d.innerHTML=`<h3>${x.c}</h3><div class="desc">${x.d}</div><div class="tags">${ta.map(t=>`<span class="tag" onclick="copiarTag('${t}',this)">${t}</span>`).join('')}</div>`;
       g.appendChild(d);
     }
   });
 }
 function filtC(){renderC(document.getElementById('busq-c').value);}
 
-// ===== INIT =====
-renderC();
-cargarFrag();
+function copiarTag(txt,el){
+  navigator.clipboard.writeText(txt).then(()=>{
+    el.classList.add('copied');el.textContent='✓ Copiado';
+    setTimeout(()=>{el.classList.remove('copied');el.textContent=txt;},1500);
+    showToast(`"${txt}" copiado al portapapeles`);
+  });
+}
+
+// ===== GLOSARIO =====
+let glosCatFiltro='Todos';
+function renderGlosario(filtro='',cat='Todos'){
+  const g=document.getElementById('glos-grid');if(!g)return;
+  const cats=['Todos',...new Set(GLOSARIO.map(x=>x.cat))];
+  const filtrosEl=document.getElementById('glos-filtros');
+  if(filtrosEl&&filtrosEl.childElementCount===0){
+    cats.forEach(c=>{
+      const b=document.createElement('button');
+      b.className='enfoque-chip'+(c==='Todos'?' sel':'');
+      b.textContent=c;b.onclick=()=>{glosCatFiltro=c;document.querySelectorAll('#glos-filtros .enfoque-chip').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');renderGlosario(document.getElementById('busq-g').value,c);};
+      filtrosEl.appendChild(b);
+    });
+  }
+  const fl=filtro.toLowerCase();
+  const items=GLOSARIO.filter(x=>{
+    const matchFl=!fl||x.term.toLowerCase().includes(fl)||x.def.toLowerCase().includes(fl);
+    const matchCat=cat==='Todos'||x.cat===cat;
+    return matchFl&&matchCat;
+  });
+  g.innerHTML=items.map(x=>`<div class="glos-item"><div class="glos-cat">${x.cat}</div><div class="glos-term">${x.term}</div><div class="glos-def">${x.def}</div></div>`).join('');
+  if(!items.length)g.innerHTML='<div class="cargando">Sin resultados para esa búsqueda.</div>';
+}
+function filtG(){renderGlosario(document.getElementById('busq-g').value,glosCatFiltro);}
+
+// ===== KEY MANAGEMENT =====
+
+
+// ===== ARRANCAR =====
+async function init() {
+  renderC();
+  renderGlosario();
+  renderDiag();
+  await cargarCorpus();
+  cargarFrag();
+  poblarSelectores();
+}
+window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
